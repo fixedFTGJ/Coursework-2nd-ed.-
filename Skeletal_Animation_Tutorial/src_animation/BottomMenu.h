@@ -12,27 +12,29 @@ namespace CourseWork {
 	{
 	public:
 		BottomMenu() {
-			Menu.FrontRightUp.CoordsGive(0.167f, -0.03f, -0.1f);
-			Menu.FrontLeftUp.CoordsGive(-0.167f, -0.03f, -0.1f);
+			Menu.FrontRightUp.CoordsGive(0.167f, -0.05f, -0.1f);
+			Menu.FrontLeftUp.CoordsGive(-0.167f, -0.05f, -0.1f);
 			Menu.FrontLeftDown.CoordsGive(-0.167f, -0.1f, -0.1f);
 			Menu.FrontRightDown.CoordsGive(0.167f, -0.1f, -0.1f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f, -0.03f, 0.167f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f, -0.03f, -0.167f);
+			Menu.LeftRightUp.CoordsGive(-0.1f, -0.05f, 0.167f);
+			Menu.LeftLeftUp.CoordsGive(-0.1f, -0.05f, -0.167f);
 			Menu.LeftLeftDown.CoordsGive(-0.1f, -0.1f, -0.167f);
 			Menu.LeftRightDown.CoordsGive(-0.1f, -0.1f, 0.167f);
 
-			Menu.BackRightUp.CoordsGive(0.167f, -0.03f, 0.1f);
-			Menu.BackLeftUp.CoordsGive(-0.167f, -0.03f, 0.1f);
+			Menu.BackRightUp.CoordsGive(0.167f, -0.05f, 0.1f);
+			Menu.BackLeftUp.CoordsGive(-0.167f, -0.05f, 0.1f);
 			Menu.BackLeftDown.CoordsGive(-0.167f, -0.1f, 0.1f);
 			Menu.BackRightDown.CoordsGive(0.167f, -0.1f, 0.1f);
 
-			Menu.RightRightUp.CoordsGive(0.1f, -0.03f, 0.167f);
-			Menu.RightLeftUp.CoordsGive(0.1f, -0.03f, -0.167f);
+			Menu.RightRightUp.CoordsGive(0.1f, -0.05f, 0.167f);
+			Menu.RightLeftUp.CoordsGive(0.1f, -0.05f, -0.167f);
 			Menu.RightLeftDown.CoordsGive(0.1f, -0.1f, -0.167f);
 			Menu.RightRightDown.CoordsGive(0.1f, -0.1f, 0.167f);
 
 			Position = 'f';
+
+			VisionMenu = true;
 		};
 
 		void Draw() {
@@ -212,10 +214,13 @@ namespace CourseWork {
 			Menu.RightRightDown.AddX(_x);
 		}
 
+		bool VisionMenu;
 
 	private:
 		InterfaceCoords Menu;
 		
+		
+
 		char Position;
 
 	};

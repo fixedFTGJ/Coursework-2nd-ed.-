@@ -159,7 +159,11 @@ void DrawScene()
 
 	
 
-	BtmM.Draw();
+	
+	if (BtmM.VisionMenu)
+	{
+		BtmM.Draw();
+	}
 	
 	
 	
@@ -289,7 +293,19 @@ void SpecialKeys(int key, int x, int y)
 	}		
 	if (key == GLUT_KEY_PAGE_DOWN) {
 		cam.rotateLoc(90, 1, 0, 0);
-	}		
+	}
+
+	if (key == GLUT_KEY_F1) {
+		if (BtmM.VisionMenu)
+		{
+			BtmM.VisionMenu = false;
+		}
+		else
+		{
+			BtmM.VisionMenu = true;
+		}
+		
+	}
 	
 	// Обновляется окно
 	glutPostRedisplay();
