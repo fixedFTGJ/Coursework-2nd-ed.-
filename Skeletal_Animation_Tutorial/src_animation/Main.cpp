@@ -1,0 +1,287 @@
+/////////////////////////////////////////////
+//
+// Skeletal Animation Tutorial
+//
+// (C) by Sven Forstmann in 2014
+//
+// License : MIT
+// http://opensource.org/licenses/MIT
+/////////////////////////////////////////////
+// Mathlib included from 
+// http://sourceforge.net/projects/nebuladevice/
+/////////////////////////////////////////////
+#include <iostream> 
+#include <vector> 
+#include <string> 
+#include <stdio.h>
+#include <glew.h>
+#include <wglew.h>
+#include <windows.h>
+#include <mmsystem.h>
+#include <GL/glut.h>
+using namespace std;
+#pragma comment(lib,"winmm.lib")
+///////////////////////////////////////////
+#include "core.h"
+#include "Bmp.h"
+#include "ogl.h"
+#include "glsl.h"
+///////////////////////////////////////////
+vec4f lightvec(-1,0,-1,0);
+#include "Mesh.h"
+///////////////////////////////////////////
+#include "Game.h"
+#include "camera.h"
+//////////////////////////////////////////
+Game g_game;
+Camera cam(0,0,0);
+float x = 0;
+float y = -5;
+float z = 0;
+/////////////////////////////////////////
+void Clear()
+{
+	// clear and basic
+	glClearDepth(1);
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	// projection
+	int vp[4];
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glGetIntegerv(GL_VIEWPORT, vp);
+	gluPerspective(90.0, float(vp[2]) / float(vp[3]), 0.01, 100);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+};
+
+void DrawScene()
+{
+	if ( GetAsyncKeyState(VK_ESCAPE) )  exit(0);
+
+	// mouse pointer position
+	POINT cursor;
+	GetCursorPos(&cursor); 
+
+	// camera orientation
+	float	viewangle_x = float(cursor.x-1280/2)/4.0;
+	float	viewangle_y = float(cursor.y-768/2)/4.0;
+
+	static uint t0=timeGetTime(); 
+	double time_elapsed=double(timeGetTime()-t0)/1000;
+
+	// clear and basic
+	glClearDepth(1);
+	glClearColor(0,0,0,1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	 //projection
+	int vp[4];
+	glMatrixMode( GL_PROJECTION);
+	glLoadIdentity();
+	glGetIntegerv(GL_VIEWPORT, vp);
+	gluPerspective(90.0,float(vp[2])/float(vp[3]) , 0.01, 100);
+
+	// modelview
+	glMatrixMode( GL_MODELVIEW);
+	glLoadIdentity();
+	glRotatef( viewangle_y,1,0,0);		// set rotation
+	glRotatef( viewangle_x,0,1,0);		// set rotation
+	glTranslatef(x, y, z);
+
+	//cam.setView();
+	//cam.rotateLoc(180, 0, 1, 0);
+	//cam.setView();
+	// select level of detail for rendering
+	// (lods are generated automatically by the ogre xml converter )
+	int lod=0; 
+	if(GetAsyncKeyState(VK_F1)) lod=1;
+	if(GetAsyncKeyState(VK_F2)) lod=2;
+	if(GetAsyncKeyState(VK_F3)) lod=3;
+	if(GetAsyncKeyState(VK_F4)) lod=4;
+	if(GetAsyncKeyState(VK_F5)) lod=5;
+   /*if (GetAsyncKeyState(VK_UP))
+	{
+		cam.rotateLoc(180, 0, 1, 0);
+		cam.setView();
+	}*/
+	cam.setView();
+	static Mesh cube("../data/cube.material", "../data/cube.xml");
+	static Mesh plane("../data/Untitled1.material", "../data/Untitled1.xml");
+
+
+	//////////////////////
+	loopi(0, g_game._dungeon->GetMaps()[0]->GetHeight())
+	{
+		loopj(0, g_game._dungeon->GetMaps()[0]->GetWidth())
+		{
+			if (g_game._dungeon->GetMaps()[0]->GetPattern()[i][j] == wall)
+			{
+				cube.Draw(
+					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
+					vec3f(
+						0,			// rotation
+						0,
+						0)
+					// LOD level
+					);
+			}
+			else
+			{
+				plane.Draw(
+					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep(), -0, j*g_game._dungeon->GetMaps()[0]->GetStep()),		  		// position
+					vec3f(
+						0,			// rotation
+						0,
+						0)
+					// LOD level
+					);
+			}
+		}
+	}
+	/////////////////////
+	/*cube.Draw(
+		vec3f(1.1, -0, -1),		  		// position
+		vec3f(
+			0,			// rotation
+			0,
+			0),
+		lod								// LOD level
+		);
+	
+	plane.Draw(
+		vec3f(0.1, -0, -1),		  		// position
+		vec3f(
+			0,			// rotation
+			0,
+			0),
+		lod								// LOD level
+		);*/
+	// Test 1 : Halo character (animated mesh)
+
+	/*static Mesh halo   ("../data/halo/halo.material",		//	required material file)
+						"../data/halo/halo.mesh.xml",		//	required mesh file
+						"../data/halo/halo.skeleton.xml");	//	optional skeleton file
+	
+	loopi(0,4)
+	{
+		// Set the skeleton to an animation at a given time
+
+		//int idle = halo.animation.GetAnimationIndexOf("idle"); // <- in case we dont know the animation id
+		halo.animation.SetPose(
+			i/2,			// animation id (2 animations, 0 and 1, are available)
+			time_elapsed );	// time in seconds
+
+		// F6 : example to manually set the shoulder - for shooting a weapon e.g.
+		if(GetAsyncKeyState(VK_F6))
+		{
+			// get the index
+			int index  = halo.animation.GetBoneIndexOf("joint2"); 
+
+			// get / modify / set the matrix
+			matrix44 m = halo.animation.bones[ index ].matrix;
+			m.x_component()=vec3f(1,0,0);
+			m.y_component()=vec3f(0,1,0); // set the rotation to identity
+			m.z_component()=vec3f(0,0,1);
+			halo.animation.bones[ index ].matrix=m;
+
+			// re-evaluate the childs
+			loopi(0,halo.animation.bones[ index ].childs.size())
+			{
+				halo.animation.EvalSubtree(
+					halo.animation.bones[ index ].childs[i],	// bone id
+					halo.animation.animations[0],				// animation
+					-1);										// key frame -1 means not use the animation
+			}
+		}
+		
+		// Draw the model
+
+		halo.Draw(
+			vec3f((i-1.5)*7,-5,7),			// position
+			vec3f(0,time_elapsed*0.3,0),	// rotation
+			lod,							// LOD level
+			(i&1)==1 );						// draw skeleton ?
+	}
+	
+	// Test 2 : moon (static mesh)
+
+	static Mesh moon   ("../data/moon/moon.material",	//	required material file)
+						"../data/moon/moon.mesh.xml");	//	required mesh file
+		moon.Draw(
+			vec3f( 1.1,-0,-1),		  		// position
+			vec3f(
+				time_elapsed*0.2,			// rotation
+				time_elapsed*0.1,
+				time_elapsed*0.4),	
+			lod								// LOD level
+		);*/
+
+	// Swap
+	glutSwapBuffers();
+}
+void Timer(int value)
+{
+	DrawScene();
+	glutTimerFunc(100, Timer, 1);
+}
+
+void SpecialKeys(int key, int x, int y)
+{
+	if (key == GLUT_KEY_UP)
+	{
+		float model_view_matrix[16];
+		glGetFloatv(GL_MODELVIEW_MATRIX, model_view_matrix);
+		vec3f normal(model_view_matrix[2], model_view_matrix[6], model_view_matrix[10]);
+		normal = normal.norm();
+		cam.moveGlob(normal.x, normal.y, normal.z, -1.0);
+	}
+		//xRot -= 5.0f;
+	if (key == GLUT_KEY_DOWN)
+	{
+		float model_view_matrix[16];
+		glGetFloatv(GL_MODELVIEW_MATRIX, model_view_matrix);
+		vec3f normal(model_view_matrix[2], model_view_matrix[6], model_view_matrix[10]);
+		normal = normal.norm();
+		cam.moveGlob(normal.x, normal.y, normal.z);
+	}
+	if (key == GLUT_KEY_LEFT)
+		cam.rotateLoc(-90, 0, 1, 0);
+	if (key == GLUT_KEY_RIGHT)
+		cam.rotateLoc(90, 0, 1, 0);
+	if(key == GLUT_KEY_PAGE_UP)
+		cam.rotateLoc(-90, 1, 0, 0);
+	if (key == GLUT_KEY_PAGE_DOWN)
+		cam.rotateLoc(90, 1, 0, 0);
+	
+	// Обновляется окно
+	glutPostRedisplay();
+}
+///////////////////////////////////////////
+int main(int argc, char **argv) 
+{ 
+  glutInit(&argc, argv);  
+  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE /*| GLUT_ALPHA */| GLUT_DEPTH);  
+  glutInitWindowSize(1280, 768);  
+  glutInitWindowPosition(0, 0);  
+  glutCreateWindow("Skinned Skeletal Animation Sample (c) Sven Forstmann in 2014");
+ // cam.setView();
+ // Clear();
+  glutSpecialFunc(SpecialKeys);
+  glutDisplayFunc(DrawScene);
+  //glutTimerFunc(100, Timer, 1);
+ // glutIdleFunc(DrawScene);
+  glewInit();
+  wglSwapIntervalEXT(0);
+  glutMainLoop();  
+  return 0;
+}
+///////////////////////////////////////////
