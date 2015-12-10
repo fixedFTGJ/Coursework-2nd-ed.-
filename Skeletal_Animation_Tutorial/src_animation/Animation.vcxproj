@@ -198,12 +198,16 @@
     <ClInclude Include="..\src_common\ogl.h" />
     <ClInclude Include="..\src_common\xml\tinystr.h" />
     <ClInclude Include="..\src_common\xml\tinyxml.h" />
+    <ClInclude Include="BottomMenu.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Coords.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DungeonInitializer.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameMenus.h" />
+    <ClInclude Include="InterfaceCoords.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshAnimation.h" />

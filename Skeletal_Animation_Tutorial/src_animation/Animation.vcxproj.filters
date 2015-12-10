@@ -28,6 +28,9 @@
     <Filter Include="shader\mesh">
       <UniqueIdentifier>{76ddbddf-ebc7-4da5-aef4-f80ddca51978}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameInterface">
+      <UniqueIdentifier>{ff0e811a-0deb-4262-96ba-26e1488d1e32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src_common\Bmp.h">
@@ -95,6 +98,18 @@
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Coords.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceCoords.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomMenu.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenus.h">
+      <Filter>src\GameInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

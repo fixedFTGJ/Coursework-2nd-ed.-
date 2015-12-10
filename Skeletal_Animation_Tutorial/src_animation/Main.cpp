@@ -32,12 +32,21 @@ vec4f lightvec(-1,0,-1,0);
 ///////////////////////////////////////////
 #include "Game.h"
 #include "camera.h"
+#include "GameMenus.h"
 //////////////////////////////////////////
 Game g_game;
 Camera cam(0,0,0);
 float x = 0;
 float y = -5;
 float z = 0;
+
+float xInterf = 0.0f;
+float yInterf = 0.0f;
+float zInterf = 0.0f;
+
+BottomMenu BtmM = BottomMenu();
+
+
 /////////////////////////////////////////
 void Clear()
 {
@@ -147,6 +156,13 @@ void DrawScene()
 			}
 		}
 	}
+
+	
+
+	BtmM.Draw();
+	
+	
+	
 	/////////////////////
 	/*cube.Draw(
 		vec3f(1.1, -0, -1),		  		// position
@@ -243,6 +259,9 @@ void SpecialKeys(int key, int x, int y)
 		vec3f normal(model_view_matrix[2], model_view_matrix[6], model_view_matrix[10]);
 		normal = normal.norm();
 		cam.moveGlob(normal.x, normal.y, normal.z, -1.0);
+
+		BtmM.Forvard();
+
 	}
 		//xRot -= 5.0f;
 	if (key == GLUT_KEY_DOWN)
@@ -252,16 +271,49 @@ void SpecialKeys(int key, int x, int y)
 		vec3f normal(model_view_matrix[2], model_view_matrix[6], model_view_matrix[10]);
 		normal = normal.norm();
 		cam.moveGlob(normal.x, normal.y, normal.z);
+
+		BtmM.Ago();
 	}
-	if (key == GLUT_KEY_LEFT)
+	if (key == GLUT_KEY_LEFT) {
 		cam.rotateLoc(-90, 0, 1, 0);
-	if (key == GLUT_KEY_RIGHT)
+
+		BtmM.TurnLeft();
+	}		
+	if (key == GLUT_KEY_RIGHT) {
 		cam.rotateLoc(90, 0, 1, 0);
-	if(key == GLUT_KEY_PAGE_UP)
+
+		BtmM.TurnRight();
+	}		
+	if (key == GLUT_KEY_PAGE_UP) {
 		cam.rotateLoc(-90, 1, 0, 0);
-	if (key == GLUT_KEY_PAGE_DOWN)
+	}		
+	if (key == GLUT_KEY_PAGE_DOWN) {
 		cam.rotateLoc(90, 1, 0, 0);
+	}		
 	
+	// Обновляется окно
+	glutPostRedisplay();
+}
+
+void OtherKeys(unsigned char key, int x, int y)
+{
+	if (key == 'w') {
+		yInterf += 0.001f;
+		cout << "y = " << yInterf << endl;
+	}
+	if (key == 'a') {
+		xInterf -= 0.001f;
+		cout << "x = " << xInterf << endl;
+	}
+	if (key == 's') {
+		yInterf -= 0.001f;
+		cout << "y = " << yInterf << endl;
+	}
+	if (key == 'd') {
+		xInterf += 0.001f;
+		cout << "x = " << xInterf << endl;
+	}
+
 	// Обновляется окно
 	glutPostRedisplay();
 }
@@ -272,10 +324,11 @@ int main(int argc, char **argv)
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE /*| GLUT_ALPHA */| GLUT_DEPTH);  
   glutInitWindowSize(1280, 768);  
   glutInitWindowPosition(0, 0);  
-  glutCreateWindow("Skinned Skeletal Animation Sample (c) Sven Forstmann in 2014");
+  glutCreateWindow("Dungeon of Hope");
  // cam.setView();
  // Clear();
   glutSpecialFunc(SpecialKeys);
+  glutKeyboardFunc(OtherKeys);
   glutDisplayFunc(DrawScene);
   //glutTimerFunc(100, Timer, 1);
  // glutIdleFunc(DrawScene);
