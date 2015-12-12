@@ -22,9 +22,4 @@ public:
 	Dungeon *_dungeon;
 	Camera *cam;
 	Party *party;
-	};
-	void InitMapGraph();
-	Dungeon *_dungeon;
-	
-private:
 };

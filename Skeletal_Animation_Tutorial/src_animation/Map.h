@@ -1,6 +1,6 @@
 #pragma once
 
-#include<list>
+#include<vector>
 #include "Environment.h"
 #include "Monster.h"
 
@@ -17,7 +17,7 @@ namespace CourseWork
 	class Map
 	{
 	public:
-		Map(int width, int height, int** pattern, list<Monster*> monsters, Coordinates startPosition);
+		Map(int width, int height, int** pattern, vector<Monster*> monsters, Coordinates startPosition);
 		int GetWidth() { return _width; };
 		int GetHeight() { return _height; };
 		int** GetPattern() { return _pattern; };
@@ -25,6 +25,7 @@ namespace CourseWork
 		float GetYCenter() { return YCenter; };
 		float GetStep() { return Step; };
 		Coordinates GetStartPosition() { return _startPosition; };
+		vector<Monster*> GetMonsters();
 	private:
 		int _width;
 		int _height;
@@ -33,6 +34,6 @@ namespace CourseWork
 		const float Step = 1.0;
 		const float XCenter = 0.5;
 		const float YCenter = 0.5;
-		list<Monster*> _monsters;
+		vector<Monster*> _monsters;
 	};
 }
