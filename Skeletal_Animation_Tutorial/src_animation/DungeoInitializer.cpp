@@ -24,7 +24,11 @@ Dungeon* DungeonInitializer::Initialize()
 	pattern1[0] = new int[MapWidth] {wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall};
 	pattern1[1] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[2] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
+<<<<<<< HEAD
 	pattern1[3] = new int[MapWidth] {wall, floor, wall, floor, wall, wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
+=======
+	pattern1[3] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
+>>>>>>> origin/master
 	pattern1[4] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[5] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[6] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};

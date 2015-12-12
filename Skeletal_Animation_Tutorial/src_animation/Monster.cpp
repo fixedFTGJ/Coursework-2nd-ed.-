@@ -6,9 +6,12 @@ Monster::Monster(Coordinates position, int health, int armor, int damage, int do
 {
 	_position = position;
 }
+<<<<<<< HEAD
 
 void Monster::SetPosition(int x, int y)
 {
 	_position.X = x;
 	_position.Y = y;
 }
+=======
+>>>>>>> origin/master

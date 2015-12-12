@@ -7,8 +7,12 @@ material Material.002
             diffuse 0.640000 0.640000 0.640000
             texture_unit
             {
+<<<<<<< HEAD
                 texture tex.bmp
 				texture_bump tex.bmp
+=======
+                texture tex.jpg
+>>>>>>> origin/master
             }
         }
     }
