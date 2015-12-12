@@ -2,6 +2,7 @@
 
 #include "InterfaceCoords.h"
 #include <glew.h>
+#include <glaux.h>
 
 using namespace std;
 
@@ -38,6 +39,8 @@ namespace CourseWork {
 		};
 
 		void Draw() {
+
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
 			switch (Position)
 			{
 			case 'f':
@@ -216,9 +219,27 @@ namespace CourseWork {
 
 		bool VisionMenu;
 
+		/////////////////   TEXTURES    /////////////////
+ 
+		GLuint texture[1];
+
+		GLvoid LoadGLTextures() {
+			AUX_RGBImageRec *texture1;
+			texture1 = auxDIBImageLoad("source/Menu.bmp");
+
+			glGenTextures(1, &texture[0]);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture1->sizeX, texture1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
+
+			glEnable(GL_TEXTURE_2D);
+		}
+
 	private:
 		InterfaceCoords Menu;
-		
 		
 
 		char Position;

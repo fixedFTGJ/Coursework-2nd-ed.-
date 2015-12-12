@@ -50,6 +50,8 @@ BottomMenu BtmM = BottomMenu();
 /////////////////////////////////////////
 void Clear()
 {
+	//BtmM.LoadGLTextures();
+
 	// clear and basic
 	glClearDepth(1);
 	glClearColor(0, 0, 0, 1);
