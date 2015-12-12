@@ -35,7 +35,7 @@ namespace CourseWork {
 
 			Position = 'f';
 
-			VisionMenu = true;
+			isVisible = true;
 		};
 
 		void Draw() {
@@ -87,7 +87,7 @@ namespace CourseWork {
 			
 		}
 
-		void Forvard() {
+		void Forward() {
 
 			switch (Position)
 			{
@@ -110,7 +110,7 @@ namespace CourseWork {
 			
 		}
 
-		void Ago() {
+		void Back() {
 			switch (Position)
 			{
 			case 'f':
@@ -217,7 +217,7 @@ namespace CourseWork {
 			Menu.RightRightDown.AddX(_x);
 		}
 
-		bool VisionMenu;
+		bool isVisible;
 
 		/////////////////   TEXTURES    /////////////////
  
@@ -225,7 +225,7 @@ namespace CourseWork {
 
 		GLvoid LoadGLTextures() {
 			AUX_RGBImageRec *texture1;
-			texture1 = auxDIBImageLoad("source/Menu.bmp");
+			texture1 = auxDIBImageLoad("../data/source/Menu.bmp");
 
 			glGenTextures(1, &texture[0]);
 			glBindTexture(GL_TEXTURE_2D, texture[0]);

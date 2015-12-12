@@ -10,8 +10,9 @@ DungeonInitializer::DungeonInitializer()
 Dungeon* DungeonInitializer::Initialize()
 {
 	Map* loadedMap;
+	Monster* monster;
 	vector<Map*> maps;
-	list<Monster*> monsterList;
+	vector<Monster*> monsters;
 	int** pattern1 = new int*[MapWidth];
 	Coordinates startPosition;
 	startPosition.X = 1;
@@ -24,11 +25,7 @@ Dungeon* DungeonInitializer::Initialize()
 	pattern1[0] = new int[MapWidth] {wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall};
 	pattern1[1] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[2] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
-<<<<<<< HEAD
 	pattern1[3] = new int[MapWidth] {wall, floor, wall, floor, wall, wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
-=======
-	pattern1[3] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
->>>>>>> origin/master
 	pattern1[4] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[5] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[6] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
@@ -46,7 +43,16 @@ Dungeon* DungeonInitializer::Initialize()
 	pattern1[18] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[19] = new int[MapWidth] {wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall};
 
-	loadedMap = new Map(MapHeight, MapWidth, pattern1, monsterList, startPosition);
+	monster = new Monster(Coordinates(5, 5), 10, 10, 10, 10);
+	monsters.push_back(monster);
+	monster = new Monster(Coordinates(10, 10), 10, 10, 10, 10);
+	monsters.push_back(monster);
+	monster = new Monster(Coordinates(7, 9), 10, 10, 10, 10);
+	monsters.push_back(monster);
+	monster = new Monster(Coordinates(11, 18), 10, 10, 10, 10);
+	monsters.push_back(monster);
+
+	loadedMap = new Map(MapHeight, MapWidth, pattern1, monsters, startPosition);
 	maps.push_back(loadedMap);
 	maps.push_back(loadedMap);
 	maps.push_back(loadedMap);

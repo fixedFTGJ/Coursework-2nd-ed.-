@@ -14,19 +14,19 @@ material _missing_material_
     }
 }
 
-// Material genrated by blender2ogre 0.5.9
+// Katarina_Default genrated by blender2ogre 0.5.9
 
-material Material 
+material Katarina_Default 
 {
     receive_shadows on 
 
     technique
     {
-        pass Material
+        pass Katarina_Default
         {
-            ambient 0.800000011920929 0.800000011920929 0.800000011920929 1.0
-            diffuse 0.6400000190734865 0.6400000190734865 0.6400000190734865 1.0
-            specular 0.5 0.5 0.5 1.0 12.5
+            ambient 0.6399999856948853 0.6399999856948853 0.6399999856948853 1.0
+            diffuse 0.5119999961853026 0.5119999961853026 0.5119999961853026 1.0
+            specular 0.4000000059604645 0.4000000059604645 0.4000000059604645 1.0 9.5
             emissive 0.0 0.0 0.0 1.0
 
             alpha_to_coverage off
@@ -48,7 +48,7 @@ material Material
 
             texture_unit 
             {
-                texture stones.bmp
+                texture katarina_base_diffuse.png
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
