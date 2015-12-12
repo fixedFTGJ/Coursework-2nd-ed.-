@@ -32,7 +32,6 @@ vec4f lightvec(-1,0,-1,0);
 ///////////////////////////////////////////
 #include "Game.h"
 #include "camera.h"
-<<<<<<< HEAD
 #include "CollisionChecker.h"
 //////////////////////////////////////////
 Game g_game;
@@ -50,7 +49,6 @@ vec3f GetLookAt()
 	return normal.norm();
 };
 
-=======
 #include "GameMenus.h"
 //////////////////////////////////////////
 Game g_game;
@@ -67,7 +65,6 @@ BottomMenu BtmM = BottomMenu();
 
 
 /////////////////////////////////////////
->>>>>>> origin/master
 void Clear()
 {
 	//BtmM.LoadGLTextures();
@@ -119,11 +116,8 @@ void DrawScene()
 	glMatrixMode( GL_PROJECTION);
 	glLoadIdentity();
 	glGetIntegerv(GL_VIEWPORT, vp);
-<<<<<<< HEAD
 	gluPerspective(55.0,float(vp[2])/float(vp[3]) , 0.01, 100);
-=======
 	gluPerspective(90.0,float(vp[2])/float(vp[3]) , 0.01, 100);
->>>>>>> origin/master
 
 	// modelview
 	glMatrixMode( GL_MODELVIEW);
@@ -131,16 +125,13 @@ void DrawScene()
 	glRotatef( viewangle_y,1,0,0);		// set rotation
 	glRotatef( viewangle_x,0,1,0);		// set rotation
 	glTranslatef(x, y, z);
-<<<<<<< HEAD
 	if (f)
 	{
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
 		g_game.cam->setView();
 		f = !f;
 	}
-=======
 
->>>>>>> origin/master
 	//cam.setView();
 	//cam.rotateLoc(180, 0, 1, 0);
 	//cam.setView();
@@ -157,18 +148,15 @@ void DrawScene()
 		cam.rotateLoc(180, 0, 1, 0);
 		cam.setView();
 	}*/
-<<<<<<< HEAD
 	g_game.cam->setView();
 	static Mesh cube("../data/cube.material", "../data/cube.xml");
 	static Mesh plane("../data/Untitled1.material", "../data/Untitled1.xml");
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 		"../data/Desktop.mesh.xml");*/
-=======
 	cam.setView();
 	static Mesh cube("../data/cube.material", "../data/cube.xml");
 	static Mesh plane("../data/Untitled1.material", "../data/Untitled1.xml");
 
->>>>>>> origin/master
 
 	//////////////////////
 	loopi(0, g_game._dungeon->GetMaps()[0]->GetHeight())
@@ -178,11 +166,8 @@ void DrawScene()
 			if (g_game._dungeon->GetMaps()[0]->GetPattern()[i][j] == wall)
 			{
 				cube.Draw(
-<<<<<<< HEAD
 					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, 0, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
-=======
 					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
->>>>>>> origin/master
 					vec3f(
 						0,			// rotation
 						0,
@@ -193,11 +178,8 @@ void DrawScene()
 			else
 			{
 				plane.Draw(
-<<<<<<< HEAD
 					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep(), 0, j*g_game._dungeon->GetMaps()[0]->GetStep()),		  		// position
-=======
 					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep(), -0, j*g_game._dungeon->GetMaps()[0]->GetStep()),		  		// position
->>>>>>> origin/master
 					vec3f(
 						0,			// rotation
 						0,
@@ -207,13 +189,11 @@ void DrawScene()
 			}
 		}
 	}
-<<<<<<< HEAD
 	/*halo.Draw(
 		vec3f(10, -0.5, 10),			// position
 		vec3f(0, 0, 0),	// rotation
 		0,							// LOD level
 		0);*/
-=======
 
 	
 
@@ -225,7 +205,6 @@ void DrawScene()
 	
 	
 	
->>>>>>> origin/master
 	/////////////////////
 	/*cube.Draw(
 		vec3f(1.1, -0, -1),		  		// position
@@ -305,7 +284,6 @@ void DrawScene()
 		);*/
 
 	// Swap
-<<<<<<< HEAD
 	static Mesh moon("../data/moon/moon.material",	//	required material file)
 		"../data/moon/moon.mesh.xml");	//	required mesh file
 	moon.Draw(
@@ -316,8 +294,6 @@ void DrawScene()
 			time_elapsed*0.4),
 		lod								// LOD level
 		);
-=======
->>>>>>> origin/master
 	glutSwapBuffers();
 }
 void Timer(int value)
@@ -328,7 +304,6 @@ void Timer(int value)
 
 void SpecialKeys(int key, int x, int y)
 {
-<<<<<<< HEAD
 	/*vec3f normal = GetLookAt();
 	int dx = 0, dy = 0;
 	if (normal.x == 1.0)
@@ -371,7 +346,6 @@ void SpecialKeys(int key, int x, int y)
 		{
 			g_game.party->SetPosition(temp.X, temp.Y);
 		}
-=======
 	if (key == GLUT_KEY_UP)
 	{
 		float model_view_matrix[16];
@@ -382,12 +356,10 @@ void SpecialKeys(int key, int x, int y)
 
 		BtmM.Forvard();
 
->>>>>>> origin/master
 	}
 		//xRot -= 5.0f;
 	if (key == GLUT_KEY_DOWN)
 	{
-<<<<<<< HEAD
 		vec3f normal = GetLookAt();
 		int dx = 0, dy = 0;
 		if (normal.x == 1.0)
@@ -420,7 +392,6 @@ void SpecialKeys(int key, int x, int y)
 		g_game.cam->rotateLoc(-90, 1, 0, 0);
 	if (key == GLUT_KEY_PAGE_DOWN)
 		g_game.cam->rotateLoc(90, 1, 0, 0);
-=======
 		float model_view_matrix[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, model_view_matrix);
 		vec3f normal(model_view_matrix[2], model_view_matrix[6], model_view_matrix[10]);
@@ -457,13 +428,10 @@ void SpecialKeys(int key, int x, int y)
 		}
 		
 	}
->>>>>>> origin/master
 	
 	// Обновляется окно
 	glutPostRedisplay();
 }
-<<<<<<< HEAD
-=======
 
 void OtherKeys(unsigned char key, int x, int y)
 {
@@ -487,7 +455,6 @@ void OtherKeys(unsigned char key, int x, int y)
 	// Обновляется окно
 	glutPostRedisplay();
 }
->>>>>>> origin/master
 ///////////////////////////////////////////
 int main(int argc, char **argv) 
 { 
@@ -495,18 +462,15 @@ int main(int argc, char **argv)
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE /*| GLUT_ALPHA */| GLUT_DEPTH);  
   glutInitWindowSize(1280, 768);  
   glutInitWindowPosition(0, 0);  
-<<<<<<< HEAD
   glutCreateWindow("Skinned Skeletal Animation Sample (c) Sven Forstmann in 2014");
  // cam.setView();
  // Clear();
   glutSpecialFunc(SpecialKeys);
-=======
   glutCreateWindow("Dungeon of Hope");
  // cam.setView();
  // Clear();
   glutSpecialFunc(SpecialKeys);
   glutKeyboardFunc(OtherKeys);
->>>>>>> origin/master
   glutDisplayFunc(DrawScene);
   //glutTimerFunc(100, Timer, 1);
  // glutIdleFunc(DrawScene);
