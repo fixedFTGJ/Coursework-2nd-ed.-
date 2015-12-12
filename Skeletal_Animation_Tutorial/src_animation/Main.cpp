@@ -122,6 +122,7 @@ void DrawScene()
 	{
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
 		g_game.cam->rotateLoc(90, 0, 1, 0);
+
 		//g_game.cam->setView();
 		f = !f;
 	}
