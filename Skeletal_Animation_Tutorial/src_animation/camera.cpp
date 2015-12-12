@@ -97,4 +97,7 @@ void Camera::rotateGlob(float deg, float x, float y, float z) {
 	glGetFloatv(GL_MODELVIEW_MATRIX, Transform);
 	glPopMatrix();
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master

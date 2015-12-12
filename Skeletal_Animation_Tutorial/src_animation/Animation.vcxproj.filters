@@ -28,9 +28,12 @@
     <Filter Include="shader\mesh">
       <UniqueIdentifier>{76ddbddf-ebc7-4da5-aef4-f80ddca51978}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
+=======
     <Filter Include="src\GameInterface">
       <UniqueIdentifier>{ff0e811a-0deb-4262-96ba-26e1488d1e32}</UniqueIdentifier>
     </Filter>
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src_common\Bmp.h">
@@ -99,6 +102,10 @@
     <ClInclude Include="camera.h">
       <Filter>src</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="CollisionChecker.h">
+      <Filter>src</Filter>
+=======
     <ClInclude Include="Coords.h">
       <Filter>src\GameInterface</Filter>
     </ClInclude>
@@ -110,6 +117,7 @@
     </ClInclude>
     <ClInclude Include="GameMenus.h">
       <Filter>src\GameInterface</Filter>
+>>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +175,12 @@
     <ClCompile Include="camera.cpp">
       <Filter>src</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="CollisionChecker.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+=======
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shader\obj\frag.txt">

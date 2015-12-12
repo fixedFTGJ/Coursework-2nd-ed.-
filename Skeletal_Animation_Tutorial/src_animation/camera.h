@@ -9,6 +9,10 @@ if youre not using Windows you most likely know what goes here
 #define  WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <GL/gl.h>
+<<<<<<< HEAD
+#include <vector> 
+=======
+>>>>>>> origin/master
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glu32.lib")
 #endif

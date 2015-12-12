@@ -1,0 +1,15 @@
+material Material
+{
+    technique
+    {
+        pass
+        {
+            diffuse 0.640000 0.640000 0.640000
+            texture_unit
+            {
+                texture tex.jpg
+            }
+        }
+    }
+}
+
