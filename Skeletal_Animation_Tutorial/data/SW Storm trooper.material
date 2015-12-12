@@ -1,0 +1,15 @@
+material Tex_0072_0_dds_Tex_0072_0.dds
+{
+    technique
+    {
+        pass
+        {
+            diffuse 0.470400 0.470400 0.470400
+            texture_unit
+            {
+                texture Tex_0072_0.dds
+            }
+        }
+    }
+}
+
