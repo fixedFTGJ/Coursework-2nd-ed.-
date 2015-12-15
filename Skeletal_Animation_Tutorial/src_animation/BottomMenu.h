@@ -13,27 +13,27 @@ namespace CourseWork {
 	{
 	public:
 		BottomMenu() {
-			Menu.FrontRightUp.CoordsGive(0.167f, -0.05f, -0.1f);
-			Menu.FrontLeftUp.CoordsGive(-0.167f, -0.05f, -0.1f);
-			Menu.FrontLeftDown.CoordsGive(-0.167f, -0.1f, -0.1f);
-			Menu.FrontRightDown.CoordsGive(0.167f, -0.1f, -0.1f);
+			Menu.FrontRightUp.CoordsGive(0.167f + 2.0f, -0.03f, -0.1f + 2.0f);
+			Menu.FrontLeftUp.CoordsGive(-0.167f + 2.0f, -0.03f, -0.1f + 2.0f);
+			Menu.FrontLeftDown.CoordsGive(-0.167f + 2.0f, -0.052f, -0.1f + 2.0f);
+			Menu.FrontRightDown.CoordsGive(0.167f + 2.0f, -0.052f, -0.1f + 2.0f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f, -0.05f, 0.167f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f, -0.05f, -0.167f);
-			Menu.LeftLeftDown.CoordsGive(-0.1f, -0.1f, -0.167f);
-			Menu.LeftRightDown.CoordsGive(-0.1f, -0.1f, 0.167f);
+			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, -0.03f, 0.167f + 2.0f);
+			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, -0.03f, -0.167f + 2.0f);
+			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, -0.052f, -0.167f + 2.0f);
+			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, -0.052f, 0.167f + 2.0f);
 
-			Menu.BackRightUp.CoordsGive(0.167f, -0.05f, 0.1f);
-			Menu.BackLeftUp.CoordsGive(-0.167f, -0.05f, 0.1f);
-			Menu.BackLeftDown.CoordsGive(-0.167f, -0.1f, 0.1f);
-			Menu.BackRightDown.CoordsGive(0.167f, -0.1f, 0.1f);
+			Menu.BackRightUp.CoordsGive(0.167f + 2.0f, -0.03f, 0.1f + 2.0f);
+			Menu.BackLeftUp.CoordsGive(-0.167f + 2.0f, -0.03f, 0.1f + 2.0f);
+			Menu.BackLeftDown.CoordsGive(-0.167f + 2.0f, -0.052f, 0.1f + 2.0f);
+			Menu.BackRightDown.CoordsGive(0.167f + 2.0f, -0.052f, 0.1f + 2.0f);
 
-			Menu.RightRightUp.CoordsGive(0.1f, -0.05f, 0.167f);
-			Menu.RightLeftUp.CoordsGive(0.1f, -0.05f, -0.167f);
-			Menu.RightLeftDown.CoordsGive(0.1f, -0.1f, -0.167f);
-			Menu.RightRightDown.CoordsGive(0.1f, -0.1f, 0.167f);
+			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, -0.03f, 0.167f + 2.0f);
+			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, -0.03f, -0.167f + 2.0f);
+			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, -0.052f, -0.167f + 2.0f);
+			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, -0.052f, 0.167f + 2.0f);
 
-			Position = 'f';
+			Position = 'r';
 
 			isVisible = true;
 		};
@@ -236,6 +236,22 @@ namespace CourseWork {
 			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture1->sizeX, texture1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
 
 			glEnable(GL_TEXTURE_2D);
+		}
+
+		void takeYUP() {
+			Menu.FrontRightUp.AddY(0.001f);
+			Menu.FrontRightDown.AddY(0.001f);
+			Menu.FrontLeftUp.AddY(0.001f);
+			Menu.FrontLeftDown.AddY(0.001f);
+			cout << Menu.FrontRightUp.Y();
+		}
+
+		void takeYDown() {
+			Menu.FrontRightUp.AddY(-0.001f);
+			Menu.FrontRightDown.AddY(-0.001f);
+			Menu.FrontLeftUp.AddY(-0.001f);
+			Menu.FrontLeftDown.AddY(-0.001f);
+			cout << Menu.FrontRightUp.Y();
 		}
 
 	private:

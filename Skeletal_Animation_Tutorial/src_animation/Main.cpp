@@ -123,6 +123,8 @@ void DrawScene()
 	if (f)
 	{
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
+		g_game.cam->rotateLoc(90, 0, 1, 0);
+
 		//g_game.cam->setView();
 		f = !f;
 	}
@@ -455,7 +457,8 @@ void OtherKeys(unsigned char key, int x, int y)
 {
 	if (key == 'w') {
 		yInterf += 0.001f;
-		cout << "y = " << yInterf << endl;
+		BtmM.takeYUP();
+		//cout << "y = " << yInterf << endl;
 	}
 	if (key == 'a') {
 		xInterf -= 0.001f;
@@ -463,7 +466,8 @@ void OtherKeys(unsigned char key, int x, int y)
 	}
 	if (key == 's') {
 		yInterf -= 0.001f;
-		cout << "y = " << yInterf << endl;
+		BtmM.takeYDown();
+		//cout << "y = " << yInterf << endl;
 	}
 	if (key == 'd') {
 		xInterf += 0.001f;
