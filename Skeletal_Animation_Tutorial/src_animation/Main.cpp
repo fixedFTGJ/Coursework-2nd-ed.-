@@ -33,9 +33,11 @@ vec4f lightvec(-1,0,-1,0);
 #include "Game.h"
 #include "camera.h"
 #include "CollisionChecker.h"
+#include "PathFinder.h"
 //////////////////////////////////////////
 Game g_game;
 CollisionChecker checker;
+PathFinder finder(g_game._dungeon->GetMaps()[0]->GetPattern(), g_game._dungeon->GetMaps()[0]->GetWidth(), g_game._dungeon->GetMaps()[0]->GetHeight());
 bool f = true;
 float x = 0;
 float y = -5;
@@ -167,7 +169,7 @@ void DrawScene()
 			else
 			{
 				plane.Draw(
-					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep(), 0, j*g_game._dungeon->GetMaps()[0]->GetStep()),		  		// position
+					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, 0, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
 						0,
@@ -181,13 +183,14 @@ void DrawScene()
 	for(Monster* m : monsters)
 	{ 
 		monster.Draw(
-			vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep(), -0.5, m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep()),
+			vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),
 			vec3f(
 				0,			// rotation
 				0,
 				0)
 			);
 	}
+
 	/*halo.Draw(
 		vec3f(10, -0.5, 10),			// position
 		vec3f(0, 0, 0),	// rotation
@@ -262,20 +265,20 @@ void DrawScene()
 			vec3f(0,time_elapsed*0.3,0),	// rotation
 			lod,							// LOD level
 			(i&1)==1 );						// draw skeleton ?
-	}
+	}*/
 	
 	// Test 2 : moon (static mesh)
 
 	static Mesh moon   ("../data/moon/moon.material",	//	required material file)
 						"../data/moon/moon.mesh.xml");	//	required mesh file
 		moon.Draw(
-			vec3f( 1.1,-0,-1),		  		// position
+			vec3f( 5, 5, 19),		  		// position
 			vec3f(
-				time_elapsed*0.2,			// rotation
+				time_elapsed*0.1,			// rotation
 				time_elapsed*0.1,
 				time_elapsed*0.4),	
 			lod								// LOD level
-		);*/
+		);
 
 	// Swap
 	/*static Mesh moon("../data/moon/moon.material",	//	required material file)
@@ -292,8 +295,35 @@ void DrawScene()
 }
 void Timer(int value)
 {
-	DrawScene();
-	glutTimerFunc(100, Timer, 1);
+	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+	int *px, *py;
+	int len;
+	for (Monster* m : monsters)
+	{
+		if ((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y))
+		{
+			if (finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len, g_game._dungeon->GetMaps()[0]->GetPattern()) && (len > 0))
+			{
+				/*for (int i = 0; i < len; i++)
+				{
+					cout << px[i] << " " << py[i] << endl;
+				}*/
+				if ((px[1] != g_game.party->GetPosition().X) || (py[1] != g_game.party->GetPosition().Y))
+					m->SetPosition(px[1], py[1]);
+			}
+		}
+	}
+	/*for (Monster* m : monsters)
+	{
+		finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y);
+		for (int i = 0; i < finder.len; i++)
+		{
+			cout << finder.px[0] << " " << finder.py[0] << endl;
+		}
+		m->SetPosition(finder.px[0], finder.py[0]);
+	}*/
+	glutPostRedisplay();
+	glutTimerFunc(1000, Timer, 1);
 }
 
 void SpecialKeys(int key, int x, int y)
@@ -388,13 +418,33 @@ void SpecialKeys(int key, int x, int y)
 	if (key == GLUT_KEY_F1) {
 		if (BtmM.isVisible)
 		{
+			/*finder.lee(1, 1, 10, 10);
+			loopi(0, finder.len)
+			{
+				cout << finder.px[i] << "," << finder.py[i] << endl;
+			}*/
 			BtmM.isVisible = false;
 		}
 		else
 		{
 			BtmM.isVisible = true;
 		}
-		
+		int *px, *py;
+		int len;
+		/*for (int i = 18; i > 1; i--)
+			for (int j = 18; j > 1; j--)
+			{*/
+				finder.lee(2, 9, 1, 1, px, py, len, g_game._dungeon->GetMaps()[0]->GetPattern());
+		/*		cout << i << " " << j << ":" << endl;*/
+				for (int k = 0; k < len; k++)
+					cout << px[k] << " " << py[k] << endl;
+				delete px;
+				delete py;
+				finder.lee(2, 8, 1, 1, px, py, len, g_game._dungeon->GetMaps()[0]->GetPattern());
+				/*		cout << i << " " << j << ":" << endl;*/
+				for (int k = 0; k < len; k++)
+					cout << px[k] << " " << py[k] << endl;
+			/*}*/
 	}
 	
 	// Обновляется окно
@@ -438,8 +488,8 @@ int main(int argc, char **argv)
   glutSpecialFunc(SpecialKeys);
   glutKeyboardFunc(OtherKeys);
   glutDisplayFunc(DrawScene);
-  //glutTimerFunc(100, Timer, 1);
- // glutIdleFunc(DrawScene);
+  glutTimerFunc(1000, Timer, 1);
+  glutIdleFunc(DrawScene);
   glewInit();
   wglSwapIntervalEXT(0);
   glutMainLoop();  

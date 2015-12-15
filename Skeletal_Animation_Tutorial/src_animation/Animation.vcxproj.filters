@@ -114,6 +114,16 @@
     <ClInclude Include="GameMenus.h">
       <Filter>src\GameInterface</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="MonsterBehavior.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="PathFinder.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -171,6 +181,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="CollisionChecker.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBehavior.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinder.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
