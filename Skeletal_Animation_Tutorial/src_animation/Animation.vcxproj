@@ -211,6 +211,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMenus.h" />
     <ClInclude Include="InterfaceCoords.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshAnimation.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Party.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="PlayableCharacter.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\include\glew.cpp" />
@@ -242,6 +244,7 @@
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="PlayableCharacter.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\data\halo\halo.material" />
