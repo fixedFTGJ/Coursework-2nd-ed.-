@@ -13,26 +13,31 @@ namespace CourseWork {
 	class MainMenu
 	{
 	public:
+		const float UpBoard = 0.052f;
+		const float DownBoard = -0.052f;
+		const float LeftBoard = -0.087f;
+		const float RightBoard = 0.087f;
+
 		MainMenu() {
-			Menu.FrontRightUp.CoordsGive(0.087f + 2.0f, 0.052f, -0.1f + 2.0f);
-			Menu.FrontLeftUp.CoordsGive(-0.087f + 2.0f, 0.052f, -0.1f + 2.0f);
-			Menu.FrontLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
-			Menu.FrontRightDown.CoordsGive(0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
+			Menu.FrontRightUp.CoordsGive(RightBoard + 2.0f, UpBoard, -0.1f + 2.0f);
+			Menu.FrontLeftUp.CoordsGive(LeftBoard + 2.0f, UpBoard, -0.1f + 2.0f);
+			Menu.FrontLeftDown.CoordsGive(LeftBoard + 2.0f, DownBoard, -0.1f + 2.0f);
+			Menu.FrontRightDown.CoordsGive(RightBoard + 2.0f, DownBoard, -0.1f + 2.0f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, 0.052f, 0.087f + 2.0f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, 0.052f, -0.087f + 2.0f);
-			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
-			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
+			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, UpBoard, RightBoard + 2.0f);
+			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, UpBoard, LeftBoard + 2.0f);
+			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, DownBoard, LeftBoard + 2.0f);
+			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, DownBoard, RightBoard + 2.0f);
 
-			Menu.BackRightUp.CoordsGive(0.087f + 2.0f, 0.052f, 0.1f + 2.0f);
-			Menu.BackLeftUp.CoordsGive(-0.087f + 2.0f, 0.052f, 0.1f + 2.0f);
-			Menu.BackLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
-			Menu.BackRightDown.CoordsGive(0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
+			Menu.BackRightUp.CoordsGive(RightBoard + 2.0f, UpBoard, 0.1f + 2.0f);
+			Menu.BackLeftUp.CoordsGive(LeftBoard + 2.0f, UpBoard, 0.1f + 2.0f);
+			Menu.BackLeftDown.CoordsGive(LeftBoard + 2.0f, DownBoard, 0.1f + 2.0f);
+			Menu.BackRightDown.CoordsGive(RightBoard + 2.0f, DownBoard, 0.1f + 2.0f);
 
-			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, 0.052f, 0.087f + 2.0f);
-			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, 0.052f, -0.087f + 2.0f);
-			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
-			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
+			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, UpBoard, RightBoard + 2.0f);
+			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, UpBoard, LeftBoard + 2.0f);
+			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, DownBoard, LeftBoard + 2.0f);
+			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, DownBoard, RightBoard + 2.0f);
 
 			Position = 'r';
 
