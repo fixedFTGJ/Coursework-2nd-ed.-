@@ -4,7 +4,10 @@ material Tex_0072_0_dds_Tex_0072_0.dds
     {
         pass
         {
-            diffuse 0.470400 0.470400 0.470400
+            ambient 1.0 1.0 1.0 1.0
+            diffuse 0.8 0.0 0.0 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive 0.3 0.3 0.3 1.0
             texture_unit
             {
                 texture Tex_0072_0.dds

@@ -11,5 +11,6 @@ public:
 	CollisionChecker() {};
 	bool Check(Map* map, Monster* monster);
 	bool Check(Map* map, Party* party);
+	bool Check(Party* party, Monster* monster);
 private:
 };

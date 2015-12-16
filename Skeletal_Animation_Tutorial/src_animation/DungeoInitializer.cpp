@@ -30,10 +30,10 @@ Dungeon* DungeonInitializer::Initialize()
 	pattern1[5] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[6] = new int[MapWidth] {wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[7] = new int[MapWidth] {wall, floor, wall, wall, wall, wall, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
-	pattern1[8] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
+	pattern1[8] = new int[MapWidth] {wall, floor, wall, floor, wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[9] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[10] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
-	pattern1[11] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
+	pattern1[11] = new int[MapWidth] {wall, floor, floor, wall, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[12] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[13] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[14] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};

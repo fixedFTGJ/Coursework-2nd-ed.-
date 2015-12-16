@@ -3,7 +3,6 @@
 #include "InterfaceCoords.h"
 #include <glew.h>
 #include <glaux.h>
-#include "Texture.h"
 
 using namespace std;
 
@@ -14,102 +13,69 @@ namespace CourseWork {
 	{
 	public:
 		BottomMenu() {
-			Menu.FrontRightUp.CoordsGive(0.087f + 2.0f, -0.03f, -0.1f + 2.0f);
-			Menu.FrontLeftUp.CoordsGive(-0.087f + 2.0f, -0.03f, -0.1f + 2.0f);
-			Menu.FrontLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
-			Menu.FrontRightDown.CoordsGive(0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
+			Menu.FrontRightUp.CoordsGive(0.167f, -0.05f, -0.1f);
+			Menu.FrontLeftUp.CoordsGive(-0.167f, -0.05f, -0.1f);
+			Menu.FrontLeftDown.CoordsGive(-0.167f, -0.1f, -0.1f);
+			Menu.FrontRightDown.CoordsGive(0.167f, -0.1f, -0.1f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, -0.03f, 0.087f + 2.0f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, -0.03f, -0.087f + 2.0f);
-			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
-			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
+			Menu.LeftRightUp.CoordsGive(-0.1f, -0.05f, 0.167f);
+			Menu.LeftLeftUp.CoordsGive(-0.1f, -0.05f, -0.167f);
+			Menu.LeftLeftDown.CoordsGive(-0.1f, -0.1f, -0.167f);
+			Menu.LeftRightDown.CoordsGive(-0.1f, -0.1f, 0.167f);
 
-			Menu.BackRightUp.CoordsGive(0.087f + 2.0f, -0.03f, 0.1f + 2.0f);
-			Menu.BackLeftUp.CoordsGive(-0.087f + 2.0f, -0.03f, 0.1f + 2.0f);
-			Menu.BackLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
-			Menu.BackRightDown.CoordsGive(0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
+			Menu.BackRightUp.CoordsGive(0.167f, -0.05f, 0.1f);
+			Menu.BackLeftUp.CoordsGive(-0.167f, -0.05f, 0.1f);
+			Menu.BackLeftDown.CoordsGive(-0.167f, -0.1f, 0.1f);
+			Menu.BackRightDown.CoordsGive(0.167f, -0.1f, 0.1f);
 
-			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, -0.03f, 0.087f + 2.0f);
-			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, -0.03f, -0.087f + 2.0f);
-			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
-			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
+			Menu.RightRightUp.CoordsGive(0.1f, -0.05f, 0.167f);
+			Menu.RightLeftUp.CoordsGive(0.1f, -0.05f, -0.167f);
+			Menu.RightLeftDown.CoordsGive(0.1f, -0.1f, -0.167f);
+			Menu.RightRightDown.CoordsGive(0.1f, -0.1f, 0.167f);
 
-			Position = 'r';
+			Position = 'f';
 
 			isVisible = true;
 		};
 
-		/////////////////   TEXTURES    /////////////////
-		
-		CTexture *Texture;
-		TextureImage Textures[2];
-
-		void InitTexture() {
-			Texture = new CTexture();
-			Texture->LoadTexture(IL_JPG, "source/Menu.jpg", &Textures[0]);
-			Texture->LoadTexture(IL_JPG, "source/Menu.jpg", &Textures[1]);
-		}
-		/////////////////   TEXTURES    /////////////////
-
 		void Draw() {
-			
-			glEnable(GL_TEXTURE_2D);
-			
+
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
 			switch (Position)
 			{
 			case 'f':
-				glBindTexture(GL_TEXTURE_2D, Textures[0].texID);
 				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
+				glColor3ub((GLubyte)255, (GLubyte)0, (GLubyte)0);
 				glVertex3f(Menu.FrontRightUp.X(), Menu.FrontRightUp.Y(), Menu.FrontRightUp.Z());
-				glTexCoord2f(0, 0);
 				glVertex3f(Menu.FrontLeftUp.X(), Menu.FrontLeftUp.Y(), Menu.FrontLeftUp.Z());
-				glTexCoord2f(0, 1);
 				glVertex3f(Menu.FrontLeftDown.X(), Menu.FrontLeftDown.Y(), Menu.FrontLeftDown.Z());
-				glTexCoord2f(1, 1);
 				glVertex3f(Menu.FrontRightDown.X(), Menu.FrontRightDown.Y(), Menu.FrontRightDown.Z());
 				glEnd();
 				break;
 			case 'l':
-				glBindTexture(GL_TEXTURE_2D, Textures[1].texID);
 				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
+				glColor3ub((GLubyte)255, (GLubyte)0, (GLubyte)0);
 				glVertex3f(Menu.LeftRightUp.X(), Menu.LeftRightUp.Y(), Menu.LeftRightUp.Z());
-				glTexCoord2f(1, 1);
 				glVertex3f(Menu.LeftRightDown.X(), Menu.LeftRightDown.Y(), Menu.LeftRightDown.Z());
-				glTexCoord2f(0, 1);
 				glVertex3f(Menu.LeftLeftDown.X(), Menu.LeftLeftDown.Y(), Menu.LeftLeftDown.Z());
-				glTexCoord2f(0, 0);
 				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());		
 				glEnd();
 				break;
 			case 'b':
-				glBindTexture(GL_TEXTURE_2D, Textures[1].texID);
 				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
+				glColor3ub((GLubyte)255, (GLubyte)0, (GLubyte)0);
 				glVertex3f(Menu.BackRightUp.X(), Menu.BackRightUp.Y(), Menu.BackRightUp.Z());
-				glTexCoord2f(1, 1);
 				glVertex3f(Menu.BackRightDown.X(), Menu.BackRightDown.Y(), Menu.BackRightDown.Z());
-				glTexCoord2f(0, 1);
 				glVertex3f(Menu.BackLeftDown.X(), Menu.BackLeftDown.Y(), Menu.BackLeftDown.Z());
-				glTexCoord2f(0, 0);
 				glVertex3f(Menu.BackLeftUp.X(), Menu.BackLeftUp.Y(), Menu.BackLeftUp.Z());
 				glEnd();
 				break;
 			case 'r':
-				glBindTexture(GL_TEXTURE_2D, Textures[0].texID);
 				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
+				glColor3ub((GLubyte)255, (GLubyte)0, (GLubyte)0);
 				glVertex3f(Menu.RightRightUp.X(), Menu.RightRightUp.Y(), Menu.RightRightUp.Z());
-				glTexCoord2f(0, 0);
 				glVertex3f(Menu.RightLeftUp.X(), Menu.RightLeftUp.Y(), Menu.RightLeftUp.Z());
-				glTexCoord2f(0, 1);
 				glVertex3f(Menu.RightLeftDown.X(), Menu.RightLeftDown.Y(), Menu.RightLeftDown.Z());
-				glTexCoord2f(1, 1);
 				glVertex3f(Menu.RightRightDown.X(), Menu.RightRightDown.Y(), Menu.RightRightDown.Z());
 				glEnd();
 				break;
@@ -253,22 +219,23 @@ namespace CourseWork {
 
 		bool isVisible;
 
+		/////////////////   TEXTURES    /////////////////
+ 
+		GLuint texture[1];
 
+		GLvoid LoadGLTextures() {
+			AUX_RGBImageRec *texture1;
+			texture1 = auxDIBImageLoad("../data/source/Menu.bmp");
 
-		void takeYUP() {
-			Menu.FrontRightUp.AddY(0.001f);
-			Menu.FrontRightDown.AddY(0.001f);
-			Menu.FrontLeftUp.AddY(0.001f);
-			Menu.FrontLeftDown.AddY(0.001f);
-			cout << Menu.FrontRightUp.Y();
-		}
+			glGenTextures(1, &texture[0]);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
 
-		void takeYDown() {
-			Menu.FrontRightUp.AddY(-0.001f);
-			Menu.FrontRightDown.AddY(-0.001f);
-			Menu.FrontLeftUp.AddY(-0.001f);
-			Menu.FrontLeftDown.AddY(-0.001f);
-			cout << Menu.FrontRightUp.Y();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture1->sizeX, texture1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
+
+			glEnable(GL_TEXTURE_2D);
 		}
 
 	private:

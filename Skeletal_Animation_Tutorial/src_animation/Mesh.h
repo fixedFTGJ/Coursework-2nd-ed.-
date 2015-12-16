@@ -366,9 +366,11 @@ public:
 				loopi(0,3) tri.index[i]+=offset;
 				triangles.push_back(tri);
 			}
-			if(sscanf(line," <position x=\"%f\" y=\"%f\" z=\"%f\" />",&v.x,&v.y,&v.z )==3){Vertex a;a.position=v;vertices.push_back(a);}
+			if(sscanf(line," <position x=\"%f\" y=\"%f\" z=\"%f\" />",&v.x,&v.y,&v.z )==3)
+				{Vertex a;a.position=v;vertices.push_back(a);}
 			if(sscanf(line," <normal x=\"%f\" y=\"%f\" z=\"%f\" />",&v.x,&v.y,&v.z )==3) vertices[normal_id++].normal=v;
-			if(sscanf(line," <texcoord u=\"%f\" v=\"%f\" />",&v.x,&v.y )==2)  vertices[texcoord_id++].texcoord=v;
+			if(sscanf(line," <texcoord u=\"%f\" v=\"%f\" />",&v.x,&v.y )==2)  
+				vertices[texcoord_id++].texcoord=v;
 			if(sscanf(line," <tangent x=\"%f\" y=\"%f\" z=\"%f\" w=\"%f\"",&v.x,&v.y,&v.z,&w )==4)vertices[tangent_id++].tangent=vec4f(v.x,v.y,v.z,w);
 			if(sscanf(line," <vertexboneassignment vertexindex=\"%d\" boneindex=\"%d\" weight=\"%f\" />",&a1,&a2,&w )==3)
 			{

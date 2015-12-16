@@ -1,64 +1,21 @@
 #include "PathFinder.h"
 #include <iostream>
 using namespace std;
+using namespace CourseWork;
 
-PathFinder::PathFinder(int ** matrix, int width, int height)
+PathFinder::PathFinder(Map* map)
 {
-	/*_matrixSize = height*width;
-	_weightMatrix = new int*[_matrixSize];
-	_wayMatrix = new int*[_matrixSize];
-
-	for (int i = 0; i < _matrixSize; i++)
-	{
-		_weightMatrix[i] = new int[_matrixSize];
-		_wayMatrix[i] = new int[_matrixSize];
-	}
-
-	for (int i = 0; i < _matrixSize; i++)
-	{
-		for (int j = 0; i < _matrixSize; j++)
-		{
-			_weightMatrix[i][j] = INT_MAX;
-			if (i != j)
-				_wayMatrix[i][j] = j;
-			else
-				_wayMatrix[i][j] = INT_MAX;
-		}
-	}
-	
-
-	int k = 0;
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; i < width; j++)
-		{
-			if ((matrix[i][j + 1] == 0) && (j < width - 1))
-			{
-				_weightMatrix[k][j + 1] = 1;
-				_weightMatrix[j + 1][k] = 1;
-			}
-			if ((matrix[i + 1][j] == 0) && (i < height - 1))
-			{
-				_weightMatrix[j + i*width][k] = 1;
-				_weightMatrix[k][j + i*width] = 1;
-			}
-			k++;
-		}
-	}
-
-	CalculateWays();*/
-	W = width;
-	H = height;
-	/*px = new int[W*H];
-	py = new int[W*H];*/
+	_map = map;
+	int W = _map->GetWidth(), H = _map->GetHeight();
 	grid = new int*[H];
+	/*int** matrix = _map->GetPattern();*/
 
 	for (int i = 0; i < H; i++)
 	{
 		grid[i] = new int[W];
 	}
 
-	for (int i = 0; i < H; i++)
+	/*for (int i = 0; i < H; i++)
 	{
 		for (int j = 0; j < W; j++)
 		{
@@ -67,26 +24,14 @@ PathFinder::PathFinder(int ** matrix, int width, int height)
 			else
 				grid[i][j] = BLANK;
 		}
-	}
-}
-
-void PathFinder::CalculateWays()
-{
-	for (int k = 0; k < _matrixSize - 1; k++)
-		for (int i = 0; i < _matrixSize; i++)
-			for (int j = 0; j < _matrixSize; j++)
-			{
-				if (_weightMatrix[i][j] > _weightMatrix[i][k] + _weightMatrix[k][j])
-				{
-					_weightMatrix[i][j] = _weightMatrix[i][k] + _weightMatrix[k][j];
-					_wayMatrix[i][j] = k;
-				}
-			}
+	}*/
 }
 
 
-bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &len, int** matrix)   // поиск пути из €чейки (ax, ay) в €чейку (bx, by)
+bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &len)   // поиск пути из €чейки (ax, ay) в €чейку (bx, by)
 {
+	int W = _map->GetWidth(), H = _map->GetHeight();
+	int** matrix = _map->GetPattern();
 	px = new int[W*H];
 	py = new int[W*H];
 	for (int i = 0; i < H; i++)
@@ -94,11 +39,26 @@ bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &l
 		for (int j = 0; j < W; j++)
 		{
 			if (matrix[i][j] == 1)
-				grid[i][j] = WALL;
+				grid[j][i] = WALL;
 			else
-				grid[i][j] = BLANK;
+				grid[j][i] = BLANK;
 		}
 	}
+	vector<Monster*> monsters = _map->GetMonsters();
+	for (Monster* m : monsters)
+	{
+		grid[m->GetPosition().Y][m->GetPosition().X] = WALL;
+	}
+	grid[ay][ax] = BLANK;
+	for (int i = 0; i < H; i++)
+	{
+		for (int j = 0; j < W; j++)
+		{
+			cout << grid[i][j] << " ";;
+		}
+		cout << endl;
+	}
+	cout << endl;
 	//////////////////
 	int dx[4] = { 1, 0, -1, 0 };   // смещени€, соответствующие сосед€м €чейки
 	int dy[4] = { 0, 1, 0, -1 };   // справа, снизу, слева и сверху
