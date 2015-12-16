@@ -31,6 +31,7 @@ bool f = true;
 float x = 0;
 float y = -5;
 float z = 0;
+bool isMute = false;
 
 int WHight = 1280;
 int WWidth = 768;
@@ -121,6 +122,7 @@ void DrawScene()
 	glTranslatef(x, y, z);*/
 	if (f)
 	{
+		//PlaySound("recycle.wav", NULL, SND_FILENAME);
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
 		g_game.cam->rotateLoc(90, 0, 1, 0);
 
@@ -358,7 +360,6 @@ void SpecialKeys(int key, int x, int y)
 
 	cout << g_game.party->GetPosition().X << " " << g_game.party->GetPosition().Y << " " << dx << " " << dy << endl;*/
 
-
 	if (key == GLUT_KEY_UP)
 	{
 		vec3f normal = GetLookAt();
@@ -538,7 +539,11 @@ void OtherKeys(unsigned char key, int x, int y)
 		cout << "x = " << xInterf << endl;
 	}
 	if (key == 'q') {
-		//PlaySound("D:\\materials.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+	}
+	if (key == 'm')
+	{
+		PlaySound(NULL, NULL, SND_ASYNC);
 	}
 	if (key == 'z') {
 
