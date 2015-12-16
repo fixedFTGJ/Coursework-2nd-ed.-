@@ -31,6 +31,12 @@
     <Filter Include="src\GameInterface">
       <UniqueIdentifier>{ff0e811a-0deb-4262-96ba-26e1488d1e32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameInterface\Textures">
+      <UniqueIdentifier>{0e2161c1-3b65-4478-b573-a07440790e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameInterface\Buttons">
+      <UniqueIdentifier>{838ac6bf-3722-4094-bc8b-8fafca7eddc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src_common\Bmp.h">
@@ -124,6 +130,24 @@
     <ClInclude Include="PathFinder.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="MouseCoords.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="MainMenu.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Texture.h">
+      <Filter>src\GameInterface\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="NewGame.h">
+      <Filter>src\GameInterface\Buttons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -188,6 +212,9 @@
     </ClCompile>
     <ClCompile Include="PathFinder.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>src\GameInterface\Textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

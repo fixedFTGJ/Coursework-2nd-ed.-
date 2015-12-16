@@ -40,7 +40,7 @@ namespace CourseWork {
 		};
 
 		/////////////////   TEXTURES    /////////////////
-		
+
 		CTexture *Texture;
 		TextureImage Textures[2];
 
@@ -52,9 +52,9 @@ namespace CourseWork {
 		/////////////////   TEXTURES    /////////////////
 
 		void Draw() {
-			
+			InitTexture();
 			glEnable(GL_TEXTURE_2D);
-			
+
 			switch (Position)
 			{
 			case 'f':
@@ -82,7 +82,7 @@ namespace CourseWork {
 				glTexCoord2f(0, 1);
 				glVertex3f(Menu.LeftLeftDown.X(), Menu.LeftLeftDown.Y(), Menu.LeftLeftDown.Z());
 				glTexCoord2f(0, 0);
-				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());		
+				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());
 				glEnd();
 				break;
 			case 'b':
@@ -118,7 +118,7 @@ namespace CourseWork {
 				break;
 			}
 
-			
+
 		}
 
 		void Forward() {
@@ -141,7 +141,7 @@ namespace CourseWork {
 			default:
 				break;
 			}
-			
+
 		}
 
 		void Back() {
@@ -162,7 +162,7 @@ namespace CourseWork {
 
 			default:
 				break;
-			}			
+			}
 		}
 
 		void TurnRight() {
@@ -273,7 +273,7 @@ namespace CourseWork {
 
 	private:
 		InterfaceCoords Menu;
-		
+
 
 		char Position;
 

@@ -10,44 +10,45 @@ using namespace std;
 namespace CourseWork {
 
 
-	class BottomMenu
+	class MainMenu
 	{
 	public:
-		BottomMenu() {
-			Menu.FrontRightUp.CoordsGive(0.087f + 2.0f, -0.03f, -0.1f + 2.0f);
-			Menu.FrontLeftUp.CoordsGive(-0.087f + 2.0f, -0.03f, -0.1f + 2.0f);
+		MainMenu() {
+			Menu.FrontRightUp.CoordsGive(0.087f + 2.0f, 0.052f, -0.1f + 2.0f);
+			Menu.FrontLeftUp.CoordsGive(-0.087f + 2.0f, 0.052f, -0.1f + 2.0f);
 			Menu.FrontLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
 			Menu.FrontRightDown.CoordsGive(0.087f + 2.0f, -0.052f, -0.1f + 2.0f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, -0.03f, 0.087f + 2.0f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, -0.03f, -0.087f + 2.0f);
+			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, 0.052f, 0.087f + 2.0f);
+			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, 0.052f, -0.087f + 2.0f);
 			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
 			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
 
-			Menu.BackRightUp.CoordsGive(0.087f + 2.0f, -0.03f, 0.1f + 2.0f);
-			Menu.BackLeftUp.CoordsGive(-0.087f + 2.0f, -0.03f, 0.1f + 2.0f);
+			Menu.BackRightUp.CoordsGive(0.087f + 2.0f, 0.052f, 0.1f + 2.0f);
+			Menu.BackLeftUp.CoordsGive(-0.087f + 2.0f, 0.052f, 0.1f + 2.0f);
 			Menu.BackLeftDown.CoordsGive(-0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
 			Menu.BackRightDown.CoordsGive(0.087f + 2.0f, -0.052f, 0.1f + 2.0f);
 
-			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, -0.03f, 0.087f + 2.0f);
-			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, -0.03f, -0.087f + 2.0f);
+			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, 0.052f, 0.087f + 2.0f);
+			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, 0.052f, -0.087f + 2.0f);
 			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, -0.052f, -0.087f + 2.0f);
 			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, -0.052f, 0.087f + 2.0f);
 
 			Position = 'r';
 
-			isVisible = true;
+			isVisible = false;
+
 		};
 
 		/////////////////   TEXTURES    /////////////////
-		
+
 		CTexture *Texture;
 		TextureImage Textures[2];
 
 		void InitTexture() {
 			Texture = new CTexture();
-			Texture->LoadTexture(IL_JPG, "source/Menu.jpg", &Textures[0]);
-			Texture->LoadTexture(IL_JPG, "source/Menu.jpg", &Textures[1]);
+			Texture->LoadTexture(IL_JPG, "source/MainMenu.jpg", &Textures[0]);
+			Texture->LoadTexture(IL_JPG, "source/MainMenu2.jpg", &Textures[1]);
 		}
 		/////////////////   TEXTURES    /////////////////
 
@@ -82,7 +83,7 @@ namespace CourseWork {
 				glTexCoord2f(0, 1);
 				glVertex3f(Menu.LeftLeftDown.X(), Menu.LeftLeftDown.Y(), Menu.LeftLeftDown.Z());
 				glTexCoord2f(0, 0);
-				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());		
+				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());
 				glEnd();
 				break;
 			case 'b':
@@ -117,8 +118,6 @@ namespace CourseWork {
 			default:
 				break;
 			}
-
-			
 		}
 
 		void Forward() {
@@ -141,7 +140,7 @@ namespace CourseWork {
 			default:
 				break;
 			}
-			
+
 		}
 
 		void Back() {
@@ -162,7 +161,7 @@ namespace CourseWork {
 
 			default:
 				break;
-			}			
+			}
 		}
 
 		void TurnRight() {
@@ -253,7 +252,24 @@ namespace CourseWork {
 
 		bool isVisible;
 
+		/////////////////   TEXTURES    /////////////////
 
+		GLuint texture[1];
+
+		GLvoid LoadGLTextures() {
+			AUX_RGBImageRec *texture1;
+			texture1 = auxDIBImageLoad("D:\\Menu.bmp");
+
+			glGenTextures(1, &texture[0]);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture1->sizeX, texture1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
+
+			glEnable(GL_TEXTURE_2D);
+		}
 
 		void takeYUP() {
 			Menu.FrontRightUp.AddY(0.001f);
@@ -273,7 +289,7 @@ namespace CourseWork {
 
 	private:
 		InterfaceCoords Menu;
-		
+
 
 		char Position;
 
