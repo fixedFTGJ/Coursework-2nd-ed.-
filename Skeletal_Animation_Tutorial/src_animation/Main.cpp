@@ -1,3 +1,15 @@
+/////////////////////////////////////////////
+//
+// Skeletal Animation Tutorial
+//
+// (C) by Sven Forstmann in 2014
+//
+// License : MIT
+// http://opensource.org/licenses/MIT
+/////////////////////////////////////////////
+// Mathlib included from 
+// http://sourceforge.net/projects/nebuladevice/
+/////////////////////////////////////////////
 #include <iostream> 
 #include <vector> 
 #include <string> 
@@ -31,10 +43,6 @@ bool f = true;
 float x = 0;
 float y = -5;
 float z = 0;
-
-int WHight = 1280;
-int WWidth = 768;
-
 /////////////////////////////////////////
 vec3f GetLookAt()
 {
@@ -50,21 +58,14 @@ float xInterf = 0.0f;
 float yInterf = 0.0f;
 float zInterf = 0.0f;
 
-POINT mCursor;
-
 BottomMenu BtmM = BottomMenu();
 
-MainMenu MM = MainMenu();
-
-float angle = 0.0;
-float lx = 0.0f, lz = -1.0f;
-float deltaAngle = 0.0f;
-float deltaMove = 0;
-int xOrigin = -1;
 
 ////////////////////////////////////////
 void Clear()
 {
+	//BtmM.LoadGLTextures();
+
 	// clear and basic
 	glClearDepth(1);
 	glClearColor(0, 0, 0, 1);
@@ -122,9 +123,6 @@ void DrawScene()
 	if (f)
 	{
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
-		g_game.cam->rotateLoc(90, 0, 1, 0);
-
-
 		//g_game.cam->setView();
 		f = !f;
 	}
@@ -202,10 +200,6 @@ void DrawScene()
 	if (BtmM.isVisible)
 	{
 		BtmM.Draw();
-	}
-	if (MM.isVisible)
-	{
-		MM.Draw();
 	}
 
 	/////////////////////
@@ -381,9 +375,7 @@ void SpecialKeys(int key, int x, int y)
 		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
-
 			BtmM.Forward();
-			MM.Forward();
 		}
 		else
 		{
@@ -415,9 +407,7 @@ void SpecialKeys(int key, int x, int y)
 		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z);
-
 			BtmM.Back();
-			MM.Back();
 		}
 		else
 		{
@@ -427,16 +417,12 @@ void SpecialKeys(int key, int x, int y)
 	if (key == GLUT_KEY_LEFT)
 	{
 		g_game.cam->rotateLoc(-90, 0, 1, 0);
-
 		BtmM.TurnLeft();
-		MM.TurnLeft();
 	}
 	if (key == GLUT_KEY_RIGHT)
 	{
 		g_game.cam->rotateLoc(90, 0, 1, 0);
-
 		BtmM.TurnRight();
-		MM.TurnRight();
 	}
 	if(key == GLUT_KEY_PAGE_UP)
 		g_game.cam->rotateLoc(-90, 1, 0, 0);
@@ -446,78 +432,23 @@ void SpecialKeys(int key, int x, int y)
 	if (key == GLUT_KEY_F1) {
 		if (BtmM.isVisible)
 		{
-
+			/*finder.lee(1, 1, 10, 10);
+			loopi(0, finder.len)
+			{
+				cout << finder.px[i] << "," << finder.py[i] << endl;
+			}*/
 			BtmM.isVisible = false;
 		}
 		else
 		{
 			BtmM.isVisible = true;
 		}
+	
 	}
-
-	if (key == GLUT_KEY_F2) {
-		if (MM.isVisible)
-		{
-			MM.isVisible = false;
-		}
-		else
-		{
-			MM.isVisible = true;
-		}
-	}
-
 	
 	// Обновляется окно
 	glutPostRedisplay();
 };
-
-class CVector3
-{
-public:
-	CVector3() {
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-	CVector3(float _x, float _y, float _z) {
-		x = _x;
-		y = _y;
-		z = _z;
-	}
-	float x, y, z;
-};
-
-CVector3 t1;
-CVector3 t2;
-
-void calc_select_line(int mouse_x, int mouse_y, CVector3& p1, CVector3& p2)
-{
-	// mouse_x, mouse_y  - оконные координаты курсора мыши.
-	// p1, p2            - возвращаемые параметры - концы селектирующего отрезка,
-	//                     лежащие соответственно на ближней и дальней плоскостях
-	//                     отсечения.
-	GLint    viewport[4];    // параметры viewport-a.
-	GLdouble projection[16]; // матрица проекции.
-	GLdouble modelview[16];  // видовая матрица.
-	GLdouble vx, vy, vz;       // координаты курсора мыши в системе координат viewport-a.
-	GLdouble wx, wy, wz;       // возвращаемые мировые координаты.
-
-	glGetIntegerv(GL_VIEWPORT, viewport);           // узнаём параметры viewport-a.
-	glGetDoublev(GL_PROJECTION_MATRIX, projection); // узнаём матрицу проекции.
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);   // узнаём видовую матрицу.
-													// переводим оконные координаты курсора в систему координат viewport-a.
-	vx = mouse_x;
-	vy = WHight - mouse_y - 1; // где height - текущая высота окна.
-
-							   // вычисляем ближний конец селектирующего отрезка.
-	vz = -1;
-	gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
-	p1 = CVector3(wx, wy, wz);
-	// вычисляем дальний конец селектирующего отрезка.
-	vz = 1;
-	gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
-	p2 = CVector3(wx, wy, wz);
-}
 
 void OtherKeys(unsigned char key, int x, int y)
 {
@@ -537,62 +468,24 @@ void OtherKeys(unsigned char key, int x, int y)
 		xInterf += 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 'q') {
-		//PlaySound("D:\\materials.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
-	}
-	if (key == 'z') {
-
-		GetCursorPos(&mCursor);
-		cout << mCursor.x << endl;
-		cout << mCursor.y << endl;
-		calc_select_line(mCursor.x, mCursor.y, t1, t2);
-		cout << "X1 = " << t1.x << "Y1 = " << t1.y << "Z1 = " << t1.z << endl;
-		cout << "X2 = " << t2.x << "Y2 = " << t2.y << "Z2 = " << t2.z << endl;
-	}
-
 
 	// Обновляется окно
 	glutPostRedisplay();
-}
-
-void mouseMove(int x, int y) {
-
-	if (xOrigin >= 0) {
-
-		deltaAngle = (x - xOrigin) * 0.001f;
-
-		lx = sin(angle + deltaAngle);
-		lz = -cos(angle + deltaAngle);
-	}
-}
-
-void mouseButton(int button, int state, int x, int y) {
-
-	if (button == GLUT_LEFT_BUTTON) {
-		//PlaySound("D:\\materials.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
-	}
 }
 ///////////////////////////////////////////
 int main(int argc, char **argv) 
 { 
   glutInit(&argc, argv);  
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE /*| GLUT_ALPHA */| GLUT_DEPTH);  
-  glutInitWindowSize(WHight, WWidth);
+  glutInitWindowSize(1280, 768);  
   glutInitWindowPosition(0, 0);  
-  glutCreateWindow("Dungeon of Hope");
+  glutCreateWindow("Skinned Skeletal Animation Sample (c) Sven Forstmann in 2014");
  // cam.setView();
  // Clear();
  // cam.setView();
  // Clear();
-  glutMouseFunc(mouseButton);
-  glutMotionFunc(mouseMove);
-
   glutSpecialFunc(SpecialKeys);
   glutKeyboardFunc(OtherKeys);
-
-  BtmM.InitTexture();
-  MM.InitTexture();
-
   glutDisplayFunc(DrawScene);
   glutTimerFunc(1000, Timer, 1);
   glutIdleFunc(DrawScene);

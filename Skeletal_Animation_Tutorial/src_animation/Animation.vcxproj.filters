@@ -31,9 +31,6 @@
     <Filter Include="src\GameInterface">
       <UniqueIdentifier>{ff0e811a-0deb-4262-96ba-26e1488d1e32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\GameInterface\Textures">
-      <UniqueIdentifier>{3ba50745-76cd-436d-9cc5-e465e98393e0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src_common\Bmp.h">
@@ -127,14 +124,6 @@
     <ClInclude Include="PathFinder.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="Texture.h">
-      <Filter>src\GameInterface\Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -199,9 +188,6 @@
     </ClCompile>
     <ClCompile Include="PathFinder.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>src\GameInterface\Textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
