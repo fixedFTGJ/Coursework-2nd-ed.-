@@ -115,11 +115,11 @@ void DrawScene()
 	gluPerspective(55.0,float(vp[2])/float(vp[3]) , 0.01, 100);
 
 	// modelview
-	/*glMatrixMode( GL_MODELVIEW);
+/*	glMatrixMode( GL_MODELVIEW);
 	glLoadIdentity();
 	glRotatef( viewangle_y,1,0,0);		// set rotation
-	glRotatef( viewangle_x,0,1,0);		// set rotation
-	glTranslatef(x, y, z);*/
+	glRotatef( viewangle_x,0,1,0);	*/	// set rotation
+//	glTranslatef(x, y, z);
 	if (f)
 	{
 		//PlaySound("recycle.wav", NULL, SND_FILENAME);
@@ -522,31 +522,36 @@ void calc_select_line(int mouse_x, int mouse_y, CVector3& p1, CVector3& p2)
 
 void OtherKeys(unsigned char key, int x, int y)
 {
-	if (key == 'w') {
+	if (key == 'w') 
+	{
 		yInterf += 0.001f;
 		cout << "y = " << yInterf << endl;
 	}
-	if (key == 'a') {
+	if (key == 'a')
+	{
 		xInterf -= 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 's') {
+	if (key == 's') 
+	{
 		yInterf -= 0.001f;
 		cout << "y = " << yInterf << endl;
 	}
-	if (key == 'd') {
+	if (key == 'd') 
+	{
 		xInterf += 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 'q') {
+	if (key == 'q')
+	{
 		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 	}
 	if (key == 'm')
 	{
 		PlaySound(NULL, NULL, SND_ASYNC);
 	}
-	if (key == 'z') {
-
+	if (key == 'z') 
+	{
 		GetCursorPos(&mCursor);
 		cout << mCursor.x << endl;
 		cout << mCursor.y << endl;
