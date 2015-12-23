@@ -33,7 +33,7 @@ float y = -5;
 float z = 0;
 bool isMute = false;
 
-int WHight = 1280;
+int WHeight = 1280;
 int WWidth = 768;
 
 /////////////////////////////////////////
@@ -51,7 +51,6 @@ float xInterf = 0.0f;
 float yInterf = 0.0f;
 float zInterf = 0.0f;
 
-POINT mCursor;
 
 BottomMenu BtmM = BottomMenu();
 
@@ -84,6 +83,39 @@ void Clear()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 };
+
+void Begin2D(void)
+{
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, WWidth, 0, WHeight);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+}
+
+void End2D(void)
+{
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void DrawQuad(float x, float y, float w, float h, uint texture)
+{
+	glBindTexture(GL_TEXTURE_2D, texture);
+	y = (float)WHeight - y - h;
+	glBegin(GL_TRIANGLE_STRIP);
+	glTexCoord2f(0.0f, 0.0f);    glVertex2f(x, y);
+	glTexCoord2f(1.0f, 0.0f);    glVertex2f(x + w, y);
+	glTexCoord2f(0.0f, 1.0f);    glVertex2f(x, y + h);
+	glTexCoord2f(1.0f, 1.0f);    glVertex2f(x + w, y + h);
+	glEnd();
+}
 
 void DrawScene()
 {
@@ -299,6 +331,11 @@ void DrawScene()
 			time_elapsed*0.4),
 		lod								// LOD level
 		);*/
+
+		/*Begin2D();
+		DrawQuad(0.0f, 0.0f, 400.0f, 768.0f, 4);
+		End2D();*/
+
 	glutSwapBuffers();
 }
 void Timer(int value)
@@ -383,8 +420,6 @@ void SpecialKeys(int key, int x, int y)
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
 
-			BtmM.Forward();
-			MM.Forward();
 		}
 		else
 		{
@@ -417,8 +452,6 @@ void SpecialKeys(int key, int x, int y)
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z);
 
-			BtmM.Back();
-			MM.Back();
 		}
 		else
 		{
@@ -429,15 +462,11 @@ void SpecialKeys(int key, int x, int y)
 	{
 		g_game.cam->rotateLoc(-90, 0, 1, 0);
 
-		BtmM.TurnLeft();
-		MM.TurnLeft();
 	}
 	if (key == GLUT_KEY_RIGHT)
 	{
 		g_game.cam->rotateLoc(90, 0, 1, 0);
 
-		BtmM.TurnRight();
-		MM.TurnRight();
 	}
 	if(key == GLUT_KEY_PAGE_UP)
 		g_game.cam->rotateLoc(-90, 1, 0, 0);
@@ -472,54 +501,6 @@ void SpecialKeys(int key, int x, int y)
 	glutPostRedisplay();
 };
 
-class CVector3
-{
-public:
-	CVector3() {
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-	CVector3(float _x, float _y, float _z) {
-		x = _x;
-		y = _y;
-		z = _z;
-	}
-	float x, y, z;
-};
-
-CVector3 t1;
-CVector3 t2;
-
-void calc_select_line(int mouse_x, int mouse_y, CVector3& p1, CVector3& p2)
-{
-	// mouse_x, mouse_y  - оконные координаты курсора мыши.
-	// p1, p2            - возвращаемые параметры - концы селектирующего отрезка,
-	//                     лежащие соответственно на ближней и дальней плоскостях
-	//                     отсечения.
-	GLint    viewport[4];    // параметры viewport-a.
-	GLdouble projection[16]; // матрица проекции.
-	GLdouble modelview[16];  // видовая матрица.
-	GLdouble vx, vy, vz;       // координаты курсора мыши в системе координат viewport-a.
-	GLdouble wx, wy, wz;       // возвращаемые мировые координаты.
-
-	glGetIntegerv(GL_VIEWPORT, viewport);           // узнаём параметры viewport-a.
-	glGetDoublev(GL_PROJECTION_MATRIX, projection); // узнаём матрицу проекции.
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);   // узнаём видовую матрицу.
-													// переводим оконные координаты курсора в систему координат viewport-a.
-	vx = mouse_x;
-	vy = WHight - mouse_y - 1; // где height - текущая высота окна.
-
-							   // вычисляем ближний конец селектирующего отрезка.
-	vz = -1;
-	gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
-	p1 = CVector3(wx, wy, wz);
-	// вычисляем дальний конец селектирующего отрезка.
-	vz = 1;
-	gluUnProject(vx, vy, vz, modelview, projection, viewport, &wx, &wy, &wz);
-	p2 = CVector3(wx, wy, wz);
-}
-
 void OtherKeys(unsigned char key, int x, int y)
 {
 	if (key == 'w') 
@@ -550,15 +531,7 @@ void OtherKeys(unsigned char key, int x, int y)
 	{
 		PlaySound(NULL, NULL, SND_ASYNC);
 	}
-	if (key == 'z') 
-	{
-		GetCursorPos(&mCursor);
-		cout << mCursor.x << endl;
-		cout << mCursor.y << endl;
-		calc_select_line(mCursor.x, mCursor.y, t1, t2);
-		cout << "X1 = " << t1.x << "Y1 = " << t1.y << "Z1 = " << t1.z << endl;
-		cout << "X2 = " << t2.x << "Y2 = " << t2.y << "Z2 = " << t2.z << endl;
-	}
+
 
 
 	// Обновляется окно
@@ -577,9 +550,58 @@ void mouseMove(int x, int y) {
 }
 
 void mouseButton(int button, int state, int x, int y) {
-
 	if (button == GLUT_LEFT_BUTTON) {
-		//PlaySound("D:\\materials.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+
+		if (MM.NewGame.Press(x, y))
+		{
+			if (state == GLUT_DOWN)
+			{
+				MM.NewGame.isPressed = true;
+			}
+			else
+			{
+				MM.NewGame.isPressed = false;
+				MM.isVisible = false;
+			}
+		}
+
+		if (MM.Continue.Press(x, y))
+		{
+			if (state == GLUT_DOWN)
+			{
+				MM.Continue.isPressed = true;
+			}
+			else
+			{
+				MM.Continue.isPressed = false;
+				MM.isVisible = false;
+			}
+		}
+
+		if (MM.Options.Press(x, y))
+		{
+			if (state == GLUT_DOWN)
+			{
+				MM.Options.isPressed = true;
+			}
+			else
+			{
+				MM.Options.isPressed = false;
+			}
+		}
+
+		if (MM.Exit.Press(x, y))
+		{
+			if (state == GLUT_DOWN)
+			{
+				MM.Exit.isPressed = true;
+			}
+			else
+			{
+				MM.Exit.isPressed = false;
+				exit(0);
+			}
+		}
 	}
 }
 ///////////////////////////////////////////
@@ -587,7 +609,7 @@ int main(int argc, char **argv)
 { 
   glutInit(&argc, argv);  
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE /*| GLUT_ALPHA */| GLUT_DEPTH);  
-  glutInitWindowSize(WHight, WWidth);
+  glutInitWindowSize(WHeight, WWidth);
   glutInitWindowPosition(0, 0);  
   glutCreateWindow("Dungeon of Hope");
  // cam.setView();

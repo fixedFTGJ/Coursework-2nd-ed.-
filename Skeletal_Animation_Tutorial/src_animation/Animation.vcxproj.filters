@@ -105,12 +105,6 @@
     <ClInclude Include="CollisionChecker.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Coords.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="InterfaceCoords.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
     <ClInclude Include="BottomMenu.h">
       <Filter>src\GameInterface</Filter>
     </ClInclude>
@@ -133,6 +127,21 @@
       <Filter>src\GameInterface\Textures</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="2dmod.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawFigure.h">
+      <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Button.h">
       <Filter>src\GameInterface</Filter>
     </ClInclude>
   </ItemGroup>

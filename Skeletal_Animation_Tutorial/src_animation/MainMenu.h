@@ -1,302 +1,108 @@
 #pragma once
 
-#include "InterfaceCoords.h"
 #include <glew.h>
 #include <glaux.h>
 #include "Texture.h"
+#include "2dmod.h"
+#include "DrawFigure.h"
+#include "Button.h"
 
 using namespace std;
 
 namespace CourseWork {
 
-
 	class MainMenu
 	{
 	public:
-		const float UpBoard = 0.052f;
-		const float DownBoard = -0.052f;
-		const float LeftBoard = -0.087f;
-		const float RightBoard = 0.087f;
-
 		MainMenu() {
-			Menu.FrontRightUp.CoordsGive(RightBoard + 2.0f, UpBoard, -0.1f + 2.0f);
-			Menu.FrontLeftUp.CoordsGive(LeftBoard + 2.0f, UpBoard, -0.1f + 2.0f);
-			Menu.FrontLeftDown.CoordsGive(LeftBoard + 2.0f, DownBoard, -0.1f + 2.0f);
-			Menu.FrontRightDown.CoordsGive(RightBoard + 2.0f, DownBoard, -0.1f + 2.0f);
 
-			Menu.LeftRightUp.CoordsGive(-0.1f + 2.0f, UpBoard, RightBoard + 2.0f);
-			Menu.LeftLeftUp.CoordsGive(-0.1f + 2.0f, UpBoard, LeftBoard + 2.0f);
-			Menu.LeftLeftDown.CoordsGive(-0.1f + 2.0f, DownBoard, LeftBoard + 2.0f);
-			Menu.LeftRightDown.CoordsGive(-0.1f + 2.0f, DownBoard, RightBoard + 2.0f);
-
-			Menu.BackRightUp.CoordsGive(RightBoard + 2.0f, UpBoard, 0.1f + 2.0f);
-			Menu.BackLeftUp.CoordsGive(LeftBoard + 2.0f, UpBoard, 0.1f + 2.0f);
-			Menu.BackLeftDown.CoordsGive(LeftBoard + 2.0f, DownBoard, 0.1f + 2.0f);
-			Menu.BackRightDown.CoordsGive(RightBoard + 2.0f, DownBoard, 0.1f + 2.0f);
-
-			Menu.RightRightUp.CoordsGive(0.1f + 2.0f, UpBoard, RightBoard + 2.0f);
-			Menu.RightLeftUp.CoordsGive(0.1f + 2.0f, UpBoard, LeftBoard + 2.0f);
-			Menu.RightLeftDown.CoordsGive(0.1f + 2.0f, DownBoard, LeftBoard + 2.0f);
-			Menu.RightRightDown.CoordsGive(0.1f + 2.0f, DownBoard, RightBoard + 2.0f);
-
-			Position = 'r';
-
-			isVisible = false;
+			isVisible = true;
 
 		};
 
 		/////////////////   TEXTURES    /////////////////
 
 		CTexture *Texture;
-		TextureImage Textures[2];
+		TextureImage Textures[9];
 
 		void InitTexture() {
 			Texture = new CTexture();
-			Texture->LoadTexture(IL_JPG, "source/MainMenu.jpg", &Textures[0]);
-			Texture->LoadTexture(IL_JPG, "source/MainMenu2.jpg", &Textures[1]);
+			Texture->LoadTexture(IL_JPG, "source/MainMenu1.jpg", &Textures[0]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/new.png", &Textures[1]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/newPr.png", &Textures[2]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/cont.png", &Textures[3]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/contPr.png", &Textures[4]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/opt.png", &Textures[5]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/optPr.png", &Textures[6]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/ex.png", &Textures[7]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/exPr.png", &Textures[8]);
 		}
+
 		/////////////////   TEXTURES    /////////////////
 
 		void Draw() {
 
 			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, Textures[0].texID);
 
-			switch (Position)
+			Mode.Begin2D();
+
+			DrawQuad(xLeft, yDown, xRight, yUp);
+
+			if (!NewGame.isPressed)
 			{
-			case 'f':
-				glBindTexture(GL_TEXTURE_2D, Textures[0].texID);
-				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
-				glVertex3f(Menu.FrontRightUp.X(), Menu.FrontRightUp.Y(), Menu.FrontRightUp.Z());
-				glTexCoord2f(0, 0);
-				glVertex3f(Menu.FrontLeftUp.X(), Menu.FrontLeftUp.Y(), Menu.FrontLeftUp.Z());
-				glTexCoord2f(0, 1);
-				glVertex3f(Menu.FrontLeftDown.X(), Menu.FrontLeftDown.Y(), Menu.FrontLeftDown.Z());
-				glTexCoord2f(1, 1);
-				glVertex3f(Menu.FrontRightDown.X(), Menu.FrontRightDown.Y(), Menu.FrontRightDown.Z());
-				glEnd();
-				break;
-			case 'l':
-				glBindTexture(GL_TEXTURE_2D, Textures[1].texID);
-				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
-				glVertex3f(Menu.LeftRightUp.X(), Menu.LeftRightUp.Y(), Menu.LeftRightUp.Z());
-				glTexCoord2f(1, 1);
-				glVertex3f(Menu.LeftRightDown.X(), Menu.LeftRightDown.Y(), Menu.LeftRightDown.Z());
-				glTexCoord2f(0, 1);
-				glVertex3f(Menu.LeftLeftDown.X(), Menu.LeftLeftDown.Y(), Menu.LeftLeftDown.Z());
-				glTexCoord2f(0, 0);
-				glVertex3f(Menu.LeftLeftUp.X(), Menu.LeftLeftUp.Y(), Menu.LeftLeftUp.Z());
-				glEnd();
-				break;
-			case 'b':
-				glBindTexture(GL_TEXTURE_2D, Textures[1].texID);
-				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
-				glVertex3f(Menu.BackRightUp.X(), Menu.BackRightUp.Y(), Menu.BackRightUp.Z());
-				glTexCoord2f(1, 1);
-				glVertex3f(Menu.BackRightDown.X(), Menu.BackRightDown.Y(), Menu.BackRightDown.Z());
-				glTexCoord2f(0, 1);
-				glVertex3f(Menu.BackLeftDown.X(), Menu.BackLeftDown.Y(), Menu.BackLeftDown.Z());
-				glTexCoord2f(0, 0);
-				glVertex3f(Menu.BackLeftUp.X(), Menu.BackLeftUp.Y(), Menu.BackLeftUp.Z());
-				glEnd();
-				break;
-			case 'r':
-				glBindTexture(GL_TEXTURE_2D, Textures[0].texID);
-				glBegin(GL_QUADS);
-				glColor3ub((GLubyte)255, (GLubyte)255, (GLubyte)255);
-				glTexCoord2f(1, 0);
-				glVertex3f(Menu.RightRightUp.X(), Menu.RightRightUp.Y(), Menu.RightRightUp.Z());
-				glTexCoord2f(0, 0);
-				glVertex3f(Menu.RightLeftUp.X(), Menu.RightLeftUp.Y(), Menu.RightLeftUp.Z());
-				glTexCoord2f(0, 1);
-				glVertex3f(Menu.RightLeftDown.X(), Menu.RightLeftDown.Y(), Menu.RightLeftDown.Z());
-				glTexCoord2f(1, 1);
-				glVertex3f(Menu.RightRightDown.X(), Menu.RightRightDown.Y(), Menu.RightRightDown.Z());
-				glEnd();
-				break;
-
-			default:
-				break;
+				NewGame.Draw(Textures[1]);
 			}
-		}
-
-		void Forward() {
-
-			switch (Position)
+			else
 			{
-			case 'f':
-				MoveZ(-1.0f);
-				break;
-			case 'l':
-				MoveX(-1.0f);
-				break;
-			case 'b':
-				MoveZ(1.0f);
-				break;
-			case 'r':
-				MoveX(1.0f);
-				break;
-
-			default:
-				break;
+				NewGame.Draw(Textures[2]);
 			}
 
-		}
-
-		void Back() {
-			switch (Position)
+			if (!Continue.isPressed)
 			{
-			case 'f':
-				MoveZ(1.0f);
-				break;
-			case 'l':
-				MoveX(1.0f);
-				break;
-			case 'b':
-				MoveZ(-1.0f);
-				break;
-			case 'r':
-				MoveX(-1.0f);
-				break;
-
-			default:
-				break;
+				Continue.Draw(Textures[3]);
 			}
-		}
-
-		void TurnRight() {
-			switch (Position)
+			else
 			{
-			case 'f':
-				Position = 'r';
-				break;
-			case 'l':
-				Position = 'f';
-				break;
-			case 'b':
-				Position = 'l';
-				break;
-			case 'r':
-				Position = 'b';
-				break;
-
-			default:
-				break;
+				Continue.Draw(Textures[4]);
 			}
-		}
 
-		void TurnLeft() {
-			switch (Position)
+			if (!Options.isPressed)
 			{
-			case 'f':
-				Position = 'l';
-				break;
-			case 'l':
-				Position = 'b';
-				break;
-			case 'b':
-				Position = 'r';
-				break;
-			case 'r':
-				Position = 'f';
-				break;
-
-			default:
-				break;
+				Options.Draw(Textures[5]);
 			}
+			else
+			{
+				Options.Draw(Textures[6]);
+			}
+
+			if (!Exit.isPressed)
+			{
+				Exit.Draw(Textures[7]);
+			}
+			else
+			{
+				Exit.Draw(Textures[8]);
+			}
+
+			Mode.End2D();
 		}
 
-		void MoveZ(float _x) {
-			Menu.FrontRightUp.AddZ(_x);
-			Menu.FrontLeftUp.AddZ(_x);
-			Menu.FrontLeftDown.AddZ(_x);
-			Menu.FrontRightDown.AddZ(_x);
-
-			Menu.LeftRightUp.AddZ(_x);
-			Menu.LeftLeftUp.AddZ(_x);
-			Menu.LeftLeftDown.AddZ(_x);
-			Menu.LeftRightDown.AddZ(_x);
-
-			Menu.BackRightUp.AddZ(_x);
-			Menu.BackLeftUp.AddZ(_x);
-			Menu.BackLeftDown.AddZ(_x);
-			Menu.BackRightDown.AddZ(_x);
-
-			Menu.RightRightUp.AddZ(_x);
-			Menu.RightLeftUp.AddZ(_x);
-			Menu.RightLeftDown.AddZ(_x);
-			Menu.RightRightDown.AddZ(_x);
-		}
-
-		void MoveX(float _x) {
-			Menu.FrontRightUp.AddX(_x);
-			Menu.FrontLeftUp.AddX(_x);
-			Menu.FrontLeftDown.AddX(_x);
-			Menu.FrontRightDown.AddX(_x);
-
-			Menu.LeftRightUp.AddX(_x);
-			Menu.LeftLeftUp.AddX(_x);
-			Menu.LeftLeftDown.AddX(_x);
-			Menu.LeftRightDown.AddX(_x);
-
-			Menu.BackRightUp.AddX(_x);
-			Menu.BackLeftUp.AddX(_x);
-			Menu.BackLeftDown.AddX(_x);
-			Menu.BackRightDown.AddX(_x);
-
-			Menu.RightRightUp.AddX(_x);
-			Menu.RightLeftUp.AddX(_x);
-			Menu.RightLeftDown.AddX(_x);
-			Menu.RightRightDown.AddX(_x);
-		}
 
 		bool isVisible;
 
-		/////////////////   TEXTURES    /////////////////
-
-		GLuint texture[1];
-
-		GLvoid LoadGLTextures() {
-			AUX_RGBImageRec *texture1;
-			texture1 = auxDIBImageLoad("D:\\Menu.bmp");
-
-			glGenTextures(1, &texture[0]);
-			glBindTexture(GL_TEXTURE_2D, texture[0]);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, texture1->sizeX, texture1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
-
-			glEnable(GL_TEXTURE_2D);
-		}
-
-		void takeYUP() {
-			Menu.FrontRightUp.AddY(0.001f);
-			Menu.FrontRightDown.AddY(0.001f);
-			Menu.FrontLeftUp.AddY(0.001f);
-			Menu.FrontLeftDown.AddY(0.001f);
-			cout << Menu.FrontRightUp.Y();
-		}
-
-		void takeYDown() {
-			Menu.FrontRightUp.AddY(-0.001f);
-			Menu.FrontRightDown.AddY(-0.001f);
-			Menu.FrontLeftUp.AddY(-0.001f);
-			Menu.FrontLeftDown.AddY(-0.001f);
-			cout << Menu.FrontRightUp.Y();
-		}
+		Button NewGame = Button(93, 523, 411, 568);
+		Button Continue = Button(93, 433, 368, 478);
+		Button Options = Button(93, 343, 331, 388);
+		Button Exit = Button(93, 253, 222, 299);
 
 	private:
-		InterfaceCoords Menu;
+		TwoDMode Mode;
 
-
-		char Position;
+		const double yUp = WWidth;
+		const double yDown = 0;
+		const double xLeft = 0;
+		const double xRight = WHeight;
 
 	};
 }
