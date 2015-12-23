@@ -16,9 +16,14 @@ public:
 	{
 		DungeonInitializer init;
 		_dungeon = init.Initialize();
-		party = new Party(nullptr, nullptr, nullptr, nullptr, _dungeon->GetMaps()[0]->GetStartPosition());
+		PlayableCharacter* Juggernaut = new PlayableCharacter(100, 10, 10, 10, 20, 5, 5, 25);
+		PlayableCharacter* Medic = new PlayableCharacter(100, 10, 10, 10, 10, 5, 20, 20);
+		PlayableCharacter* Assassin = new PlayableCharacter(100, 10, 10, 10, 15, 20, 10, 10);
+		PlayableCharacter* Kinetic = new PlayableCharacter(100, 10, 10, 10, 5, 10, 30, 10);
+		party = new Party(Juggernaut, Medic, Assassin, Kinetic, _dungeon->GetMaps()[0]->GetStartPosition());
 	};
 	void InitMapGraph();
+	bool IsOver();
 	Dungeon *_dungeon;
 	Camera *cam;
 	Party *party;

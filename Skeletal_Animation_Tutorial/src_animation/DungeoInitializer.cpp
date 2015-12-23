@@ -43,13 +43,13 @@ Dungeon* DungeonInitializer::Initialize()
 	pattern1[18] = new int[MapWidth] {wall, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, wall};
 	pattern1[19] = new int[MapWidth] {wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall, wall};
 
-	monster = new Monster(Coordinates(5, 5), 10, 10, 10, 10);
+	monster = new Monster(Coordinates(5, 5), 200, 10, 30, 15);
 	monsters.push_back(monster);
-	monster = new Monster(Coordinates(10, 10), 10, 10, 10, 10);
+	monster = new Monster(Coordinates(10, 10), 200, 10, 30, 15);
 	monsters.push_back(monster);
-	monster = new Monster(Coordinates(7, 9), 10, 10, 10, 10);
+	monster = new Monster(Coordinates(7, 9), 200, 10, 30, 15);
 	monsters.push_back(monster);
-	monster = new Monster(Coordinates(11, 18), 10, 10, 10, 10);
+	monster = new Monster(Coordinates(11, 18), 200, 10, 30, 15);
 	monsters.push_back(monster);
 
 	loadedMap = new Map(MapHeight, MapWidth, pattern1, monsters, startPosition);

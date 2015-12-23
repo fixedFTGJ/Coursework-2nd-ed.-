@@ -4,11 +4,16 @@ using namespace CourseWork;
 
 Party::Party(PlayableCharacter* character0, PlayableCharacter* character1, PlayableCharacter* character2, PlayableCharacter* character3, Coordinates position)
 {
-	_characters[0] = character0;
-	_characters[1] = character1;
-	_characters[2] = character2;
-	_characters[3] = character3;
+	_characters.push_back(character0);
+	_characters.push_back(character1);
+	_characters.push_back(character2);
+	_characters.push_back(character3);
 	_position = position;
+}
+
+vector<PlayableCharacter*> CourseWork::Party::GetCharacters()
+{
+	return _characters;
 }
 
 void Party::SetPosition(int x, int y)

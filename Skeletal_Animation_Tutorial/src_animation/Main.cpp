@@ -84,6 +84,17 @@ void Clear()
 	glLoadIdentity();
 };
 
+Monster* GetMonsterByPosition(int x, int y)
+{
+	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+	for (Monster* m : monsters)
+	{
+		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y))
+			return m;
+	}
+	return nullptr;
+};
+
 void Begin2D(void)
 {
 	glDisable(GL_DEPTH_TEST);
@@ -218,13 +229,16 @@ void DrawScene()
 
 	for(Monster* m : monsters)
 	{ 
-		monster.Draw(
-			vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),
-			vec3f(
-				0,			// rotation
-				m->GetRotation(),
-				0)
-			);
+		if (!m->IsDead())
+		{
+			monster.Draw(
+				vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),
+				vec3f(
+					0,			// rotation
+					m->GetRotation(),
+					0)
+				);
+		}
 	}
 
 	/*halo.Draw(
@@ -337,46 +351,55 @@ void DrawScene()
 		End2D();*/
 
 	glutSwapBuffers();
-}
+};
+
 void Timer(int value)
 {
-	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
-	int *px, *py;
-	int len;
-	for (Monster* m : monsters)
+	if (MM.isVisible)
 	{
-		if ((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y))
+		glutTimerFunc(1000, Timer, 1);
+	}
+	else
+	{
+		vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+		vector<PlayableCharacter*> party = g_game.party->GetCharacters();
+		int *px, *py;
+		int len;
+		for (Monster* m : monsters)
 		{
-			if (finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len))
+			if (((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y)) && !(m->IsDead()))
 			{
-				/*for (int i = 0; i < len; i++)
+				if (finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len))
 				{
-					cout << px[i] << " " << py[i] << endl;
-				}*/
-				if (px[1] - m->GetPosition().X == 1)
-					m->SetOrientation(1, 0);
-				if (px[1] - m->GetPosition().X == -1)
-					m->SetOrientation(-1, 0);
-				if (py[1] - m->GetPosition().Y == 1)
-					m->SetOrientation(0, 1);
-				if (py[1] - m->GetPosition().Y == -1)
-					m->SetOrientation(0, -1);
-				if (((px[1] != g_game.party->GetPosition().X) || (py[1] != g_game.party->GetPosition().Y)))
-					m->SetPosition(px[1], py[1]);
+					if ((len < 9) && (!m->IsActive()))
+						m->SwitchActivity();
+
+					if ((len == 1) && (m->IsActive()))
+					{
+						m->Attack(party[rand() % 4]);
+					}
+
+					if (m->IsActive())
+					{
+						if (px[1] - m->GetPosition().X == 1)
+							m->SetOrientation(1, 0);
+						if (px[1] - m->GetPosition().X == -1)
+							m->SetOrientation(-1, 0);
+						if (py[1] - m->GetPosition().Y == 1)
+							m->SetOrientation(0, 1);
+						if (py[1] - m->GetPosition().Y == -1)
+							m->SetOrientation(0, -1);
+						if (((px[1] != g_game.party->GetPosition().X) || (py[1] != g_game.party->GetPosition().Y)))
+							m->SetPosition(px[1], py[1]);
+					}
+				}
 			}
 		}
+		if (g_game.IsOver())
+			exit(0);
+		glutPostRedisplay();
+		glutTimerFunc(1000, Timer, 1);
 	}
-	/*for (Monster* m : monsters)
-	{
-		finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y);
-		for (int i = 0; i < finder.len; i++)
-		{
-			cout << finder.px[0] << " " << finder.py[0] << endl;
-		}
-		m->SetPosition(finder.px[0], finder.py[0]);
-	}*/
-	glutPostRedisplay();
-	glutTimerFunc(1000, Timer, 1);
 }
 
 void SpecialKeys(int key, int x, int y)
@@ -396,6 +419,8 @@ void SpecialKeys(int key, int x, int y)
 	g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
 
 	cout << g_game.party->GetPosition().X << " " << g_game.party->GetPosition().Y << " " << dx << " " << dy << endl;*/
+	if (MM.isVisible)
+		return;
 
 	if (key == GLUT_KEY_UP)
 	{
@@ -414,8 +439,7 @@ void SpecialKeys(int key, int x, int y)
 		g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
 		vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
 		for (Monster* m : monsters)
-			throughMonster = throughMonster || checker.Check(g_game.party, m);
-		cout << g_game.party->GetPosition().X << " " << g_game.party->GetPosition().Y << " " << dx << " " << dy << endl;
+			throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
 		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
@@ -447,7 +471,6 @@ void SpecialKeys(int key, int x, int y)
 		for (Monster* m : monsters)
 			throughMonster = throughMonster || checker.Check(g_game.party, m);
 
-		cout << g_game.party->GetPosition().X << " " << g_game.party->GetPosition().Y << " " << dx << " " << dy << endl;
 		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
 		{
 			g_game.cam->moveGlob(normal.x, normal.y, normal.z);
@@ -495,7 +518,6 @@ void SpecialKeys(int key, int x, int y)
 			MM.isVisible = true;
 		}
 	}
-
 	
 	// Обновляется окно
 	glutPostRedisplay();
@@ -523,7 +545,7 @@ void OtherKeys(unsigned char key, int x, int y)
 		xInterf += 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 'q')
+	if (key == 'n')
 	{
 		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 	}
@@ -537,7 +559,73 @@ void OtherKeys(unsigned char key, int x, int y)
 		cout << MM.Textures[2].height << endl;
 	}
 
+	if (key == 'x')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+			g_game.party->GetCharacters()[0]->Attack(m);
+	}
 
+	if (key == 'c')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr))
+			g_game.party->GetCharacters()[1]->Attack(m);
+	}
+
+	if (key == 'v')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr))
+			g_game.party->GetCharacters()[2]->Attack(m);
+	}
+
+	if (key == 'b')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+			g_game.party->GetCharacters()[3]->Attack(m);
+	}
 
 	// Обновляется окно
 	glutPostRedisplay();
