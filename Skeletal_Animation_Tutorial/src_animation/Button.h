@@ -13,6 +13,10 @@ namespace CourseWork {
 	class Button
 	{
 	public:
+		Button() {
+			isPressed = false;
+		}
+
 		Button(double _xL, double _yD, double _xR, double _yU) {
 
 			yUp = _yU;
@@ -23,6 +27,12 @@ namespace CourseWork {
 			isPressed = false;
 		};
 
+		void GetCoord(double _xL, double _yD, double _xR, double _yU) {
+			yUp = _yU;
+			yDown = _yD;
+			xLeft = _xL;
+			xRight = _xR;
+		}
 
 		void Draw(TextureImage _TI) {
 			Textures = _TI;

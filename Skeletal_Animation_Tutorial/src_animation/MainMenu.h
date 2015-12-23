@@ -27,7 +27,7 @@ namespace CourseWork {
 
 		void InitTexture() {
 			Texture = new CTexture();
-			Texture->LoadTexture(IL_JPG, "source/MainMenu1.jpg", &Textures[0]);
+			Texture->LoadTexture(IL_JPG, "source/MainMenu.jpg", &Textures[0]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/new.png", &Textures[1]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/newPr.png", &Textures[2]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/cont.png", &Textures[3]);
@@ -36,6 +36,11 @@ namespace CourseWork {
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/optPr.png", &Textures[6]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/ex.png", &Textures[7]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/exPr.png", &Textures[8]);
+
+			NewGame.GetCoord(93, 523, 93 + Textures[1].width, 523 + Textures[1].height);
+			Continue.GetCoord(93, 433, 93 + Textures[3].width, 433 + Textures[3].height);
+			Options.GetCoord(93, 343, 93 + Textures[5].width, 343 + Textures[5].height);
+			Exit.GetCoord(93, 253, 93 + Textures[7].width, 253 + Textures[7].height);
 		}
 
 		/////////////////   TEXTURES    /////////////////
@@ -91,10 +96,10 @@ namespace CourseWork {
 
 		bool isVisible;
 
-		Button NewGame = Button(93, 523, 411, 568);
-		Button Continue = Button(93, 433, 368, 478);
-		Button Options = Button(93, 343, 331, 388);
-		Button Exit = Button(93, 253, 222, 299);
+		Button NewGame;
+		Button Continue;
+		Button Options;
+		Button Exit;
 
 	private:
 		TwoDMode Mode;

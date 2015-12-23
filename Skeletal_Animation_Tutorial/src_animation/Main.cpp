@@ -531,6 +531,11 @@ void OtherKeys(unsigned char key, int x, int y)
 	{
 		PlaySound(NULL, NULL, SND_ASYNC);
 	}
+	if (key == 'z')
+	{
+		cout << MM.Textures[2].width << endl;
+		cout << MM.Textures[2].height << endl;
+	}
 
 
 
@@ -564,6 +569,13 @@ void mouseButton(int button, int state, int x, int y) {
 				MM.isVisible = false;
 			}
 		}
+		else
+		{
+			if (state == GLUT_UP)
+			{
+				MM.NewGame.isPressed = false;
+			}
+		}
 
 		if (MM.Continue.Press(x, y))
 		{
@@ -577,6 +589,13 @@ void mouseButton(int button, int state, int x, int y) {
 				MM.isVisible = false;
 			}
 		}
+		else
+		{
+			if (state == GLUT_UP)
+			{
+				MM.Continue.isPressed = false;
+			}
+		}
 
 		if (MM.Options.Press(x, y))
 		{
@@ -585,6 +604,13 @@ void mouseButton(int button, int state, int x, int y) {
 				MM.Options.isPressed = true;
 			}
 			else
+			{
+				MM.Options.isPressed = false;
+			}
+		}
+		else
+		{
+			if (state == GLUT_UP)
 			{
 				MM.Options.isPressed = false;
 			}
@@ -600,6 +626,13 @@ void mouseButton(int button, int state, int x, int y) {
 			{
 				MM.Exit.isPressed = false;
 				exit(0);
+			}
+		}
+		else
+		{
+			if (state == GLUT_UP)
+			{
+				MM.Exit.isPressed = false;
 			}
 		}
 	}

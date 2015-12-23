@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "2dmod.h"
 #include "DrawFigure.h"
+#include "Button.h"
 
 using namespace std;
 
@@ -22,11 +23,11 @@ namespace CourseWork {
 		/////////////////   TEXTURES    /////////////////
 
 		CTexture *Texture;
-		TextureImage Textures[9];
+		TextureImage Textures[1];
 
 		void InitTexture() {
 			Texture = new CTexture();
-			Texture->LoadTexture(IL_JPG, "source/Menu.jpg", &Textures[0]);
+			Texture->LoadTexture(IL_JPG, "source/BottomMenu.jpg", &Textures[0]);
 			
 		}
 

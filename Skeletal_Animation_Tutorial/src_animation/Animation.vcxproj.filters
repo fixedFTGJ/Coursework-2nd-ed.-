@@ -34,6 +34,9 @@
     <Filter Include="src\GameInterface\Textures">
       <UniqueIdentifier>{3ba50745-76cd-436d-9cc5-e465e98393e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameInterface\Menus">
+      <UniqueIdentifier>{b9fa2fe6-9800-4b94-9e32-306f83a371c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src_common\Bmp.h">
@@ -105,12 +108,6 @@
     <ClInclude Include="CollisionChecker.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="BottomMenu.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMenus.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
     <ClInclude Include="camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="MonsterBehavior.h">
@@ -126,9 +123,6 @@
     <ClInclude Include="Texture.h">
       <Filter>src\GameInterface\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>src\GameInterface</Filter>
-    </ClInclude>
     <ClInclude Include="camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="2dmod.h">
@@ -143,6 +137,17 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Button.h">
       <Filter>src\GameInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="BottomMenu.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenus.h">
+      <Filter>src\GameInterface\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
