@@ -44,7 +44,7 @@ namespace CourseWork {
 		CTexture *Texture;
 
 
-		TextureImage Textures[23];
+		TextureImage Textures[27];
 		
 
 		void InitTexture() {
@@ -75,9 +75,13 @@ namespace CourseWork {
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenuPr.png", &Textures[18]);
 
 			Texture->LoadTexture(IL_PNG, "source/HeroPort/Jug.png", &Textures[19]);
-			Texture->LoadTexture(IL_PNG, "source/HeroPort/Med.png", &Textures[20]);
-			Texture->LoadTexture(IL_PNG, "source/HeroPort/Ass.png", &Textures[21]);
-			Texture->LoadTexture(IL_PNG, "source/HeroPort/Kin.png", &Textures[22]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/JugPr.png", &Textures[20]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Med.png", &Textures[21]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/MedPr.png", &Textures[22]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Ass.png", &Textures[23]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/AssPr.png", &Textures[24]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Kin.png", &Textures[25]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/KinPr.png", &Textures[26]);
 
 			Power.GetCoord(123, yUp - 84, 123 + Textures[1].width, yUp - 84 + Textures[1].height);
 			Provocation.GetCoord(123, yUp - 112, 123 + Textures[3].width, yUp - 112 + Textures[3].height);
@@ -91,9 +95,9 @@ namespace CourseWork {
 			MainMenu.GetCoord(1110, yUp - 63, 1110 + Textures[17].width, yUp - 63 + Textures[17].height);
 
 			Jug.GetCoord(30, yUp - 140, 30 + Textures[19].width, yUp - 140 + Textures[19].height);
-			Med.GetCoord(260, yUp - 140, 260 + Textures[20].width, yUp - 140 + Textures[20].height);
-			Ass.GetCoord(490, yUp - 140, 490 + Textures[21].width, yUp - 140 + Textures[21].height);
-			Kin.GetCoord(720, yUp - 140, 720 + Textures[22].width, yUp - 140 + Textures[22].height);
+			Med.GetCoord(260, yUp - 140, 260 + Textures[21].width, yUp - 140 + Textures[21].height);
+			Ass.GetCoord(490, yUp - 140, 490 + Textures[23].width, yUp - 140 + Textures[23].height);
+			Kin.GetCoord(720, yUp - 140, 720 + Textures[25].width, yUp - 140 + Textures[25].height);
 
 			InitNumerals();
 		    InitHeroLvl();
@@ -277,34 +281,34 @@ namespace CourseWork {
 			}
 			else
 			{
-				Jug.Draw(Textures[19]);
+				Jug.Draw(Textures[20]);
 			}
 
 			if (!Med.isPressed)
 			{
-				Med.Draw(Textures[20]);
+				Med.Draw(Textures[21]);
 			}
 			else
 			{
-				Med.Draw(Textures[20]);
+				Med.Draw(Textures[22]);
 			}
 
 			if (!Ass.isPressed)
 			{
-				Ass.Draw(Textures[21]);
+				Ass.Draw(Textures[23]);
 			}
 			else
 			{
-				Ass.Draw(Textures[21]);
+				Ass.Draw(Textures[24]);
 			}
 
 			if (!Kin.isPressed)
 			{
-				Kin.Draw(Textures[22]);
+				Kin.Draw(Textures[25]);
 			}
 			else
 			{
-				Kin.Draw(Textures[22]);
+				Kin.Draw(Textures[26]);
 			}
 
 			DrawNumerals();

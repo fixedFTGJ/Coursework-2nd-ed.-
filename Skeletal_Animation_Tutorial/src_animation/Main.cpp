@@ -207,7 +207,6 @@ void DrawScene()
 	g_game.cam->setView();
 	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
 	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
-	//static Mesh monster("../data/st/st.material", "../data/st/st.xml");
 	static Mesh monster("../data/badboy/badboy.material", "../data/badboy/badboy.xml");
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
@@ -261,7 +260,10 @@ void DrawScene()
 	{
 		WL.Win = false;
 		WL.isVisible = true;
+		BtmM.isVisible = false;
+		MM.isVisible = false;
 	}
+
 	if (g_game.IsNextLevel())
 	{
 		if (g_game._currentMap < 2)
@@ -684,7 +686,6 @@ void OtherKeys(unsigned char key, int x, int y)
 		cout << MM.Textures[2].width << endl;
 		cout << MM.Textures[2].height << endl;
 	}
-
 	// Обновляется окно
 	glutPostRedisplay();
 }

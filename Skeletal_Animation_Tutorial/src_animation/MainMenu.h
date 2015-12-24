@@ -52,18 +52,6 @@ namespace CourseWork {
 			Exit.GetCoord(93, 253, 93 + Textures[7].width, 253 + Textures[7].height);
 		}
 
-		double wX(double x) {
-			int cW = glutGet(GLUT_WINDOW_WIDTH);
-
-			return (cW - (cW - x));
-		}
-
-		double wY(double y) {
-			int cH = glutGet(GLUT_WINDOW_HEIGHT);
-
-			return (cH - (cH - y));
-		}
-
 		/////////////////   TEXTURES    /////////////////
 
 		void Draw() {
