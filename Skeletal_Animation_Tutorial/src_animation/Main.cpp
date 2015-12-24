@@ -1070,25 +1070,6 @@ void mouseButton(int button, int state, int x, int y) {
 					}
 				}
 
-				if (BtmM.Drag_in.Press(x, y))
-				{
-					if (state == GLUT_DOWN)
-					{
-						BtmM.Drag_in.isPressed = true;
-					}
-					else
-					{
-						BtmM.Drag_in.isPressed = false;
-					}
-				}
-				else
-				{
-					if (state == GLUT_UP)
-					{
-						BtmM.Drag_in.isPressed = false;
-					}
-				}
-
 				if (BtmM.MainMenu.Press(x, y))
 				{
 					if (state == GLUT_DOWN)
@@ -1106,6 +1087,82 @@ void mouseButton(int button, int state, int x, int y) {
 					if (state == GLUT_UP)
 					{
 						BtmM.MainMenu.isPressed = false;
+					}
+				}
+
+				if (BtmM.Jug.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Jug.isPressed = true;
+					}
+					else
+					{
+						BtmM.Jug.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Jug.isPressed = false;
+					}
+				}
+
+				if (BtmM.Med.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Med.isPressed = true;
+					}
+					else
+					{
+						BtmM.Med.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Med.isPressed = false;
+					}
+				}
+
+				if (BtmM.Ass.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Ass.isPressed = true;
+					}
+					else
+					{
+						BtmM.Ass.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Ass.isPressed = false;
+					}
+				}
+
+				if (BtmM.Kin.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Kin.isPressed = true;
+					}
+					else
+					{
+						BtmM.Kin.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Kin.isPressed = false;
 					}
 				}
 			}
@@ -1149,46 +1206,48 @@ void mouseButton(int button, int state, int x, int y) {
 						WL.WinExit.isPressed = false;
 					}
 				}
-			}
 
-			if (WL.LoseMenu.Press(x, y))
-			{
-				if (state == GLUT_DOWN)
+				if (WL.LoseMenu.Press(x, y))
 				{
-					WL.LoseMenu.isPressed = true;
+					if (state == GLUT_DOWN)
+					{
+						WL.LoseMenu.isPressed = true;
+					}
+					else
+					{
+						WL.LoseMenu.isPressed = false;
+					}
 				}
 				else
 				{
-					WL.LoseMenu.isPressed = false;
+					if (state == GLUT_UP)
+					{
+						WL.LoseMenu.isPressed = false;
+					}
 				}
-			}
-			else
-			{
-				if (state == GLUT_UP)
-				{
-					WL.LoseMenu.isPressed = false;
-				}
-			}
 
-			if (WL.LoseExit.Press(x, y))
-			{
-				if (state == GLUT_DOWN)
+				if (WL.LoseExit.Press(x, y))
 				{
-					WL.LoseExit.isPressed = true;
+					if (state == GLUT_DOWN)
+					{
+						WL.LoseExit.isPressed = true;
+					}
+					else
+					{
+						WL.LoseExit.isPressed = false;
+
+					}
 				}
 				else
 				{
-					WL.LoseExit.isPressed = false;
-					
+					if (state == GLUT_UP)
+					{
+						WL.LoseExit.isPressed = false;
+					}
 				}
 			}
-			else
-			{
-				if (state == GLUT_UP)
-				{
-					WL.LoseExit.isPressed = false;
-				}
-			}
+
+			
 
 		}
 	}
@@ -1206,6 +1265,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(WHeight, WWidth);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Dungeon of Hope");
+
 	// cam.setView();
 	// Clear();
 	// cam.setView();

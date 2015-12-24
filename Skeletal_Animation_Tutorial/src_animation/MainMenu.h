@@ -35,8 +35,8 @@ namespace CourseWork {
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/cont.png", &Textures[3]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/contPr.png", &Textures[4]);
 
-			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/opt.png", &Textures[5]);
-			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/optPr.png", &Textures[6]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/help.png", &Textures[5]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/helpPr.png", &Textures[6]);
 
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/ex.png", &Textures[7]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/exPr.png", &Textures[8]);
@@ -45,6 +45,23 @@ namespace CourseWork {
 			Continue.GetCoord(93, 433, 93 + Textures[3].width, 433 + Textures[3].height);
 			Options.GetCoord(93, 343, 93 + Textures[5].width, 343 + Textures[5].height);
 			Exit.GetCoord(93, 253, 93 + Textures[7].width, 253 + Textures[7].height);
+
+			NewGame.GetCoord(93, 523, 93 + Textures[1].width, 523 + Textures[1].height);
+			Continue.GetCoord(93, 433, 93 + Textures[3].width, 433 + Textures[3].height);
+			Options.GetCoord(93, 343, 93 + Textures[5].width, 343 + Textures[5].height);
+			Exit.GetCoord(93, 253, 93 + Textures[7].width, 253 + Textures[7].height);
+		}
+
+		double wX(double x) {
+			int cW = glutGet(GLUT_WINDOW_WIDTH);
+
+			return (cW - (cW - x));
+		}
+
+		double wY(double y) {
+			int cH = glutGet(GLUT_WINDOW_HEIGHT);
+
+			return (cH - (cH - y));
 		}
 
 		/////////////////   TEXTURES    /////////////////

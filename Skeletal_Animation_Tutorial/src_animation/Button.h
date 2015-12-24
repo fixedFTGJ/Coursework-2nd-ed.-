@@ -32,6 +32,7 @@ namespace CourseWork {
 			yDown = _yD;
 			xLeft = _xL;
 			xRight = _xR;
+
 		}
 
 		void Draw(TextureImage _TI) {
