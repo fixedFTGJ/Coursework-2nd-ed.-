@@ -60,15 +60,6 @@ bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &l
 	}
 	grid[ay][ax] = BLANK;
 
-	for (int i = 0; i < H; i++)
-	{
-		for (int j = 0; j < W; j++)
-		{
-			cout << grid[i][j];
-		}
-		cout << endl;
-	}
-	cout << endl;
 	//////////////////
 	int dx[4] = { 1, 0, -1, 0 };   // смещени€, соответствующие сосед€м €чейки
 	int dy[4] = { 0, 1, 0, -1 };   // справа, снизу, слева и сверху

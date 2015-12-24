@@ -649,27 +649,165 @@ void SpecialKeys(int key, int x, int y)
 
 void OtherKeys(unsigned char key, int x, int y)
 {
-	if (key == 'w')
+	if ((key == 'w') || (key == 'W') || (key == 'ö') || (key == 'Ö'))
+	{
+		if (g_game.party->CanMove())
+		{
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dx = -1;
+			if (normal.x == -1.0)
+				dx = 1;
+			if (normal.z == 1.0)
+				dy = -1;
+			if (normal.z == -1.0)
+				dy = 1;
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
+		}
+	}
+
+	if ((key == 's') || (key == 'S') || (key == 'û') || (key == 'Û'))
+	{
+		if (g_game.party->CanMove())
+		{
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dx = 1;
+			if (normal.x == -1.0)
+				dx = -1;
+			if (normal.z == 1.0)
+				dy = 1;
+			if (normal.z == -1.0)
+				dy = -1;
+
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || checker.Check(g_game.party, m);
+
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(normal.x, normal.y, normal.z);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
+		}
+	}
+	if ((key == 'a') || (key == 'A') || (key == 'ô') || (key == 'Ô'))
+	{
+		if (g_game.party->CanMove())
+		{
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dy = 1;
+			if (normal.x == -1.0)
+				dy = -1;
+			if (normal.z == 1.0)
+				dx = -1;
+			if (normal.z == -1.0)
+				dx = 1;
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(dx, normal.y, dy, 1.0);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
+		}
+	}
+	if ((key == 'd') || (key == 'D') || (key == 'â') || (key == 'Â'))
+	{
+		if (g_game.party->CanMove())
+		{
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dy = -1;
+			if (normal.x == -1.0)
+				dy = 1;
+			if (normal.z == 1.0)
+				dx = 1;
+			if (normal.z == -1.0)
+				dx = -1;
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(dx, normal.y, dy, 1.0);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
+		}
+	}
+
+	if ((key == 'q') || (key == 'Q') || (key == 'é') || (key == 'É'))
+	{
+		g_game.cam->rotateLoc(-90, 0, 1, 0);
+	}
+
+	if ((key == 'e') || (key == 'E') || (key == 'ó') || (key == 'Ó'))
+	{
+		g_game.cam->rotateLoc(90, 0, 1, 0);
+	}
+
+	if (key == 'u')
 	{
 		yInterf += 0.001f;
 		cout << "y = " << yInterf << endl;
 	}
-	if (key == 'a')
+	if (key == 'h')
 	{
 		xInterf -= 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 's')
+	if (key == 'j')
 	{
 		yInterf -= 0.001f;
 		cout << "y = " << yInterf << endl;
 	}
-	if (key == 'd')
+	if (key == 'k')
 	{
 		xInterf += 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 'q')
+	if (key == ',')
 	{
 		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 	}
