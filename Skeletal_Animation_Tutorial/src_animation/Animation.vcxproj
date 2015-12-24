@@ -201,12 +201,10 @@
     <ClInclude Include="2dmod.h" />
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="BottomMenu.h" />
     <ClInclude Include="camera.h" />
-    <ClInclude Include="Character.h" />
     <ClInclude Include="DrawFigure.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DungeonInitializer.h" />
