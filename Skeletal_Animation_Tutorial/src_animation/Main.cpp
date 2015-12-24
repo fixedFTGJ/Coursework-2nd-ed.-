@@ -402,6 +402,13 @@ void Timer(int value)
 				}
 			}
 		}
+		for (PlayableCharacter* pl : party)
+		{
+			if (!pl->IsDead())
+			{
+				pl->Regenerate();
+			}
+		}
 		if (g_game.IsOver())
 			exit(0);
 		glutPostRedisplay();
@@ -576,7 +583,7 @@ void OtherKeys(unsigned char key, int x, int y)
 		xInterf += 0.001f;
 		cout << "x = " << xInterf << endl;
 	}
-	if (key == 'n')
+	if (key == 'q')
 	{
 		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 	}
@@ -590,7 +597,7 @@ void OtherKeys(unsigned char key, int x, int y)
 		cout << MM.Textures[2].height << endl;
 	}
 
-	if (key == 'x')
+	if (key == 'c')
 	{
 		vec3f normal = GetLookAt();
 		int dx = 0, dy = 0;
@@ -607,7 +614,7 @@ void OtherKeys(unsigned char key, int x, int y)
 			g_game.party->GetCharacters()[0]->Attack(m);
 	}
 
-	if (key == 'c')
+	if (key == 'v')
 	{
 		vec3f normal = GetLookAt();
 		int dx = 0, dy = 0;
@@ -624,7 +631,7 @@ void OtherKeys(unsigned char key, int x, int y)
 			g_game.party->GetCharacters()[1]->Attack(m);
 	}
 
-	if (key == 'v')
+	if (key == 'b')
 	{
 		vec3f normal = GetLookAt();
 		int dx = 0, dy = 0;
@@ -641,7 +648,7 @@ void OtherKeys(unsigned char key, int x, int y)
 			g_game.party->GetCharacters()[2]->Attack(m);
 	}
 
-	if (key == 'b')
+	if (key == 'n')
 	{
 		vec3f normal = GetLookAt();
 		int dx = 0, dy = 0;
@@ -658,6 +665,157 @@ void OtherKeys(unsigned char key, int x, int y)
 			g_game.party->GetCharacters()[3]->Attack(m);
 	}
 
+	if (key == 'f')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		{
+			g_game.party->GetCharacters()[0]->_abilities[0]->SetTarget(m);
+			g_game.party->GetCharacters()[0]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[0]->_abilities[0]->Reset();
+		}
+	}
+
+	if (key == 'r')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		{
+			g_game.party->GetCharacters()[0]->_abilities[1];
+			g_game.party->GetCharacters()[0]->_abilities[1]->Do();
+		}
+	}
+
+	if (key == 'g')
+	{
+		if (!g_game.party->GetCharacters()[1]->IsDead())
+			g_game.party->GetCharacters()[1]->_abilities[0]->Do();
+	}
+
+	if (key == 't')
+	{
+		if (!g_game.party->GetCharacters()[1]->IsDead())
+		{
+			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
+		}
+	}
+
+	if (key == 'h')
+	{
+		if (!g_game.party->GetCharacters()[2]->IsDead())
+		{
+			g_game.party->GetCharacters()[2]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[2]->_abilities[0]->Reset();
+		}
+	}
+
+	if (key == 'y')
+	{
+		if (!g_game.party->GetCharacters()[1]->IsDead())
+		{
+			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
+		}
+	}
+
+	if (key == 'j')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		{
+			g_game.party->GetCharacters()[3]->_abilities[0]->SetTarget(m);
+			g_game.party->GetCharacters()[3]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[0]->Reset();
+		}
+	}
+
+	if (key == 'u')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		if (normal.x == 1.0)
+			dx = -1;
+		if (normal.x == -1.0)
+			dx = 1;
+		if (normal.z == 1.0)
+			dy = -1;
+		if (normal.z == -1.0)
+			dy = 1;
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		{
+			g_game.party->GetCharacters()[3]->_abilities[1]->SetTarget(m);
+			g_game.party->GetCharacters()[3]->_abilities[1]->SetLookAt(dx, dy);
+			g_game.party->GetCharacters()[3]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[1]->Reset();
+		}
+	}
+
+	/*if (key == 'i')
+	{
+		vec3f normal = GetLookAt();
+		int dx = 0, dy = 0;
+		int dx1 = 0, dy1 = 0;
+		if (normal.x == 1.0)
+		{
+			dx = -2;
+			dx1 = -1;
+		}
+		if (normal.x == -1.0)
+		{
+			dx = 2;
+			dx1 = 1;
+		}
+		if (normal.z == 1.0)
+		{
+			dy = -2;
+			dy1 = -1;
+		}
+		if (normal.z == -1.0)
+		{
+			dy = 2;
+			dy1 = 1;
+		}
+		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		{
+			g_game.party->GetCharacters()[3]->_abilities[2]->SetTarget(m);
+			g_game.party->GetCharacters()[3]->_abilities[1]->SetLookAt(dx1, dy1);
+			g_game.party->GetCharacters()[3]->_abilities[2]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[2]->Reset();
+		}
+	}*/
 	// Обновляется окно
 	glutPostRedisplay();
 }

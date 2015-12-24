@@ -47,7 +47,8 @@ bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &l
 	vector<Monster*> monsters = _map->GetMonsters();
 	for (Monster* m : monsters)
 	{
-		grid[m->GetPosition().Y][m->GetPosition().X] = WALL;
+		if(!m->IsDead())
+			grid[m->GetPosition().Y][m->GetPosition().X] = WALL;
 	}
 	grid[ay][ax] = BLANK;
 	

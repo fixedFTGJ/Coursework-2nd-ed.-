@@ -10,3 +10,13 @@ PlayableCharacter::PlayableCharacter(int health, int armor, int damage, int dodg
 	_intellegence = intellegence;
 	_stamina = stamina;
 }
+
+void CourseWork::PlayableCharacter::Regenerate()
+{
+	if (_health < _healthLimit)
+	{
+		_health += _stamina / 10;
+	}
+	if (_health > _healthLimit)
+		_health = _healthLimit;
+}
