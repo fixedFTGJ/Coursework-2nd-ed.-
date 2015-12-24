@@ -27,6 +27,7 @@ public:
 		}
 	};
 	virtual bool CanBeUsed() { return _canBeUsed; };
+	virtual void UpdateState() = 0;
 protected:
 	Character* _ctarget;
 	Monster* _mtarget;
@@ -94,11 +95,13 @@ public:
 	{
 		TargetAbility::SetTarget(target);
 	}
-
+	
 	void Do()
 	{
 		_ctarget->Attack(_character);
 	}
+	
+	void UpdateState() {};
 
 	void Reset() {};
 private:
@@ -110,6 +113,11 @@ class Rage : public SelfAbility
 public:
 	Rage(Character* character, int cooldown) : SelfAbility(character, cooldown) {};
 	
+	void UpdateState() 
+	{
+		_exDamage = _character->GetDamage();
+	};
+
 	void Do()
 	{
 		if (_character->GetHealth() > 10)
@@ -147,6 +155,8 @@ public:
 		}
 	}
 
+	void UpdateState() {};
+
 	void Reset() {};
 };
 
@@ -166,6 +176,8 @@ public:
 			}
 		}
 	}
+
+	void UpdateState() {};
 
 	void Reset()
 	{
@@ -190,6 +202,11 @@ public:
 		_character->SetDamage(2*_character->GetDamage());
 	}
 
+	void UpdateState()
+	{
+		_exDamage = _character->GetDamage();
+	};
+
 	void Reset()
 	{
 		_character->SetDamage(_exDamage);
@@ -209,6 +226,11 @@ public:
 		_character->SetDodge(100);
 	}
 
+	void UpdateState() 
+	{
+		_exDodge = _character->GetDodge();
+	};
+
 	void Reset()
 	{
 		_character->SetDodge(_exDodge);
@@ -226,6 +248,8 @@ public:
 	{
 		OnlyKineticAbility::SetTarget(target);
 	}
+
+	void UpdateState() {};
 
 	void Do()
 	{
@@ -249,6 +273,8 @@ public:
 	{
 		OnlyKineticAbility::SetTarget(target);
 	}
+
+	void UpdateState() {};
 
 	void Do()
 	{
@@ -284,6 +310,8 @@ public:
 	{
 		OnlyKineticAbility::SetTarget(target);
 	}
+
+	void UpdateState() {};
 
 	void Do()
 	{
