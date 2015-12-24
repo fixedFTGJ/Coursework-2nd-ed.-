@@ -16,7 +16,7 @@ using namespace std;
 #include "ogl.h"
 #include "glsl.h"
 ///////////////////////////////////////////
-vec4f lightvec(-1, 0, -1, 0);
+//vec4f lightvec(1, 1, 1, 0);
 #include "Mesh.h"
 ///////////////////////////////////////////
 #include "Game.h"
@@ -202,7 +202,7 @@ void DrawScene()
 	}*/
 	g_game.cam->setView();
 	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
-	static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
+	//static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
 	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
 	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
 
@@ -228,7 +228,7 @@ void DrawScene()
 			else
 			{
 				plane.Draw(
-					vec3f(i*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, j*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),		  		// position
+					vec3f(i*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -1, j*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
 						0,
