@@ -197,9 +197,11 @@ void DrawScene()
 	cam.setView();
 	}*/
 	g_game.cam->setView();
-	static Mesh cube("../data/cube.material", "../data/cube.xml");
-	static Mesh plane("../data/Untitled1.material", "../data/Untitled1.xml");
-	static Mesh monster("../data/SW Storm trooper.material", "../data/SW Storm trooper.mesh.xml");
+	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
+	static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
+	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
+	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
+
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/
 	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
@@ -222,7 +224,7 @@ void DrawScene()
 			else
 			{
 				plane.Draw(
-					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0.5, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
+					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -1, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
 						0,
