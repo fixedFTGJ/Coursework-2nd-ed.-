@@ -7,6 +7,7 @@ Monster::Monster(Coordinates position, int health, int armor, int damage, int do
 	_position = position;
 	_orientation = Coordinates(0, 1);
 	_rotation = 0;
+	_isActive = false;
 }
 
 void Monster::SetPosition(int x, int y)
@@ -28,4 +29,14 @@ void CourseWork::Monster::SetOrientation(int x, int y)
 
 	_orientation.X = x;
 	_orientation.Y = y;
+}
+
+void CourseWork::Monster::SwitchActivity()
+{
+	_isActive = !_isActive;
+}
+
+bool CourseWork::Monster::IsActive()
+{
+	return _isActive;
 }

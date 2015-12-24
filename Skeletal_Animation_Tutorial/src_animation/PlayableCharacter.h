@@ -4,7 +4,7 @@
 
 namespace CourseWork
 {
-	class PlayableCharacter : Character
+	class PlayableCharacter : public Character
 	{
 	public:
 		PlayableCharacter(int health, int armor, int damage, int dodge, int strength, int agility, int intellegence, int stamina);

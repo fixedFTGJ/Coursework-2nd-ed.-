@@ -9,10 +9,12 @@ namespace CourseWork
 		void Attack(Character* target);
 		void ReceiveDamage(int damage);
 		bool IsDodge();
+		bool IsDead();
 	private:
 		int _health;
 		int _armor;
 		int _damage;
 		int _dodge;
+		bool _isDead;
 	};
 }

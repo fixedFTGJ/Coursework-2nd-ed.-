@@ -11,3 +11,9 @@ void Game::InitMapGraph()
 		}
 	}
 }
+
+bool Game::IsOver()
+{
+	vector<PlayableCharacter*> characters = party->GetCharacters();
+	return ((characters[0]->IsDead()) && (characters[1]->IsDead()) && (characters[2]->IsDead()) && (characters[3]->IsDead()));
+}

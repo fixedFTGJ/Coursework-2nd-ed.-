@@ -2,6 +2,9 @@
 
 #include "PlayableCharacter.h"
 #include "Environment.h"
+#include <vector>
+
+using namespace std;
 
 namespace CourseWork
 {
@@ -10,9 +13,10 @@ namespace CourseWork
 	public:
 		Party(PlayableCharacter* character0, PlayableCharacter* character1, PlayableCharacter* character2, PlayableCharacter* character3, Coordinates position);
 		Coordinates GetPosition() { return _position; };
+		vector<PlayableCharacter*> GetCharacters();
 		void SetPosition(int x, int y);
 	private:
-		PlayableCharacter* _characters[4];
+		vector <PlayableCharacter*> _characters;
 		Coordinates _position;
 	};
 }

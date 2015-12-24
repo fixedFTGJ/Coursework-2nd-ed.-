@@ -3,7 +3,7 @@
 using namespace CourseWork;
 
 PlayableCharacter::PlayableCharacter(int health, int armor, int damage, int dodge, int strength, int agility, int intellegence, int stamina) :
-	Character(health, armor, damage, dodge)
+	Character(health+stamina, armor, damage+strength, dodge + agility)
 {
 	_strength = strength;
 	_agility = agility;

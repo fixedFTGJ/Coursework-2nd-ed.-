@@ -10,19 +10,23 @@ Character::Character(int health, int armor, int damage, int dodge)
 	_armor = armor;
 	_damage = damage;
 	_dodge = dodge;
+	_isDead = false;
 };
 
 void Character::Attack(Character* target)
 {
-	target->ReceiveDamage(_damage);
+	if(!target->IsDead())
+		target->ReceiveDamage(_damage);
 };
 
 void Character::ReceiveDamage(int damage)
 {
-	if (!IsDodge() && ((damage - _armor) > 0))
+	if ((!IsDodge()) && ((damage - _armor) > 0))
 	{
 		_health = _health - (damage - _armor);
 	}
+	if (_health <= 0)
+		_isDead = !_isDead;
 };
 
 bool Character::IsDodge()
@@ -31,4 +35,9 @@ bool Character::IsDodge()
 		return true;
 	else
 		return false;
-};
+}
+bool CourseWork::Character::IsDead()
+{
+	return _isDead;
+}
+;
