@@ -416,6 +416,11 @@ void Timer(int value)
 				{
 					pl->ReduceCooldown();
 				}
+				loopi(0, 2)
+				{
+					if(!pl->_abilities[i]->CanBeUsed())
+						pl->_abilities[i]->ReduceCooldown();
+				}
 			}
 		}
 
@@ -821,10 +826,11 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[0]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[0]->_abilities[0]->SetTarget(m);
 			g_game.party->GetCharacters()[0]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[0]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[0]->_abilities[0]->Reset();
 		}
 	}
@@ -842,43 +848,52 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[0]->_abilities[1]->CanBeUsed()))
 		{
-			g_game.party->GetCharacters()[0]->_abilities[1];
+			g_game.party->GetCharacters()[0]->_abilities[1]->SetTarget((Character*)m);
 			g_game.party->GetCharacters()[0]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[0]->_abilities[1]->SetCurrentCooldown();
+
 		}
 	}
 
 	if (key == 'g')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[0]->CanBeUsed()))
+		{
 			g_game.party->GetCharacters()[1]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[0]->SetCurrentCooldown();
+		}
+
 	}
 
 	if (key == 't')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[1]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[1]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
 		}
 	}
 
 	if (key == 'h')
 	{
-		if (!g_game.party->GetCharacters()[2]->IsDead())
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (g_game.party->GetCharacters()[2]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[2]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[2]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[2]->_abilities[0]->Reset();
 		}
 	}
 
 	if (key == 'y')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (g_game.party->GetCharacters()[2]->_abilities[1]->CanBeUsed()))
 		{
-			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
-			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
+			g_game.party->GetCharacters()[2]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[2]->_abilities[1]->SetCurrentCooldown();
+			g_game.party->GetCharacters()[2]->_abilities[1]->Reset();
 		}
 	}
 
@@ -895,10 +910,11 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[3]->_abilities[0]->SetTarget(m);
 			g_game.party->GetCharacters()[3]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[3]->_abilities[0]->Reset();
 		}
 	}
@@ -916,11 +932,12 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->_abilities[1]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[3]->_abilities[1]->SetTarget(m);
 			g_game.party->GetCharacters()[3]->_abilities[1]->SetLookAt(dx, dy);
 			g_game.party->GetCharacters()[3]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[1]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[3]->_abilities[1]->Reset();
 		}
 	}

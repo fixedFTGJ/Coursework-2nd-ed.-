@@ -10,21 +10,35 @@ using namespace CourseWork;
 class Ability
 {
 public:
+	Ability(int cooldown) { _cooldown = cooldown; };
 	virtual void Do() = 0;
 	virtual void Reset() = 0;
 	virtual void SetTarget(Monster* target) { _mtarget = target; };
 	virtual void SetTarget(Character* target) { _ctarget = target; };
 	virtual void SetLookAt(int x, int y) { _lookAt.X = x; _lookAt.Y = y; };
+	virtual void SetCurrentCooldown() { _currentCooldown = _cooldown; _canBeUsed = false; };
+	virtual void ReduceCooldown() 
+	{
+		_currentCooldown -= 1;
+		if (_currentCooldown <= 0)
+		{
+			_canBeUsed = true;
+		}
+	};
+	virtual bool CanBeUsed() { return _canBeUsed; };
 protected:
 	Character* _ctarget;
 	Monster* _mtarget;
 	Coordinates _lookAt;
+	int _cooldown;
+	int _currentCooldown;
+	bool _canBeUsed;
 };
 
 class OnlyKineticAbility : public Ability
 {
 public:
-	OnlyKineticAbility() : Ability() {
+	OnlyKineticAbility(int cooldown) : Ability(cooldown) {
 		_mtarget = nullptr;
 		_ctarget = nullptr;
 	};
@@ -35,7 +49,7 @@ public:
 class TargetAbility : public Ability
 {
 public:
-	TargetAbility()
+	TargetAbility(int cooldown) : Ability(cooldown)
 	{
 		_mtarget = nullptr;
 		_ctarget = nullptr;
@@ -47,7 +61,7 @@ public:
 class SelfAbility : public Ability
 {
 public:
-	SelfAbility(Character* character)
+	SelfAbility(Character* character, int cooldown) : Ability(cooldown)
 	{
 		_character = character;
 	}
@@ -60,7 +74,7 @@ protected:
 class MassAbility : public Ability
 {
 public:
-	MassAbility(vector<Character*> characters)
+	MassAbility(vector<Character*> characters, int cooldown) : Ability(cooldown)
 	{
 		_characters = characters;
 	}
@@ -73,7 +87,7 @@ protected:
 class Provoke : public TargetAbility
 {
 public:
-	Provoke(Character* character) : TargetAbility() { _character = character; };
+	Provoke(Character* character, int cooldown) : TargetAbility(cooldown) { _character = character; };
 	
 	void SetTarget(Character* target)
 	{
@@ -93,7 +107,7 @@ private:
 class Rage : public SelfAbility
 {
 public:
-	Rage(Character* character) : SelfAbility(character) {};
+	Rage(Character* character, int cooldown) : SelfAbility(character, cooldown) {};
 	
 	void Do()
 	{
@@ -116,7 +130,7 @@ private:
 class Heal : public MassAbility
 {
 public:
-	Heal(vector<Character*> characters) : MassAbility(characters) {};
+	Heal(vector<Character*> characters, int cooldown) : MassAbility(characters, cooldown) {};
 	
 	void Do()
 	{
@@ -138,7 +152,7 @@ public:
 class Reinforce : public MassAbility
 {
 public:
-	Reinforce(vector<Character*> characters) : MassAbility(characters) {};
+	Reinforce(vector<Character*> characters, int cooldown) : MassAbility(characters, cooldown) {};
 
 	void Do()
 	{
@@ -167,7 +181,7 @@ private:
 class Empower : public SelfAbility
 {
 public:
-	Empower(Character* character) : SelfAbility(character) {};
+	Empower(Character* character, int cooldown) : SelfAbility(character, cooldown) {};
 
 	void Do()
 	{
@@ -186,7 +200,7 @@ private:
 class DodgeMaster : public SelfAbility
 {
 public:
-	DodgeMaster(Character* character) : SelfAbility(character) {};
+	DodgeMaster(Character* character, int cooldown) : SelfAbility(character, cooldown) {};
 
 	void Do()
 	{
@@ -205,7 +219,7 @@ private:
 class Stun : public OnlyKineticAbility
 {
 public:
-	Stun() : OnlyKineticAbility() {};
+	Stun(int cooldown) : OnlyKineticAbility(cooldown) {};
 
 	void SetTarget(Monster* target)
 	{
@@ -228,7 +242,7 @@ public:
 class GetOverHere : public OnlyKineticAbility
 {
 public:
-	GetOverHere() : OnlyKineticAbility() {};
+	GetOverHere(int cooldown) : OnlyKineticAbility(cooldown) {};
 
 	void SetTarget(Monster* target)
 	{
@@ -263,7 +277,7 @@ public:
 class GetAway : public OnlyKineticAbility
 {
 public:
-	GetAway() : OnlyKineticAbility() {};
+	GetAway(int cooldown) : OnlyKineticAbility(cooldown) {};
 
 	void SetTarget(Monster* target)
 	{
