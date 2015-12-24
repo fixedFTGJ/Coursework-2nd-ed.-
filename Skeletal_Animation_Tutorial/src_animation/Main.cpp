@@ -260,9 +260,7 @@ void DrawScene()
 	if (g_game.IsOver())
 	{
 		WL.Win = false;
-		Begin2D();
-		WL.Draw();
-		End2D();
+		WL.isVisible = true;
 	}
 	if (g_game.IsNextLevel())
 	{
@@ -278,9 +276,7 @@ void DrawScene()
 		if (g_game._currentMap == 2)
 		{
 			WL.Win = true;
-			Begin2D();
-			WL.Draw();
-			End2D();
+			WL.isVisible = true;
 		}
 	}
 
