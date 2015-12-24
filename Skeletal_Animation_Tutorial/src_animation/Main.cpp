@@ -26,7 +26,7 @@ vec4f lightvec(-1, 0, -1, 0);
 //////////////////////////////////////////
 Game g_game;
 CollisionChecker checker;
-PathFinder finder(g_game._dungeon->GetMaps()[0]);
+PathFinder* finder = new PathFinder(g_game._dungeon->GetMaps()[g_game._currentMap]);
 bool f = true;
 float x = 0;
 float y = -5;
@@ -87,7 +87,7 @@ void Clear()
 
 Monster* GetMonsterByPosition(int x, int y)
 {
-	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+	vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 	for (Monster* m : monsters)
 	{
 		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y) && (!m->IsDead()))
@@ -167,7 +167,7 @@ void DrawScene()
 	if (f)
 	{
 		//PlaySound("recycle.wav", NULL, SND_FILENAME);
-		g_game.cam = new Camera(g_game._dungeon->GetMaps()[0]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[0]->GetStartPosition().Y*1.0 + 1.0);
+		g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
 		g_game.cam->rotateLoc(90, 0, 1, 0);
 
 
@@ -179,6 +179,10 @@ void DrawScene()
 	BtmM.GetNumeralsN2(party[1]->GetHealth() / 100, party[1]->GetHealth() % 100 / 10, party[1]->GetHealth() % 100 % 10);
 	BtmM.GetNumeralsN3(party[2]->GetHealth() / 100, party[2]->GetHealth() % 100 / 10, party[2]->GetHealth() % 100 % 10);
 	BtmM.GetNumeralsN4(party[3]->GetHealth() / 100, party[3]->GetHealth() % 100 / 10, party[3]->GetHealth() % 100 % 10);
+	BtmM.hL1 = party[0]->GetLevel();
+	BtmM.hL2 = party[1]->GetLevel();
+	BtmM.hL3 = party[2]->GetLevel();
+	BtmM.hL4 = party[3]->GetLevel();
 
 	//cam.setView();
 	//cam.rotateLoc(180, 0, 1, 0);
@@ -204,16 +208,16 @@ void DrawScene()
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/
-	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+	vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 	//////////////////////
-	loopi(0, g_game._dungeon->GetMaps()[0]->GetHeight())
+	loopi(0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetHeight())
 	{
-		loopj(0, g_game._dungeon->GetMaps()[0]->GetWidth())
+		loopj(0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetWidth())
 		{
-			if (g_game._dungeon->GetMaps()[0]->GetPattern()[i][j] == wall)
+			if (g_game._dungeon->GetMaps()[g_game._currentMap]->GetPattern()[i][j] == wall)
 			{
 				cube.Draw(
-					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, 0, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
+					vec3f(i*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, 0, j*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
 						0,
@@ -224,7 +228,7 @@ void DrawScene()
 			else
 			{
 				plane.Draw(
-					vec3f(i*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -1, j*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),		  		// position
+					vec3f(i*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, j*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
 						0,
@@ -240,7 +244,7 @@ void DrawScene()
 		if (!m->IsDead())
 		{
 			monster.Draw(
-				vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[0]->GetStep() + 1.0),
+				vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),
 				vec3f(
 					0,			// rotation
 					m->GetRotation(),
@@ -375,7 +379,7 @@ void Timer(int value)
 	}
 	else
 	{
-		vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+		vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 		vector<PlayableCharacter*> party = g_game.party->GetCharacters();
 		int *px, *py;
 		int len;
@@ -385,7 +389,7 @@ void Timer(int value)
 		{
 			if (((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y)) && !(m->IsDead()))
 			{
-				if (finder.lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len))
+				if (finder->lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len))
 				{
 					if ((len < 9) && (!m->IsActive()))
 						m->SwitchActivity();
@@ -441,6 +445,18 @@ void Timer(int value)
 
 		if (g_game.IsOver())
 			exit(0);
+		if (g_game.IsNextLevel())
+		{
+			if (g_game._currentMap < 6)
+			{
+				g_game._currentMap++;
+				finder = new PathFinder(g_game._dungeon->GetMaps()[g_game._currentMap]);
+				Clear();
+				g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
+				g_game.cam->rotateLoc(90, 0, 1, 0);
+				g_game.party->SetPosition(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y);
+			}
+		}
 		glutPostRedisplay();
 		glutTimerFunc(1000, Timer, 1);
 	}
@@ -483,10 +499,10 @@ void SpecialKeys(int key, int x, int y)
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
 			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
-			vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
-			if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
 			{
 				g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
 				g_game.party->SwitchAbilityToMove();
@@ -516,11 +532,11 @@ void SpecialKeys(int key, int x, int y)
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
 			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
-			vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || checker.Check(g_game.party, m);
 
-			if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+			if (!checker.Check(g_game._dungeon->GetMaps()[g_game._currentMap], g_game.party) && (!throughMonster))
 			{
 				g_game.cam->moveGlob(normal.x, normal.y, normal.z);
 				g_game.party->SwitchAbilityToMove();
@@ -1013,6 +1029,7 @@ void mouseButton(int button, int state, int x, int y) {
 				if (state == GLUT_DOWN)
 				{
 					MM.NewGame.isPressed = true;
+					g_game.ResetGame();
 				}
 				else
 				{

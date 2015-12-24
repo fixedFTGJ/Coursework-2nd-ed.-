@@ -14,6 +14,7 @@ PlayableCharacter::PlayableCharacter(int health, int armor, int damage, int dodg
 	_attackCooldown = 1;
 	_currentAttackCooldown = 0;
 	_canAttack = true;
+	_level = 1;
 }
 
 void CourseWork::PlayableCharacter::Regenerate()

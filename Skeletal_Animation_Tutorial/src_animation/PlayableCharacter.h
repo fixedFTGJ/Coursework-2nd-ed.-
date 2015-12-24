@@ -11,8 +11,10 @@ namespace CourseWork
 		PlayableCharacter(int health, int armor, int damage, int dodge, int strength, int agility, int intellegence, int stamina);
 		void Regenerate();
 		void SetAbilities(vector<Ability*> abilities) { _abilities = abilities; };
-		void GainExp(int exp) {
-			_experience += exp; 
+		void GainExp(int exp) 
+		{
+			if(_level < 10)
+				_experience += exp; 
 		};
 		bool IsLevelUp() { return (_experience >= _expLimit); };
 		int GetCurrentAttackCooldown() { return _currentAttackCooldown; };
@@ -26,6 +28,7 @@ namespace CourseWork
 			_agility += agility;
 			_expLimit *= 2;
 			_experience = 0;
+			_level += 1;
 		};
 		void ReduceCooldown()
 		{
@@ -33,6 +36,7 @@ namespace CourseWork
 			if (_currentAttackCooldown <= 0)
 				_canAttack = true;
 		}
+		int GetLevel() { return _level; };
 		bool CanAttack() { return _canAttack; };
 		vector<Ability*> _abilities;
 	private:
@@ -44,6 +48,7 @@ namespace CourseWork
 		int _expLimit;
 		int _attackCooldown;
 		int _currentAttackCooldown;
+		int _level;
 		bool _canAttack;
 	};
 }
