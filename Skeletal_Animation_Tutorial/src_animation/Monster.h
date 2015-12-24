@@ -16,6 +16,7 @@ namespace CourseWork
 		float GetRotation() { return _rotation; };
 		void SwitchActivity();
 		bool IsActive();
+		int exp;
 	private:
 		bool _isActive;
 		Coordinates _position;

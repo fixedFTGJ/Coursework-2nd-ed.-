@@ -90,7 +90,7 @@ Monster* GetMonsterByPosition(int x, int y)
 	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
 	for (Monster* m : monsters)
 	{
-		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y))
+		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y) && (!m->IsDead()))
 			return m;
 	}
 	return nullptr;
@@ -174,6 +174,11 @@ void DrawScene()
 		//g_game.cam->setView();
 		f = !f;
 	}
+	vector<PlayableCharacter*> party = g_game.party->GetCharacters();
+	BtmM.GetNumeralsN1(party[0]->GetHealth() / 100, party[0]->GetHealth() % 100 / 10, party[0]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN2(party[1]->GetHealth() / 100, party[1]->GetHealth() % 100 / 10, party[1]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN3(party[2]->GetHealth() / 100, party[2]->GetHealth() % 100 / 10, party[2]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN4(party[3]->GetHealth() / 100, party[3]->GetHealth() % 100 / 10, party[3]->GetHealth() % 100 % 10);
 
 	//cam.setView();
 	//cam.rotateLoc(180, 0, 1, 0);
@@ -407,8 +412,21 @@ void Timer(int value)
 			if (!pl->IsDead())
 			{
 				pl->Regenerate();
+				if (!pl->CanAttack())
+				{
+					pl->ReduceCooldown();
+				}
+				loopi(0, 2)
+				{
+					if(!pl->_abilities[i]->CanBeUsed())
+						pl->_abilities[i]->ReduceCooldown();
+				}
 			}
 		}
+
+		if (!g_game.party->CanMove())
+			g_game.party->SwitchAbilityToMove();
+
 		if (g_game.IsOver())
 			exit(0);
 		glutPostRedisplay();
@@ -438,61 +456,67 @@ void SpecialKeys(int key, int x, int y)
 
 	if (key == GLUT_KEY_UP)
 	{
-		vec3f normal = GetLookAt();
-		int dx = 0, dy = 0;
-		if (normal.x == 1.0)
-			dx = -1;
-		if (normal.x == -1.0)
-			dx = 1;
-		if (normal.z == 1.0)
-			dy = -1;
-		if (normal.z == -1.0)
-			dy = 1;
-		bool throughMonster = false;
-		Coordinates temp = g_game.party->GetPosition();
-		g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
-		vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
-		for (Monster* m : monsters)
-			throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
-		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+		if (g_game.party->CanMove())
 		{
-			g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
-
-		}
-		else
-		{
-			g_game.party->SetPosition(temp.X, temp.Y);
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dx = -1;
+			if (normal.x == -1.0)
+				dx = 1;
+			if (normal.z == 1.0)
+				dy = -1;
+			if (normal.z == -1.0)
+				dy = 1;
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
+			if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(normal.x, normal.y, normal.z, -1.0);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
 		}
 	}
 
 	if (key == GLUT_KEY_DOWN)
 	{
-		vec3f normal = GetLookAt();
-		int dx = 0, dy = 0;
-		if (normal.x == 1.0)
-			dx = 1;
-		if (normal.x == -1.0)
-			dx = -1;
-		if (normal.z == 1.0)
-			dy = 1;
-		if (normal.z == -1.0)
-			dy = -1;
-
-		bool throughMonster = false;
-		Coordinates temp = g_game.party->GetPosition();
-		g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
-		vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
-		for (Monster* m : monsters)
-			throughMonster = throughMonster || checker.Check(g_game.party, m);
-
-		if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+		if (g_game.party->CanMove())
 		{
-			g_game.cam->moveGlob(normal.x, normal.y, normal.z);
+			vec3f normal = GetLookAt();
+			int dx = 0, dy = 0;
+			if (normal.x == 1.0)
+				dx = 1;
+			if (normal.x == -1.0)
+				dx = -1;
+			if (normal.z == 1.0)
+				dy = 1;
+			if (normal.z == -1.0)
+				dy = -1;
 
-		}
-		else
-		{
-			g_game.party->SetPosition(temp.X, temp.Y);
+			bool throughMonster = false;
+			Coordinates temp = g_game.party->GetPosition();
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
+			for (Monster* m : monsters)
+				throughMonster = throughMonster || checker.Check(g_game.party, m);
+
+			if (!checker.Check(g_game._dungeon->GetMaps()[0], g_game.party) && (!throughMonster))
+			{
+				g_game.cam->moveGlob(normal.x, normal.y, normal.z);
+				g_game.party->SwitchAbilityToMove();
+			}
+			else
+			{
+				g_game.party->SetPosition(temp.X, temp.Y);
+			}
 		}
 	}
 	if (key == GLUT_KEY_LEFT)
@@ -610,8 +634,39 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (!m->IsDead()) && (g_game.party->GetCharacters()[0]->CanAttack()))
+		{
 			g_game.party->GetCharacters()[0]->Attack(m);
+			g_game.party->GetCharacters()[0]->SetCurrentAttackCooldown();
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'v')
@@ -627,8 +682,39 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[1]->CanAttack()))
+		{
 			g_game.party->GetCharacters()[1]->Attack(m);
+			g_game.party->GetCharacters()[1]->SetCurrentAttackCooldown();
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'b')
@@ -644,8 +730,39 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[2]->CanAttack()))
+		{
 			g_game.party->GetCharacters()[2]->Attack(m);
+			g_game.party->GetCharacters()[2]->SetCurrentAttackCooldown();
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'n')
@@ -661,8 +778,39 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->CanAttack()))
+		{
 			g_game.party->GetCharacters()[3]->Attack(m);
+			g_game.party->GetCharacters()[3]->SetCurrentAttackCooldown();
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'f')
@@ -678,10 +826,11 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[0]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[0]->_abilities[0]->SetTarget(m);
 			g_game.party->GetCharacters()[0]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[0]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[0]->_abilities[0]->Reset();
 		}
 	}
@@ -699,43 +848,52 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[0]->_abilities[1]->CanBeUsed()))
 		{
-			g_game.party->GetCharacters()[0]->_abilities[1];
+			g_game.party->GetCharacters()[0]->_abilities[1]->SetTarget((Character*)m);
 			g_game.party->GetCharacters()[0]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[0]->_abilities[1]->SetCurrentCooldown();
+
 		}
 	}
 
 	if (key == 'g')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[0]->CanBeUsed()))
+		{
 			g_game.party->GetCharacters()[1]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[0]->SetCurrentCooldown();
+		}
+
 	}
 
 	if (key == 't')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[1]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[1]->_abilities[1]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
 		}
 	}
 
 	if (key == 'h')
 	{
-		if (!g_game.party->GetCharacters()[2]->IsDead())
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (g_game.party->GetCharacters()[2]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[2]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[2]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[2]->_abilities[0]->Reset();
 		}
 	}
 
 	if (key == 'y')
 	{
-		if (!g_game.party->GetCharacters()[1]->IsDead())
+		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (g_game.party->GetCharacters()[2]->_abilities[1]->CanBeUsed()))
 		{
-			g_game.party->GetCharacters()[1]->_abilities[1]->Do();
-			g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
+			g_game.party->GetCharacters()[2]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[2]->_abilities[1]->SetCurrentCooldown();
+			g_game.party->GetCharacters()[2]->_abilities[1]->Reset();
 		}
 	}
 
@@ -752,10 +910,11 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->_abilities[0]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[3]->_abilities[0]->SetTarget(m);
 			g_game.party->GetCharacters()[3]->_abilities[0]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[0]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[3]->_abilities[0]->Reset();
 		}
 	}
@@ -773,11 +932,12 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->_abilities[1]->CanBeUsed()))
 		{
 			g_game.party->GetCharacters()[3]->_abilities[1]->SetTarget(m);
 			g_game.party->GetCharacters()[3]->_abilities[1]->SetLookAt(dx, dy);
 			g_game.party->GetCharacters()[3]->_abilities[1]->Do();
+			g_game.party->GetCharacters()[3]->_abilities[1]->SetCurrentCooldown();
 			g_game.party->GetCharacters()[3]->_abilities[1]->Reset();
 		}
 	}
