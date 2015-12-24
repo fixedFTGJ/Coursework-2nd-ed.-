@@ -1088,7 +1088,28 @@ void mouseButton(int button, int state, int x, int y) {
 						BtmM.Drag_in.isPressed = false;
 					}
 				}
+
+				if (BtmM.MainMenu.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.MainMenu.isPressed = true;
+					}
+					else
+					{
+						BtmM.MainMenu.isPressed = false;
+						MM.isVisible = true;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.MainMenu.isPressed = false;
+					}
+				}
 			}
+
 			if (WL.isVisible == true)
 			{
 				if (WL.WinMenu.Press(x, y))
@@ -1158,6 +1179,7 @@ void mouseButton(int button, int state, int x, int y) {
 				else
 				{
 					WL.LoseExit.isPressed = false;
+					
 				}
 			}
 			else
