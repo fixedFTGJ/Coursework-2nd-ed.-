@@ -3,17 +3,17 @@
 using namespace std;
 using namespace CourseWork;
 
-PathFinder::PathFinder(Map* map)
+PathFinder::PathFinder(/*Map* map*/)
 {
-	_map = map;
-	int W = _map->GetWidth(), H = _map->GetHeight();
-	grid = new int*[H];
+	//_map = map;
+	/*int W = _map->GetWidth(), H = _map->GetHeight();*/
+	/*grid = new int*[H];*/
 	/*int** matrix = _map->GetPattern();*/
 
-	for (int i = 0; i < H; i++)
+	/*for (int i = 0; i < H; i++)
 	{
 		grid[i] = new int[W];
-	}
+	}*/
 
 	/*for (int i = 0; i < H; i++)
 	{
@@ -28,9 +28,17 @@ PathFinder::PathFinder(Map* map)
 }
 
 
-bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &len)   // поиск пути из €чейки (ax, ay) в €чейку (bx, by)
+bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &len, Map* _map)   // поиск пути из €чейки (ax, ay) в €чейку (bx, by)
 {
 	int W = _map->GetWidth(), H = _map->GetHeight();
+
+	grid = new int*[H];
+
+	for (int i = 0; i < H; i++)
+	{
+		grid[i] = new int[W];
+	}
+
 	int** matrix = _map->GetPattern();
 	px = new int[W*H];
 	py = new int[W*H];
@@ -47,11 +55,20 @@ bool PathFinder::lee(int ax, int ay, int bx, int by , int* &px, int* &py, int &l
 	vector<Monster*> monsters = _map->GetMonsters();
 	for (Monster* m : monsters)
 	{
-		if(!m->IsDead())
+		if(!(m->IsDead()))
 			grid[m->GetPosition().Y][m->GetPosition().X] = WALL;
 	}
 	grid[ay][ax] = BLANK;
-	
+
+	for (int i = 0; i < H; i++)
+	{
+		for (int j = 0; j < W; j++)
+		{
+			cout << grid[i][j];
+		}
+		cout << endl;
+	}
+	cout << endl;
 	//////////////////
 	int dx[4] = { 1, 0, -1, 0 };   // смещени€, соответствующие сосед€м €чейки
 	int dy[4] = { 0, 1, 0, -1 };   // справа, снизу, слева и сверху

@@ -28,7 +28,7 @@ vec4f lightvec(1, 1, 1, 1);
 //////////////////////////////////////////
 Game g_game;
 CollisionChecker checker;
-PathFinder* finder = new PathFinder(g_game._dungeon->GetMaps()[g_game._currentMap]);
+PathFinder* finder = new PathFinder(/*g_game._dungeon->GetMaps()[g_game._currentMap]*/);
 bool f = true;
 float x = 0;
 float y = -5;
@@ -257,28 +257,6 @@ void DrawScene()
 		}
 	}
 
-	if (g_game.IsOver())
-	{
-		WL.Win = false;
-		WL.isVisible = true;
-	}
-	if (g_game.IsNextLevel())
-	{
-		if (g_game._currentMap < 2)
-		{
-			g_game._currentMap++;
-			finder = new PathFinder(g_game._dungeon->GetMaps()[g_game._currentMap]);
-			Clear();
-			g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
-			g_game.cam->rotateLoc(90, 0, 1, 0);
-			g_game.party->SetPosition(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y);
-		}
-		if (g_game._currentMap == 2)
-		{
-			WL.Win = true;
-			WL.isVisible = true;
-		}
-	}
 
 	/*halo.Draw(
 	vec3f(10, -0.5, 10),			// position
@@ -418,7 +396,7 @@ void Timer(int value)
 		{
 			if (((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y)) && !(m->IsDead()))
 			{
-				if (finder->lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len))
+				if (finder->lee(m->GetPosition().X, m->GetPosition().Y, g_game.party->GetPosition().X, g_game.party->GetPosition().Y, px, py, len, g_game._dungeon->GetMaps()[g_game._currentMap]))
 				{
 					if ((len < 9) && (!m->IsActive()))
 						m->SwitchActivity();
@@ -492,6 +470,28 @@ void Timer(int value)
 				WL.Win = true;
 			}
 		}*/
+		if (g_game.IsOver())
+		{
+			WL.Win = false;
+			WL.isVisible = true;
+		}
+		if (g_game.IsNextLevel())
+		{
+			if (g_game._currentMap < 2)
+			{
+				g_game._currentMap++;
+				finder = new PathFinder(/*g_game._dungeon->GetMaps()[g_game._currentMap]*/);
+				Clear();
+				g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
+				g_game.cam->rotateLoc(90, 0, 1, 0);
+				g_game.party->SetPosition(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y);
+			}
+			if (g_game._currentMap == 2)
+			{
+				WL.Win = true;
+				WL.isVisible = true;
+			}
+		}
 		glutPostRedisplay();
 		glutTimerFunc(1000, Timer, 1);
 	}
@@ -894,12 +894,12 @@ void mouseButton(int button, int state, int x, int y) {
 					if (state == GLUT_DOWN)
 					{
 						BtmM.Buff.isPressed = true;
-						if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[1]->CanBeUsed()))
+						/*if ((!g_game.party->GetCharacters()[1]->IsDead()) && (g_game.party->GetCharacters()[1]->_abilities[1]->CanBeUsed()))
 						{
 							g_game.party->GetCharacters()[1]->_abilities[1]->Do();
 							g_game.party->GetCharacters()[1]->_abilities[1]->SetCurrentCooldown();
 							g_game.party->GetCharacters()[1]->_abilities[1]->Reset();
-						}
+						}*/
 					}
 					else
 					{
