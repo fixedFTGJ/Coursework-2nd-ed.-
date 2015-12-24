@@ -28,12 +28,16 @@ namespace CourseWork {
 		void InitTexture() {
 			Texture = new CTexture();
 			Texture->LoadTexture(IL_JPG, "source/MainMenu.jpg", &Textures[0]);
+
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/new.png", &Textures[1]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/newPr.png", &Textures[2]);
+
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/cont.png", &Textures[3]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/contPr.png", &Textures[4]);
+
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/opt.png", &Textures[5]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/optPr.png", &Textures[6]);
+
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/ex.png", &Textures[7]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/mainmenu/exPr.png", &Textures[8]);
 

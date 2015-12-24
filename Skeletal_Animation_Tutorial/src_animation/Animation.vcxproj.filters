@@ -149,11 +149,22 @@
     <ClInclude Include="GameMenus.h">
       <Filter>src\GameInterface\Menus</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Ability.h">
       <Filter>src</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Numerals.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="WinAndGameOver.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
+>>>>>>> f43c7b359683fba17ef5ca03b55351f59e1c2ebc
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

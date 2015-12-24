@@ -219,10 +219,12 @@
     <ClInclude Include="MeshAnimation.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterBehavior.h" />
+    <ClInclude Include="Numerals.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="PlayableCharacter.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="WinAndGameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\include\glew.cpp" />
