@@ -29,6 +29,12 @@ namespace CourseWork {
 			c42 = 2;
 			c43 = 1;
 
+			hL1 = 2;
+			hL2 = 1;
+			hL3 = 3;
+			hL4 = 4;
+
+
 			isVisible = true;
 
 		};
@@ -36,7 +42,9 @@ namespace CourseWork {
 		/////////////////   TEXTURES    /////////////////
 
 		CTexture *Texture;
-		TextureImage Textures[21];
+
+
+		TextureImage Textures[23];
 		
 
 		void InitTexture() {
@@ -62,11 +70,14 @@ namespace CourseWork {
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/StunPr.png", &Textures[14]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/Push.png", &Textures[15]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/PushPr.png", &Textures[16]);
-			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/Drag_in.png", &Textures[17]);
-			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/Drag_inPr.png", &Textures[18]);
 
-			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenu.png", &Textures[19]);
-			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenuPr.png", &Textures[20]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenu.png", &Textures[17]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenuPr.png", &Textures[18]);
+
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Jug.png", &Textures[19]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Med.png", &Textures[20]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Ass.png", &Textures[21]);
+			Texture->LoadTexture(IL_PNG, "source/HeroPort/Kin.png", &Textures[22]);
 
 			Power.GetCoord(123, yUp - 84, 123 + Textures[1].width, yUp - 84 + Textures[1].height);
 			Provocation.GetCoord(123, yUp - 112, 123 + Textures[3].width, yUp - 112 + Textures[3].height);
@@ -76,28 +87,34 @@ namespace CourseWork {
 			Evasion.GetCoord(583, yUp - 112, 583 + Textures[11].width, yUp - 112 + Textures[11].height);
 			Stun.GetCoord(813, yUp - 84, 813 + Textures[13].width, yUp - 84 + Textures[13].height);
 			Push.GetCoord(813, yUp - 112, 813 + Textures[15].width, yUp - 112 + Textures[15].height);
-			Drag_in.GetCoord(813, yUp - 140, 813 + Textures[17].width, yUp - 140 + Textures[17].height);
 
-			MainMenu.GetCoord(1110, yUp - 63, 1110 + Textures[19].width, yUp - 63 + Textures[19].height);
+			MainMenu.GetCoord(1110, yUp - 63, 1110 + Textures[17].width, yUp - 63 + Textures[17].height);
+
+			Jug.GetCoord(30, yUp - 140, 30 + Textures[19].width, yUp - 140 + Textures[19].height);
+			Med.GetCoord(260, yUp - 140, 260 + Textures[20].width, yUp - 140 + Textures[20].height);
+			Ass.GetCoord(490, yUp - 140, 490 + Textures[21].width, yUp - 140 + Textures[21].height);
+			Kin.GetCoord(720, yUp - 140, 720 + Textures[22].width, yUp - 140 + Textures[22].height);
 
 			InitNumerals();
+		    InitHeroLvl();
 		}
 
 		/////////////////   TEXTURES    /////////////////
+		CTexture *Texture1;
 		TextureImage NumTextures[10];
 
 		void InitNumerals() {
-			Texture = new CTexture();
-			Texture->LoadTexture(IL_PNG, "source/numerals/0.png", &NumTextures[0]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/1.png", &NumTextures[1]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/2.png", &NumTextures[2]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/3.png", &NumTextures[3]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/4.png", &NumTextures[4]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/5.png", &NumTextures[5]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/6.png", &NumTextures[6]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/7.png", &NumTextures[7]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/8.png", &NumTextures[8]);
-			Texture->LoadTexture(IL_PNG, "source/numerals/9.png", &NumTextures[9]);
+			Texture1 = new CTexture();
+			Texture1->LoadTexture(IL_PNG, "source/numerals/0.png", &NumTextures[0]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/1.png", &NumTextures[1]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/2.png", &NumTextures[2]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/3.png", &NumTextures[3]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/4.png", &NumTextures[4]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/5.png", &NumTextures[5]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/6.png", &NumTextures[6]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/7.png", &NumTextures[7]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/8.png", &NumTextures[8]);
+			Texture1->LoadTexture(IL_PNG, "source/numerals/9.png", &NumTextures[9]);
 
 			N11.GetCoord(35, yUp - 170, 35 + NumTextures[c11].width, yUp - 170 + NumTextures[c11].height);
 			N12.GetCoord(60, yUp - 170, 60 + NumTextures[c12].width, yUp - 170 + NumTextures[c12].height);
@@ -115,6 +132,29 @@ namespace CourseWork {
 			N42.GetCoord(750, yUp - 170, 750 + NumTextures[c42].width, yUp - 170 + NumTextures[c42].height);
 			N43.GetCoord(775, yUp - 170, 775 + NumTextures[c43].width, yUp - 170 + NumTextures[c43].height);
 		}
+		
+		CTexture *Texture2;
+		TextureImage LvlTextures[9];
+
+		void InitHeroLvl() {
+			Texture2 = new CTexture();
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/1.png", &LvlTextures[1]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/2.png", &LvlTextures[2]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/3.png", &LvlTextures[3]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/4.png", &LvlTextures[4]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/5.png", &LvlTextures[5]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/6.png", &LvlTextures[6]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/7.png", &LvlTextures[7]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/8.png", &LvlTextures[8]);
+			Texture2->LoadTexture(IL_PNG, "source/herolevel/9.png", &LvlTextures[9]);
+
+			L1.GetCoord(200, yUp - 170, 200 + LvlTextures[hL1].width, yUp - 170 + LvlTextures[hL1].height);
+			L2.GetCoord(430, yUp - 170, 430 + LvlTextures[hL2].width, yUp - 170 + LvlTextures[hL2].height);
+			L3.GetCoord(660, yUp - 170, 660 + LvlTextures[hL3].width, yUp - 170 + LvlTextures[hL3].height);
+			L4.GetCoord(890, yUp - 170, 890 + LvlTextures[hL4].width, yUp - 170 + LvlTextures[hL4].height);
+		}
+
+
 
 		void DrawNumerals() {
 			N11.Draw(NumTextures[c11]);
@@ -132,6 +172,12 @@ namespace CourseWork {
 			N41.Draw(NumTextures[c41]);
 			N42.Draw(NumTextures[c42]);
 			N43.Draw(NumTextures[c43]);
+
+			L1.Draw(LvlTextures[hL1]);
+			L2.Draw(LvlTextures[hL2]);
+			L3.Draw(LvlTextures[hL3]);
+			L4.Draw(LvlTextures[hL4]);
+
 		}
 
 		void Draw() {
@@ -215,22 +261,49 @@ namespace CourseWork {
 				Push.Draw(Textures[16]);
 			}
 
-			if (!Drag_in.isPressed)
-			{
-				Drag_in.Draw(Textures[17]);
-			}
-			else
-			{
-				Drag_in.Draw(Textures[18]);
-			}
-
 			if (!MainMenu.isPressed)
 			{
-				MainMenu.Draw(Textures[19]);
+				MainMenu.Draw(Textures[17]);
 			}
 			else
 			{
-				MainMenu.Draw(Textures[20]);
+				MainMenu.Draw(Textures[18]);
+			}
+
+			if (!Jug.isPressed)
+			{
+				Jug.Draw(Textures[19]);
+			}
+			else
+			{
+				Jug.Draw(Textures[19]);
+			}
+
+			if (!Med.isPressed)
+			{
+				Med.Draw(Textures[20]);
+			}
+			else
+			{
+				Med.Draw(Textures[20]);
+			}
+
+			if (!Ass.isPressed)
+			{
+				Ass.Draw(Textures[21]);
+			}
+			else
+			{
+				Ass.Draw(Textures[21]);
+			}
+
+			if (!Kin.isPressed)
+			{
+				Kin.Draw(Textures[22]);
+			}
+			else
+			{
+				Kin.Draw(Textures[22]);
 			}
 
 			DrawNumerals();
@@ -273,10 +346,14 @@ namespace CourseWork {
 		Button Evasion;
 		Button Stun;
 		Button Push;
-		Button Drag_in;
 
 		Button MainMenu;
 		Button Inventory;
+
+		Button Jug;
+		Button Med;
+		Button Ass;
+		Button Kin;
 
 		Button N11;
 		Button N12;
@@ -291,6 +368,11 @@ namespace CourseWork {
 		Button N42;
 		Button N43;
 
+		Button L1;
+		Button L2;
+		Button L3;
+		Button L4;
+
 		int c11;
 		int c12;
 		int c13;
@@ -303,6 +385,11 @@ namespace CourseWork {
 		int c41;
 		int c42;
 		int c43;
+
+		int hL1;
+		int hL2;
+		int hL3;
+		int hL4;
 
 
 	private:
