@@ -17,6 +17,8 @@ using namespace std;
 #include "glsl.h"
 ///////////////////////////////////////////
 vec4f lightvec(1, 1, 1, 1);
+
+
 #include "Mesh.h"
 ///////////////////////////////////////////
 #include "Game.h"
@@ -207,6 +209,7 @@ void DrawScene()
 	//static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
 	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
 	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
+	static Mesh monster("../data/badboy/badboy.material", "../data/badboy/badboy.xml");
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/

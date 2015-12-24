@@ -1,18 +1,18 @@
-material Crate1_Material_002
+material Superior_Iron_Man_superiorIronman1
 {
 	technique
 	{
 		pass
 		{
 			shading phong
-			ambient 0.12 0.12 0.12 1
+			ambient 0 0 0 1
 			diffuse 1 1 1 1
-			specular 0 0 0 0
+			specular 0 0 0 125.54
 			emissive 0 0 0
 
 			texture_unit
 			{
-				texture texture.jpg
+				texture superiorironman_d.tga
 				tex_coord_set 0
 				colour_op modulate
 				scale 1 1
