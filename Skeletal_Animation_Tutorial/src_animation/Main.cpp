@@ -90,7 +90,7 @@ Monster* GetMonsterByPosition(int x, int y)
 	vector<Monster*> monsters = g_game._dungeon->GetMaps()[0]->GetMonsters();
 	for (Monster* m : monsters)
 	{
-		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y))
+		if ((m->GetPosition().X == x) && (m->GetPosition().Y == y) && (!m->IsDead()))
 			return m;
 	}
 	return nullptr;
@@ -174,6 +174,11 @@ void DrawScene()
 		//g_game.cam->setView();
 		f = !f;
 	}
+	vector<PlayableCharacter*> party = g_game.party->GetCharacters();
+	BtmM.GetNumeralsN1(party[0]->GetHealth() / 100, party[0]->GetHealth() % 100 / 10, party[0]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN2(party[1]->GetHealth() / 100, party[1]->GetHealth() % 100 / 10, party[1]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN3(party[2]->GetHealth() / 100, party[2]->GetHealth() % 100 / 10, party[2]->GetHealth() % 100 % 10);
+	BtmM.GetNumeralsN4(party[3]->GetHealth() / 100, party[3]->GetHealth() % 100 / 10, party[3]->GetHealth() % 100 % 10);
 
 	//cam.setView();
 	//cam.rotateLoc(180, 0, 1, 0);
@@ -409,6 +414,7 @@ void Timer(int value)
 				pl->Regenerate();
 			}
 		}
+
 		if (g_game.IsOver())
 			exit(0);
 		glutPostRedisplay();
@@ -610,8 +616,38 @@ void OtherKeys(unsigned char key, int x, int y)
 		if (normal.z == -1.0)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
-		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr))
+		if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (!m->IsDead()))
+		{
 			g_game.party->GetCharacters()[0]->Attack(m);
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'v')
@@ -628,7 +664,37 @@ void OtherKeys(unsigned char key, int x, int y)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
 		if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr))
+		{
 			g_game.party->GetCharacters()[1]->Attack(m);
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'b')
@@ -645,7 +711,37 @@ void OtherKeys(unsigned char key, int x, int y)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
 		if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr))
+		{
 			g_game.party->GetCharacters()[2]->Attack(m);
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp / 2);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'n')
@@ -662,7 +758,37 @@ void OtherKeys(unsigned char key, int x, int y)
 			dy = 1;
 		Monster* m = GetMonsterByPosition(g_game.party->GetPosition().X + dx, g_game.party->GetPosition().Y + dy);
 		if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr))
+		{
 			g_game.party->GetCharacters()[3]->Attack(m);
+			if (m->IsDead())
+			{
+				if ((!g_game.party->GetCharacters()[0]->IsDead()))
+					g_game.party->GetCharacters()[0]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[1]->IsDead()))
+					g_game.party->GetCharacters()[1]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[2]->IsDead()))
+					g_game.party->GetCharacters()[2]->GainExp(m->exp / 2);
+				if ((!g_game.party->GetCharacters()[3]->IsDead()))
+					g_game.party->GetCharacters()[3]->GainExp(m->exp);
+
+				if ((g_game.party->GetCharacters()[0]->IsLevelUp()) && (!g_game.party->GetCharacters()[0]->IsDead()))
+				{
+					g_game.party->GetCharacters()[0]->LevelUp(5, 1, 1, 10);
+				}
+				if ((g_game.party->GetCharacters()[1]->IsLevelUp()) && (!g_game.party->GetCharacters()[1]->IsDead()))
+				{
+					g_game.party->GetCharacters()[1]->LevelUp(5, 1, 10, 1);
+				}
+				if ((g_game.party->GetCharacters()[2]->IsLevelUp()) && (!g_game.party->GetCharacters()[2]->IsDead()))
+				{
+					g_game.party->GetCharacters()[2]->LevelUp(5, 10, 1, 1);
+				}
+				if ((g_game.party->GetCharacters()[3]->IsLevelUp()) && (!g_game.party->GetCharacters()[3]->IsDead()))
+				{
+					g_game.party->GetCharacters()[3]->LevelUp(1, 5, 10, 1);
+				}
+			}
+		}
 	}
 
 	if (key == 'f')

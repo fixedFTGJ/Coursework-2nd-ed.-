@@ -9,6 +9,8 @@ PlayableCharacter::PlayableCharacter(int health, int armor, int damage, int dodg
 	_agility = agility;
 	_intellegence = intellegence;
 	_stamina = stamina;
+	_expLimit = 200;
+	_experience = 0;
 }
 
 void CourseWork::PlayableCharacter::Regenerate()
