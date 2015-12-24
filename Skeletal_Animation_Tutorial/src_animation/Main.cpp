@@ -201,9 +201,11 @@ void DrawScene()
 	cam.setView();
 	}*/
 	g_game.cam->setView();
-	static Mesh cube("../data/cube.material", "../data/cube.xml");
-	static Mesh plane("../data/Untitled1.material", "../data/Untitled1.xml");
-	static Mesh monster("../data/SW Storm trooper.material", "../data/SW Storm trooper.mesh.xml");
+	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
+	static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
+	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
+	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
+
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/
 	vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
