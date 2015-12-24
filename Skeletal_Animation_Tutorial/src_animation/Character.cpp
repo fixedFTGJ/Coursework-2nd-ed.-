@@ -10,6 +10,7 @@ Character::Character(int health, int armor, int damage, int dodge)
 	_armor = armor;
 	_damage = damage;
 	_dodge = dodge;
+	_healthLimit = health;
 	_isDead = false;
 };
 
