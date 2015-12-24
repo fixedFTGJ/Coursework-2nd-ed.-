@@ -205,7 +205,7 @@ void DrawScene()
 	g_game.cam->setView();
 	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
 	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
-	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
+	static Mesh monster("../data/badboy/badboy.material", "../data/badboy/badboy.xml");
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/
