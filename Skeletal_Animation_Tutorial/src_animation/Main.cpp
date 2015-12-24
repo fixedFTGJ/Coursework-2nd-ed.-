@@ -607,6 +607,7 @@ void SpecialKeys(int key, int x, int y)
 		}
 	}
 
+
 	// Обновляется окно
 	glutPostRedisplay();
 };
@@ -1032,6 +1033,8 @@ void mouseButton(int button, int state, int x, int y) {
 				{
 					MM.NewGame.isPressed = false;
 					MM.isVisible = false;
+					BtmM.isVisible = true;
+					BtmM.Power.isPressed = false;
 				}
 			}
 			else

@@ -35,7 +35,7 @@ namespace CourseWork {
 			hL4 = 4;
 
 
-			isVisible = true;
+			isVisible = false;
 
 		};
 
@@ -134,7 +134,7 @@ namespace CourseWork {
 		}
 		
 		CTexture *Texture2;
-		TextureImage LvlTextures[9];
+		TextureImage LvlTextures[10];
 
 		void InitHeroLvl() {
 			Texture2 = new CTexture();
@@ -147,6 +147,7 @@ namespace CourseWork {
 			Texture2->LoadTexture(IL_PNG, "source/herolevel/7.png", &LvlTextures[7]);
 			Texture2->LoadTexture(IL_PNG, "source/herolevel/8.png", &LvlTextures[8]);
 			Texture2->LoadTexture(IL_PNG, "source/herolevel/9.png", &LvlTextures[9]);
+			
 
 			L1.GetCoord(200, yUp - 170, 200 + LvlTextures[hL1].width, yUp - 170 + LvlTextures[hL1].height);
 			L2.GetCoord(430, yUp - 170, 430 + LvlTextures[hL2].width, yUp - 170 + LvlTextures[hL2].height);
