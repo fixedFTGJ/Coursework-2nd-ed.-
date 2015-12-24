@@ -11,6 +11,9 @@ PlayableCharacter::PlayableCharacter(int health, int armor, int damage, int dodg
 	_stamina = stamina;
 	_expLimit = 200;
 	_experience = 0;
+	_attackCooldown = 1;
+	_currentAttackCooldown = 0;
+	_canAttack = true;
 }
 
 void CourseWork::PlayableCharacter::Regenerate()

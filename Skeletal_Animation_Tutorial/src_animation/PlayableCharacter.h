@@ -15,6 +15,8 @@ namespace CourseWork
 			_experience += exp; 
 		};
 		bool IsLevelUp() { return (_experience >= _expLimit); };
+		int GetCurrentAttackCooldown() { return _currentAttackCooldown; };
+		void SetCurrentAttackCooldown() { _currentAttackCooldown = _attackCooldown; _canAttack = false; };
 		void LevelUp(int strength, int agility, int intellegence, int stamina)
 		{
 			_healthLimit += stamina;
@@ -25,6 +27,13 @@ namespace CourseWork
 			_expLimit *= 2;
 			_experience = 0;
 		};
+		void ReduceCooldown()
+		{
+			_currentAttackCooldown -= 1;
+			if (_currentAttackCooldown <= 0)
+				_canAttack = true;
+		}
+		bool CanAttack() { return _canAttack; };
 		vector<Ability*> _abilities;
 	private:
 		int _strength;
@@ -33,5 +42,8 @@ namespace CourseWork
 		int _stamina;
 		int _experience;
 		int _expLimit;
+		int _attackCooldown;
+		int _currentAttackCooldown;
+		bool _canAttack;
 	};
 }

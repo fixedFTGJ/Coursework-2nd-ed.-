@@ -15,9 +15,12 @@ namespace CourseWork
 		Coordinates GetPosition() { return _position; };
 		vector<PlayableCharacter*> GetCharacters();
 		void SetPosition(int x, int y);
+		bool CanMove() { return _canMove; };
+		void SwitchAbilityToMove() { _canMove = !_canMove; };
 	private:
 		vector <PlayableCharacter*> _characters;
 		Coordinates _position;
+		bool _canMove;
 	};
 }
 

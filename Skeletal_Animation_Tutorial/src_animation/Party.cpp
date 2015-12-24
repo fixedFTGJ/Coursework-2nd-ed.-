@@ -9,6 +9,7 @@ Party::Party(PlayableCharacter* character0, PlayableCharacter* character1, Playa
 	_characters.push_back(character2);
 	_characters.push_back(character3);
 	_position = position;
+	_canMove = true;
 }
 
 vector<PlayableCharacter*> CourseWork::Party::GetCharacters()
