@@ -221,7 +221,7 @@ public:
 
 		matrix44 mat;
 		glGetFloatv(GL_MODELVIEW_MATRIX,  &mat.m[0][0]);
-		vec4f lightvec_objspc=mat*lightvec;
+		vec4f lightvec_objspc = mat*lightvec;
 		lightvec_objspc.norm();
 
 		glPushMatrix();		
