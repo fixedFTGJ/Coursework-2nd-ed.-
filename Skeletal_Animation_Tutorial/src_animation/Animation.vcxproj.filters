@@ -149,6 +149,12 @@
     <ClInclude Include="GameMenus.h">
       <Filter>src\GameInterface\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="Numerals.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="WinAndGameOver.h">
+      <Filter>src\GameInterface\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

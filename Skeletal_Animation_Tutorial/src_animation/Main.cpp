@@ -55,6 +55,7 @@ float zInterf = 0.0f;
 BottomMenu BtmM = BottomMenu();
 
 MainMenu MM = MainMenu();
+WinLose WL = WinLose();
 
 float angle = 0.0;
 float lx = 0.0f, lz = -1.0f;
@@ -233,14 +234,7 @@ void DrawScene()
 		0,							// LOD level
 		0);*/
 	
-	if (BtmM.isVisible)
-	{
-		BtmM.Draw();
-	}
-	if (MM.isVisible)
-	{
-		MM.Draw();
-	}
+
 
 	/////////////////////
 	/*cube.Draw(
@@ -335,6 +329,19 @@ void DrawScene()
 		/*Begin2D();
 		DrawQuad(0.0f, 0.0f, 400.0f, 768.0f, 4);
 		End2D();*/
+
+		if (BtmM.isVisible)
+		{
+			BtmM.Draw();
+		}
+		if (MM.isVisible)
+		{
+			MM.Draw();
+		}
+		if (WL.isVisible)
+		{
+			WL.Draw();
+		}
 
 	glutSwapBuffers();
 }
@@ -496,6 +503,30 @@ void SpecialKeys(int key, int x, int y)
 		}
 	}
 
+	if (key == GLUT_KEY_F3) {
+		WL.Win = true;
+		if (WL.isVisible)
+		{
+			WL.isVisible = false;
+		}
+		else
+		{
+			WL.isVisible = true;
+		}
+	}
+
+	if (key == GLUT_KEY_F4) {
+		WL.Win = false;
+		if (WL.isVisible)
+		{
+			WL.isVisible = false;
+		}
+		else
+		{
+			WL.isVisible = true;
+		}
+	}
+
 	
 	// Обновляется окно
 	glutPostRedisplay();
@@ -556,85 +587,347 @@ void mouseMove(int x, int y) {
 
 void mouseButton(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON) {
-
-		if (MM.NewGame.Press(x, y))
+		if (MM.isVisible)
 		{
-			if (state == GLUT_DOWN)
+			if (MM.NewGame.Press(x, y))
 			{
-				MM.NewGame.isPressed = true;
+				if (state == GLUT_DOWN)
+				{
+					MM.NewGame.isPressed = true;
+				}
+				else
+				{
+					MM.NewGame.isPressed = false;
+					MM.isVisible = false;
+				}
 			}
 			else
 			{
-				MM.NewGame.isPressed = false;
-				MM.isVisible = false;
+				if (state == GLUT_UP)
+				{
+					MM.NewGame.isPressed = false;
+				}
+			}
+
+			if (MM.Continue.Press(x, y))
+			{
+				if (state == GLUT_DOWN)
+				{
+					MM.Continue.isPressed = true;
+				}
+				else
+				{
+					MM.Continue.isPressed = false;
+					MM.isVisible = false;
+				}
+			}
+			else
+			{
+				if (state == GLUT_UP)
+				{
+					MM.Continue.isPressed = false;
+				}
+			}
+
+			if (MM.Options.Press(x, y))
+			{
+				if (state == GLUT_DOWN)
+				{
+					MM.Options.isPressed = true;
+				}
+				else
+				{
+					MM.Options.isPressed = false;
+				}
+			}
+			else
+			{
+				if (state == GLUT_UP)
+				{
+					MM.Options.isPressed = false;
+				}
+			}
+
+			if (MM.Exit.Press(x, y))
+			{
+				if (state == GLUT_DOWN)
+				{
+					MM.Exit.isPressed = true;
+				}
+				else
+				{
+					MM.Exit.isPressed = false;
+					exit(0);
+				}
+			}
+			else
+			{
+				if (state == GLUT_UP)
+				{
+					MM.Exit.isPressed = false;
+				}
 			}
 		}
 		else
 		{
-			if (state == GLUT_UP)
+			if (BtmM.isVisible == true)
 			{
-				MM.NewGame.isPressed = false;
-			}
-		}
+				if (BtmM.Power.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Power.isPressed = true;
+					}
+					else
+					{
+						BtmM.Power.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Power.isPressed = false;
+					}
+				}
 
-		if (MM.Continue.Press(x, y))
-		{
-			if (state == GLUT_DOWN)
+				if (BtmM.Provocation.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Provocation.isPressed = true;
+					}
+					else
+					{
+						BtmM.Provocation.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Provocation.isPressed = false;
+					}
+				}
+
+				if (BtmM.Heal.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Heal.isPressed = true;
+					}
+					else
+					{
+						BtmM.Heal.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Heal.isPressed = false;
+					}
+				}
+
+				if (BtmM.Buff.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Buff.isPressed = true;
+					}
+					else
+					{
+						BtmM.Buff.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Buff.isPressed = false;
+					}
+				}
+
+				if (BtmM.Backstab.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Backstab.isPressed = true;
+					}
+					else
+					{
+						BtmM.Backstab.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Backstab.isPressed = false;
+					}
+				}
+
+				if (BtmM.Evasion.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Evasion.isPressed = true;
+					}
+					else
+					{
+						BtmM.Evasion.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Evasion.isPressed = false;
+					}
+				}
+
+				if (BtmM.Stun.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Stun.isPressed = true;
+					}
+					else
+					{
+						BtmM.Stun.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Stun.isPressed = false;
+					}
+				}
+
+				if (BtmM.Push.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Push.isPressed = true;
+					}
+					else
+					{
+						BtmM.Push.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Push.isPressed = false;
+					}
+				}
+
+				if (BtmM.Drag_in.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						BtmM.Drag_in.isPressed = true;
+					}
+					else
+					{
+						BtmM.Drag_in.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						BtmM.Drag_in.isPressed = false;
+					}
+				}
+			}
+			if (WL.isVisible == true)
 			{
-				MM.Continue.isPressed = true;
+				if (WL.WinMenu.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						WL.WinMenu.isPressed = true;
+					}
+					else
+					{
+						WL.WinMenu.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						WL.WinMenu.isPressed = false;
+					}
+				}
+
+				if (WL.WinExit.Press(x, y))
+				{
+					if (state == GLUT_DOWN)
+					{
+						WL.WinExit.isPressed = true;
+					}
+					else
+					{
+						WL.WinExit.isPressed = false;
+					}
+				}
+				else
+				{
+					if (state == GLUT_UP)
+					{
+						WL.WinExit.isPressed = false;
+					}
+				}
+			}
+
+			if (WL.LoseMenu.Press(x, y))
+			{
+				if (state == GLUT_DOWN)
+				{
+					WL.LoseMenu.isPressed = true;
+				}
+				else
+				{
+					WL.LoseMenu.isPressed = false;
+				}
 			}
 			else
 			{
-				MM.Continue.isPressed = false;
-				MM.isVisible = false;
+				if (state == GLUT_UP)
+				{
+					WL.LoseMenu.isPressed = false;
+				}
 			}
-		}
-		else
-		{
-			if (state == GLUT_UP)
-			{
-				MM.Continue.isPressed = false;
-			}
-		}
 
-		if (MM.Options.Press(x, y))
-		{
-			if (state == GLUT_DOWN)
+			if (WL.LoseExit.Press(x, y))
 			{
-				MM.Options.isPressed = true;
+				if (state == GLUT_DOWN)
+				{
+					WL.LoseExit.isPressed = true;
+				}
+				else
+				{
+					WL.LoseExit.isPressed = false;
+				}
 			}
 			else
 			{
-				MM.Options.isPressed = false;
+				if (state == GLUT_UP)
+				{
+					WL.LoseExit.isPressed = false;
+				}
 			}
-		}
-		else
-		{
-			if (state == GLUT_UP)
-			{
-				MM.Options.isPressed = false;
-			}
-		}
-
-		if (MM.Exit.Press(x, y))
-		{
-			if (state == GLUT_DOWN)
-			{
-				MM.Exit.isPressed = true;
-			}
-			else
-			{
-				MM.Exit.isPressed = false;
-				exit(0);
-			}
-		}
-		else
-		{
-			if (state == GLUT_UP)
-			{
-				MM.Exit.isPressed = false;
-			}
-		}
+			
+		}		
+	}
+	if (button == GLUT_RIGHT_BUTTON)
+	{
+		cout << x << endl;
+		cout << y << endl;
 	}
 }
 ///////////////////////////////////////////
@@ -657,6 +950,7 @@ int main(int argc, char **argv)
 
   BtmM.InitTexture();
   MM.InitTexture();
+  WL.InitTexture();
 
   glutDisplayFunc(DrawScene);
   glutTimerFunc(1000, Timer, 1);
