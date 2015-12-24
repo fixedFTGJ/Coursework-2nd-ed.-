@@ -27,7 +27,10 @@ void Character::ReceiveDamage(int damage)
 		_health = _health - (damage - _armor);
 	}
 	if (_health <= 0)
+	{
+		_health = 0;
 		_isDead = !_isDead;
+	}
 };
 
 bool Character::IsDodge()

@@ -3,6 +3,7 @@
 #include "Character.h"
 #include <vector>
 #include "Monster.h"
+#include "Map.h"
 
 using namespace std;
 using namespace CourseWork;
@@ -277,7 +278,7 @@ public:
 class GetAway : public OnlyKineticAbility
 {
 public:
-	GetAway(int cooldown) : OnlyKineticAbility(cooldown) {};
+	GetAway(int cooldown, Map* map) : OnlyKineticAbility(cooldown) { _map = map; };
 
 	void SetTarget(Monster* target)
 	{
@@ -287,24 +288,32 @@ public:
 	void Do()
 	{
 		int dx = 0, dy = 0;
+		int dx1 = 0, dy1 = 0;
 		if (_lookAt.X == 1)
 		{
 			dx = 2;
+			dx1 = 1;
 		}
 		if (_lookAt.X == -1)
 		{
 			dx = -2;
+			dx1 = -1;
 		}
 		if (_lookAt.Y == 1)
 		{
 			dy = 2;
+			dy1 = 1;
 		}
 		if (_lookAt.Y == -1)
 		{
 			dy = -2;
+			dy1 = -1;
 		}
-		_mtarget->SetPosition(_mtarget->GetPosition().X + dx, _mtarget->GetPosition().Y + dy);
+		if((_map->GetPattern()[_mtarget->GetPosition().X + dx][_mtarget->GetPosition().Y + dy] != wall) && (_map->GetPattern()[_mtarget->GetPosition().X + dx1][_mtarget->GetPosition().Y + dy1] != wall))
+			_mtarget->SetPosition(_mtarget->GetPosition().X + dx, _mtarget->GetPosition().Y + dy);
 	}
 
 	void Reset() {};
+private:
+	Map* _map;
 };

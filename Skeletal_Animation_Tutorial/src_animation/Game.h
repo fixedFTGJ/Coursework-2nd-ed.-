@@ -32,7 +32,7 @@ public:
 		assassinAbilities.push_back(new Empower(Assassin, 10));
 		assassinAbilities.push_back(new DodgeMaster(Assassin, 10));
 		kineticAbilities.push_back(new Stun(10));
-		kineticAbilities.push_back(new GetAway(5));
+		kineticAbilities.push_back(new GetAway(5, _dungeon->GetMaps()[0]));
 		kineticAbilities.push_back(new GetOverHere(5));
 		Juggernaut->SetAbilities(juggernautAbilities);
 		Medic->SetAbilities(medicAbilities);

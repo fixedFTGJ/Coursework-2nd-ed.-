@@ -377,6 +377,8 @@ void Timer(int value)
 		vector<PlayableCharacter*> party = g_game.party->GetCharacters();
 		int *px, *py;
 		int len;
+		int characterIndex;
+		bool underAttack = false;
 		for (Monster* m : monsters)
 		{
 			if (((m->GetPosition().X != g_game.party->GetPosition().X) || (m->GetPosition().Y != g_game.party->GetPosition().Y)) && !(m->IsDead()))
@@ -388,7 +390,15 @@ void Timer(int value)
 
 					if ((len == 1) && (m->IsActive()))
 					{
-						m->Attack(party[rand() % 4]);
+						while (!underAttack)
+						{
+							characterIndex = rand() % 4;
+							if (!party[characterIndex]->IsDead())
+							{
+								m->Attack(party[characterIndex]);
+								underAttack = !underAttack;
+							}
+						}
 					}
 
 					if (m->IsActive())
