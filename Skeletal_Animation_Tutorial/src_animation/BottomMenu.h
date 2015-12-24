@@ -36,7 +36,7 @@ namespace CourseWork {
 		/////////////////   TEXTURES    /////////////////
 
 		CTexture *Texture;
-		TextureImage Textures[19];
+		TextureImage Textures[21];
 		
 
 		void InitTexture() {
@@ -65,6 +65,9 @@ namespace CourseWork {
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/Drag_in.png", &Textures[17]);
 			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/kin/Drag_inPr.png", &Textures[18]);
 
+			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenu.png", &Textures[19]);
+			Texture->LoadTexture(IL_PNG, "source/buttons/bottommenu/menu/MainMenuPr.png", &Textures[20]);
+
 			Power.GetCoord(123, yUp - 84, 123 + Textures[1].width, yUp - 84 + Textures[1].height);
 			Provocation.GetCoord(123, yUp - 112, 123 + Textures[3].width, yUp - 112 + Textures[3].height);
 			Heal.GetCoord(353, yUp - 84, 353 + Textures[5].width, yUp - 84 + Textures[5].height);
@@ -74,6 +77,8 @@ namespace CourseWork {
 			Stun.GetCoord(813, yUp - 84, 813 + Textures[13].width, yUp - 84 + Textures[13].height);
 			Push.GetCoord(813, yUp - 112, 813 + Textures[15].width, yUp - 112 + Textures[15].height);
 			Drag_in.GetCoord(813, yUp - 140, 813 + Textures[17].width, yUp - 140 + Textures[17].height);
+
+			MainMenu.GetCoord(1110, yUp - 63, 1110 + Textures[19].width, yUp - 63 + Textures[19].height);
 
 			InitNumerals();
 		}
@@ -219,6 +224,15 @@ namespace CourseWork {
 				Drag_in.Draw(Textures[18]);
 			}
 
+			if (!MainMenu.isPressed)
+			{
+				MainMenu.Draw(Textures[19]);
+			}
+			else
+			{
+				MainMenu.Draw(Textures[20]);
+			}
+
 			DrawNumerals();
 
 			Mode.End2D();
@@ -260,6 +274,9 @@ namespace CourseWork {
 		Button Stun;
 		Button Push;
 		Button Drag_in;
+
+		Button MainMenu;
+		Button Inventory;
 
 		Button N11;
 		Button N12;
