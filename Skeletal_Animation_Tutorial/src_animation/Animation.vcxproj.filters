@@ -155,6 +155,8 @@
     <ClInclude Include="WinAndGameOver.h">
       <Filter>src\GameInterface\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Character.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
