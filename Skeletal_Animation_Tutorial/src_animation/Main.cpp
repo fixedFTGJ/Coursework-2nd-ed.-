@@ -256,35 +256,6 @@ void DrawScene()
 		}
 	}
 
-<<<<<<< HEAD
-	if (g_game.IsOver())
-	{
-		WL.Win = false;
-		WL.isVisible = true;
-		BtmM.isVisible = false;
-		MM.isVisible = false;
-	}
-
-	if (g_game.IsNextLevel())
-	{
-		if (g_game._currentMap < 2)
-		{
-			g_game._currentMap++;
-			finder = new PathFinder(g_game._dungeon->GetMaps()[g_game._currentMap]);
-			Clear();
-			g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
-			g_game.cam->rotateLoc(90, 0, 1, 0);
-			g_game.party->SetPosition(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y);
-		}
-		if (g_game._currentMap == 2)
-		{
-			WL.Win = true;
-			WL.isVisible = true;
-		}
-	}
-=======
->>>>>>> 4b69a70f2b9b046fcfb6134ad2b6660c0fda036a
-
 	/*halo.Draw(
 	vec3f(10, -0.5, 10),			// position
 	vec3f(0, 0, 0),	// rotation
