@@ -16,8 +16,8 @@ using namespace std;
 #include "ogl.h"
 #include "glsl.h"
 ///////////////////////////////////////////
+vec4f lightvec(1, 1, 1, 1);
 
-vec4f lightvec(1, 1, 1, 0);
 
 #include "Mesh.h"
 ///////////////////////////////////////////
@@ -145,6 +145,8 @@ void DrawScene()
 	static uint t0 = timeGetTime();
 	double time_elapsed = double(timeGetTime() - t0) / 1000;
 
+
+
 	// clear and basic
 	glClearDepth(1);
 	glClearColor(0, 0, 0, 1);
@@ -204,7 +206,9 @@ void DrawScene()
 	}*/
 	g_game.cam->setView();
 	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
+	//static Mesh plane1("../data/Untitled1.material", "../data/Untitled1.xml");
 	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
+	static Mesh monster("../data/st/st.material", "../data/st/st.xml");
 	static Mesh monster("../data/badboy/badboy.material", "../data/badboy/badboy.xml");
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
@@ -1462,7 +1466,6 @@ int main(int argc, char **argv)
 	// cam.setView();
 	// Clear();
 	// cam.setView();
-	// Clear();
 	glutMouseFunc(mouseButton);
 	glutMotionFunc(mouseMove);
 
