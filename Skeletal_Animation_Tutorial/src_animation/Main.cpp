@@ -362,14 +362,16 @@ void DrawScene()
 	{
 		BtmM.Draw();
 	}
-	if (MM.isVisible)
-	{
-		MM.Draw();
-	}
 	if (WL.isVisible)
 	{
 		WL.Draw();
 	}
+
+	if (MM.isVisible)
+	{
+		MM.Draw();
+	}
+
 
 	glutSwapBuffers();
 };
