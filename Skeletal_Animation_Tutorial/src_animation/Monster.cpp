@@ -8,6 +8,7 @@ Monster::Monster(Coordinates position, int health, int armor, int damage, int do
 	_orientation = Coordinates(0, 1);
 	_rotation = 0;
 	_isActive = false;
+	_underAttack = false;
 	exp = 50;
 }
 

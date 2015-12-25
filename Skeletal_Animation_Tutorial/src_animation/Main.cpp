@@ -206,8 +206,9 @@ void DrawScene()
 	}*/
 	g_game.cam->setView();
 	static Mesh cube("../data/cube/cube.material", "../data/cube/cube.xml");
-	static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
+	//static Mesh plane("../data/cube/cube.material", "../data/cube/cube.xml");
 	static Mesh monster("../data/badboy/badboy.material", "../data/badboy/badboy.xml");
+	static Mesh monsterUnderAttack("../data/badboy/badboyUnderAttack.material", "../data/badboy/badboy.xml");
 
 	/*static Mesh halo("../data/desktop.material",		//	required material file)
 	"../data/Desktop.mesh.xml");*/
@@ -230,7 +231,7 @@ void DrawScene()
 			}
 			else
 			{
-				plane.Draw(
+				cube.Draw(
 					vec3f(i*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -1.0, j*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),		  		// position
 					vec3f(
 						0,			// rotation
@@ -246,13 +247,27 @@ void DrawScene()
 	{
 		if (!m->IsDead())
 		{
-			monster.Draw(
-				vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),
-				vec3f(
-					0,			// rotation
-					m->GetRotation(),
-					0)
-				);
+			if (!m->_underAttack)
+			{
+				monster.Draw(
+					vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),
+					vec3f(
+						0,			// rotation
+						m->GetRotation(),
+						0)
+					);
+			}
+			else
+			{
+				m->_underAttack = !m->_underAttack;
+				monsterUnderAttack.Draw(
+					vec3f(m->GetPosition().X*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0, -0.5, m->GetPosition().Y*g_game._dungeon->GetMaps()[g_game._currentMap]->GetStep() + 1.0),
+					vec3f(
+						0,			// rotation
+						m->GetRotation(),
+						0)
+					);
+			}
 		}
 	}
 
@@ -1217,6 +1232,7 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (!m->IsDead()) && (g_game.party->GetCharacters()[0]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[0]->Attack(m);
+							m->_underAttack = true;
 							g_game.party->GetCharacters()[0]->SetCurrentAttackCooldown();
 							if (m->IsDead())
 							{
@@ -1280,6 +1296,7 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[1]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[1]->Attack(m);
+							m->_underAttack = true;
 							g_game.party->GetCharacters()[1]->SetCurrentAttackCooldown();
 							if (m->IsDead())
 							{
@@ -1343,6 +1360,7 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[2]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[2]->Attack(m);
+							m->_underAttack = true;
 							g_game.party->GetCharacters()[2]->SetCurrentAttackCooldown();
 							if (m->IsDead())
 							{
@@ -1405,6 +1423,7 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[3]->Attack(m);
+							m->_underAttack = true;
 							g_game.party->GetCharacters()[3]->SetCurrentAttackCooldown();
 							if (m->IsDead())
 							{

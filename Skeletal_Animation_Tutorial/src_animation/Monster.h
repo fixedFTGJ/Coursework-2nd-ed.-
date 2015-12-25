@@ -17,6 +17,7 @@ namespace CourseWork
 		void SwitchActivity();
 		bool IsActive();
 		int exp;
+		bool _underAttack;
 	private:
 		bool _isActive;
 		Coordinates _position;
