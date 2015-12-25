@@ -532,6 +532,8 @@ void SpecialKeys(int key, int x, int y)
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
 			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			cout << temp.X + dx << " " << temp.Y + dy << endl;
 			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
@@ -565,6 +567,8 @@ void SpecialKeys(int key, int x, int y)
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
 			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
+			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			cout << temp.X + dx << " " << temp.Y + dy << endl;
 			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || checker.Check(g_game.party, m);
@@ -698,7 +702,7 @@ void OtherKeys(unsigned char key, int x, int y)
 
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
-			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
 			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || checker.Check(g_game.party, m);
@@ -730,7 +734,7 @@ void OtherKeys(unsigned char key, int x, int y)
 				dx = 1;
 			bool throughMonster = false;
 			Coordinates temp = g_game.party->GetPosition();
-			cout << normal.x << " " << normal.y << " " << normal.z << endl;
+			g_game.party->SetPosition(temp.X + dx, temp.Y + dy);
 			vector<Monster*> monsters = g_game._dungeon->GetMaps()[g_game._currentMap]->GetMonsters();
 			for (Monster* m : monsters)
 				throughMonster = throughMonster || (checker.Check(g_game.party, m) && (!m->IsDead()));
