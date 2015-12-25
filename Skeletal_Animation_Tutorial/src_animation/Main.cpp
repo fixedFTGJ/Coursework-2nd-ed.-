@@ -33,7 +33,9 @@ bool f = true;
 float x = 0;
 float y = -5;
 float z = 0;
+int NotInBattleTimer;
 bool isMute = false;
+bool PlayingAmbient = false;
 
 int WHeight = 1280;
 int WWidth = 768;
@@ -170,7 +172,8 @@ void DrawScene()
 	//	glTranslatef(x, y, z);
 	if (f)
 	{
-		//PlaySound("recycle.wav", NULL, SND_FILENAME);
+		PlayingAmbient = true;
+		PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 		g_game.cam = new Camera(g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().X*1.0 + 1.0, 0, g_game._dungeon->GetMaps()[g_game._currentMap]->GetStartPosition().Y*1.0 + 1.0);
 		g_game.cam->rotateLoc(90, 0, 1, 0);
 
@@ -422,6 +425,12 @@ void Timer(int value)
 							if (!party[characterIndex]->IsDead())
 							{
 								m->Attack(party[characterIndex]);
+								NotInBattleTimer = 5;
+								if (PlayingAmbient)
+								{
+									PlaySound(NULL, NULL, SND_ASYNC);
+									PlayingAmbient = !PlayingAmbient;
+								}
 								underAttack = !underAttack;
 							}
 						}
@@ -505,6 +514,16 @@ void Timer(int value)
 				WL.isVisible = true;
 			}
 		}
+		if ((NotInBattleTimer <= 0) && (!PlayingAmbient))
+		{
+			PlaySound("../data/sounds/fight_ambient.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+			PlayingAmbient = !PlayingAmbient;
+		}
+		if (!PlayingAmbient)
+		{
+			NotInBattleTimer--;
+		}
+		
 		glutPostRedisplay();
 		glutTimerFunc(1000, Timer, 1);
 	}
@@ -1232,6 +1251,13 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[0]->IsDead()) && (m != nullptr) && (!m->IsDead()) && (g_game.party->GetCharacters()[0]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[0]->Attack(m);
+							NotInBattleTimer = 5;
+							if (PlayingAmbient)
+							{
+								PlaySound(NULL, NULL, SND_ASYNC);
+								PlayingAmbient = !PlayingAmbient;
+							}
+							PlaySound("../data/sounds/attack.wav", NULL, SND_ASYNC | SND_FILENAME | SND_NOSTOP);
 							m->_underAttack = true;
 							g_game.party->GetCharacters()[0]->SetCurrentAttackCooldown();
 							if (m->IsDead())
@@ -1296,6 +1322,13 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[1]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[1]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[1]->Attack(m);
+							NotInBattleTimer = 5;
+							if (PlayingAmbient)
+							{
+								PlaySound(NULL, NULL, SND_ASYNC);
+								PlayingAmbient = !PlayingAmbient;
+							}
+							PlaySound("../data/sounds/attack.wav", NULL, SND_ASYNC | SND_FILENAME | SND_NOSTOP);
 							m->_underAttack = true;
 							g_game.party->GetCharacters()[1]->SetCurrentAttackCooldown();
 							if (m->IsDead())
@@ -1360,6 +1393,13 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[2]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[2]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[2]->Attack(m);
+							NotInBattleTimer = 5;
+							if (PlayingAmbient)
+							{
+								PlaySound(NULL, NULL, SND_ASYNC);
+								PlayingAmbient = !PlayingAmbient;
+							}
+							PlaySound("../data/sounds/attack.wav", NULL, SND_ASYNC | SND_FILENAME | SND_NOSTOP);
 							m->_underAttack = true;
 							g_game.party->GetCharacters()[2]->SetCurrentAttackCooldown();
 							if (m->IsDead())
@@ -1423,6 +1463,13 @@ void mouseButton(int button, int state, int x, int y) {
 						if ((!g_game.party->GetCharacters()[3]->IsDead()) && (m != nullptr) && (g_game.party->GetCharacters()[3]->CanAttack()))
 						{
 							g_game.party->GetCharacters()[3]->Attack(m);
+							NotInBattleTimer = 5;
+							if (PlayingAmbient)
+							{
+								PlaySound(NULL, NULL, SND_ASYNC);
+								PlayingAmbient = !PlayingAmbient;
+							}
+							PlaySound("../data/sounds/attack.wav", NULL, SND_ASYNC | SND_FILENAME | SND_NOSTOP);
 							m->_underAttack = true;
 							g_game.party->GetCharacters()[3]->SetCurrentAttackCooldown();
 							if (m->IsDead())
